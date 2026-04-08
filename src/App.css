@@ -747,15 +747,6 @@ body {
   color: #111;
 }
 
-/* ANSWER */
-.faq-card-answer {
-  max-height: 0;
-  overflow: visible;
-  transition: all 0.3s ease;
-  padding: 0 16px;
-
-}
-
 .faq-card-answer p {
   margin: 0;
   padding-bottom: 16px;
@@ -765,9 +756,15 @@ body {
   text-align: left;
 }
 
-/* OPEN STATE */
+.faq-card-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 16px;
+}
+
 .faq-card.open .faq-card-answer {
-  max-height: 200px;
+  max-height: 5000px;
 }
 
 /* MOBILE BLUE FIX (SUPER WICHTIG) */
