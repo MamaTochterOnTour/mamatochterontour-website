@@ -721,6 +721,7 @@ body {
   border: 1px solid #eaeaea;
   overflow: hidden;
   transition: all 0.25s ease;
+  height: auto;
 }
 
 /* QUESTION */
@@ -749,9 +750,10 @@ body {
 /* ANSWER */
 .faq-card-answer {
   max-height: 0;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.3s ease;
   padding: 0 16px;
+
 }
 
 .faq-card-answer p {
