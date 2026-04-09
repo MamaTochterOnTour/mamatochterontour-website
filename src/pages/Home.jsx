@@ -8,8 +8,15 @@ import foto4 from "../assets/foto4.jpg";
 import { FaTiktok, FaInstagram, FaYoutube } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
+import useSEO from "../utils/seo";
 
 function Home() {
+
+  useSEO({
+    title: "MamaTochterOnTour – Reiseinspiration, Mallorca & echte Travel Stories",
+    description: "Mama & Tochter unterwegs in der Welt ✈️ Echte Reiseerlebnisse, Reiseguides, Apps und Inspiration für dein nächstes Abenteuer."
+  });
+
   return (
     <div>
 
@@ -59,11 +66,26 @@ function Home() {
 
           {/* IMAGE GRID */}
           <div className="image-grid">
-            <img src={foto1} alt="Reise 1" />
-            <img src={foto2} alt="Reise 2" />
-            <img src={foto3} alt="Reise 3" />
-            <img src={foto4} alt="Reise 4" />
-          </div>
+  <img
+    src={foto1}
+    alt="Mama und Tochter in Trondheim vor der traditionellen Häuserfront am Hafen"
+  />
+
+  <img
+    src={foto2}
+    alt="Mama und Tochter am Naturstrand in Barbados mit türkisfarbenem Wasser"
+  />
+
+  <img
+    src={foto3}
+    alt="Reise Moment in La Romana am Kreuzfahrthafen während einer Karibik Reise"
+  />
+
+  <img
+    src={foto4}
+    alt="Mama und Tochter in Noordwijk in Holland am Strand bei einem Spaziergang"
+  />
+</div>
 
           {/* SOCIAL */}
           <div className="social-section">

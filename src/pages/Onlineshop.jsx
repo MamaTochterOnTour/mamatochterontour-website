@@ -2,8 +2,14 @@ import "../App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
 import { Link } from "react-router-dom";
+import useSEO from "../utils/seo";
 
 function Shop() {
+
+  useSEO({
+    title: "Reiseguides & Shop – MamaTochterOnTour",
+    description: "Entdecke digitale Reiseguides, echte Reiseerfahrungen und Inspiration im MamaTochterOnTour Shop."
+  });
   const shopUrl = "https://mamatochterontour.com";
 
   return (

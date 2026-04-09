@@ -1,11 +1,76 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.png" />
+
+    <!-- 📱 Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mamatochterontour-website</title>
+
+    <!-- 🔥 FAVICON -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- 🔥 TITLE (SEO + Branding) -->
+    <title>MamaTochterOnTour – Reiseinspiration, Reiseguides & echte Travel Stories</title>
+
+    <!-- 🔍 META DESCRIPTION (WICHTIGSTER SEO TEXT) -->
+    <meta
+      name="description"
+      content="MamaTochterOnTour ist ein Reiseprojekt mit echten Reiseerfahrungen, Guides und Inspiration für deine nächsten Abenteuer weltweit – authentisch, persönlich und unterwegs erstellt."
+    />
+
+    <!-- ❗ KEYWORDS (optional – Google ignoriert es weitgehend) -->
+    <meta
+      name="keywords"
+      content="Reiseblog, Reiseinspiration, Reiseguides, Travel Blog, Mallorca Reisen, Reise App, Mama Tochter Reisen, Travel Stories"
+    />
+
+    <!-- 👤 AUTHOR -->
+    <meta name="author" content="MamaTochterOnTour" />
+
+    <!-- 🤖 SEARCH ENGINE CONTROL -->
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- 🔥 CANONICAL URL (SEHR WICHTIG FÜR DUPLICATE CONTENT) -->
+    <link rel="canonical" href="https://mamatochterontour.de" />
+
+    <!-- 🌍 OPEN GRAPH (SOCIAL MEDIA PREVIEW) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MamaTochterOnTour" />
+    <meta property="og:title" content="MamaTochterOnTour – Reiseinspiration & Reiseguides" />
+    <meta
+      property="og:description"
+      content="Echte Reiseerlebnisse, Guides und Inspiration für deine nächsten Abenteuer weltweit."
+    />
+    <meta property="og:url" content="https://mamatochterontour.de" />
+
+    <!-- ⚠️ WICHTIG: echtes OG Bild statt favicon -->
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- 🐦 TWITTER / X PREVIEW -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MamaTochterOnTour – Reiseinspiration & Guides" />
+    <meta
+      name="twitter:description"
+      content="Echte Reiseerlebnisse & Travel Guides für deine nächsten Abenteuer."
+    />
+    <meta name="twitter:image" content="/og-image.jpg" />
+
+    <!-- ⚡ PERFORMANCE (optional aber gut) -->
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0RR2Y8KE1J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0RR2Y8KE1J');
+</script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

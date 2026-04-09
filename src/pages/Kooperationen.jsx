@@ -2,8 +2,14 @@ import "../App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
 import { Link } from "react-router-dom";
+import useSEO from "../utils/seo";
 
 function Kooperationen() {
+
+  useSEO({
+    title: "Kooperationen & Events – MamaTochterOnTour",
+    description: "Kooperationen, Eventanfragen und Partnerschaften im Reise- und Lifestyle-Bereich mit MamaTochterOnTour."
+  });
   return (
     <div>
 

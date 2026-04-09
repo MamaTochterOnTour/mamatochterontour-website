@@ -1,8 +1,15 @@
 import "../App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
+import useSEO from "../utils/seo";
 
 function Impressum() {
+
+  useSEO({
+    title: "Impressum – MamaTochterOnTour",
+    description: "Impressum und rechtliche Angaben von MamaTochterOnTour gemäß §5 TMG."
+  });
+
   return (
     <div>
       <Navbar />

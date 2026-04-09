@@ -1,8 +1,15 @@
 import "../App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
+import useSEO from "../utils/seo";
 
 function Datenschutz() {
+  
+  useSEO({
+    title: "Datenschutzerklärung – MamaTochterOnTour",
+    description: "Informationen zur Verarbeitung personenbezogener Daten auf MamaTochterOnTour gemäß DSGVO."
+  });
+
   return (
     <div>
       <Navbar />

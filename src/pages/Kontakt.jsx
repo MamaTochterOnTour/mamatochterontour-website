@@ -2,8 +2,14 @@ import "../App.css";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import Footer from "../components/BottomNavigationBar";
+import useSEO from "../utils/seo";
 
 function Contact() {
+
+  useSEO({
+    title: "Kontakt – MamaTochterOnTour",
+    description: "Kontaktiere MamaTochterOnTour für Kooperationen, Fragen oder Reiseanfragen. Wir freuen uns auf deine Nachricht."
+  });
   const [formData, setFormData] = useState({
     email: "",
     name: "",

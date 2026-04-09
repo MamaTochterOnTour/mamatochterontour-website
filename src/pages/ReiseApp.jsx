@@ -3,8 +3,14 @@ import Navbar from "../components/Navbar";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import Footer from "../components/BottomNavigationBar";
 import { useState } from "react";
+import useSEO from "../utils/seo";
 
 function AppPage() {
+
+  useSEO({
+    title: "Momentry App – Reise planen & Erinnerungen festhalten",
+    description: "Die Momentry Reise-App: Reisen planen, Erlebnisse speichern und Reiseinspiration entdecken. Kostenlos für iOS und Android."
+  });
 
   const [activeIndex, setActiveIndex] = useState(0);
 

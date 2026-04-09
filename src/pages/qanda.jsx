@@ -2,8 +2,14 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
 import "../App.css";
+import useSEO from "../utils/seo";
 
 function FAQ() {
+
+  useSEO({
+    title: "FAQ – Fragen & Antworten | MamaTochterOnTour",
+    description: "Alle Fragen rund um MamaTochterOnTour, Reisen, App, Shop und Kooperationen beantwortet."
+  });
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (index) => {
