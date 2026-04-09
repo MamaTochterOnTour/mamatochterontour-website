@@ -1,6 +1,7 @@
 import "../App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
+import { Link } from "react-router-dom";
 
 function Shop() {
   const shopUrl = "https://mamatochterontour.com";
@@ -81,9 +82,9 @@ function Shop() {
       Vielleicht wird genau dein Tipp Teil eines unserer nächsten Guides.
     </p>
 
-    <a href="/kontakt" className="store-btn google">
-      Kontakt aufnehmen
-    </a>
+    <Link to="/kontakt" className="store-btn google">
+  Kontakt aufnehmen
+</Link>
 
   </div>
 

@@ -1,6 +1,7 @@
 import "../App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/BottomNavigationBar";
+import { Link } from "react-router-dom";
 
 function Kooperationen() {
   return (
@@ -142,12 +143,9 @@ function Kooperationen() {
               Interesse an einer Zusammenarbeit oder einem Event?
             </p>
 
-            <a
-              href="/kontakt"
-              className="shop-cta-button"
-            >
-              Kontakt aufnehmen
-            </a>
+            <Link to="/kontakt" className="shop-cta-button">
+  Kontakt aufnehmen
+</Link>
 
           </div>
 
