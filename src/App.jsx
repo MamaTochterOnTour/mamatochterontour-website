@@ -9,7 +9,7 @@ import Datenschutz from "./pages/Datenschutz"; // 👈 neu
 import Shop from "./pages/Onlineshop";
 import Kooperationen from "./pages/Kooperationen";
 import FAQ from "./pages/qanda";
-import PostRedirect from "./pages/PostPage";
+import PostPage from "./pages/PostPage";
 
 function App() {
   return (
