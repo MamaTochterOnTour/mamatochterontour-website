@@ -9,7 +9,7 @@ import Datenschutz from "./pages/Datenschutz"; // 👈 neu
 import Shop from "./pages/Onlineshop";
 import Kooperationen from "./pages/Kooperationen";
 import FAQ from "./pages/qanda";
-import PostRedirect from "./pages/PostRedirect";
+import PostRedirect from "./pages/PostPage";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
       <Route path="/datenschutz" element={<Datenschutz />} />
 
       {/* DEEP LINK ROUTE */}
-      <Route path="/p/:postId" element={<PostRedirect />} />
+      <Route path="/post/:postId" element={<PostPage />} />
       
     </Routes>
   );

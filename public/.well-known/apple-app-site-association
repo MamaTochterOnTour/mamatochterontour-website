@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "63QDXY5V25.com.mycompany.reisetagebuch",
+        "paths": [ "/p/*" ]
+      }
+    ]
+  }
+}
