@@ -27,7 +27,7 @@ function App() {
       <Route path="/datenschutz" element={<Datenschutz />} />
 
       {/* DEEP LINK ROUTE */}
-      <Route path="/post/:postId" element={<PostPage />} />
+      <Route path="/p/:postId" element={<PostPage />} />
       
     </Routes>
   );
