@@ -9,20 +9,38 @@ export default function PostPage() {
   const playStoreLink =
     "https://play.google.com/store/apps/details?id=com.mycompany.reisetagebuch";
 
+  const openApp = () => {
+    const deepLink = `mamatochter://p/${postId}`;
+
+    // Versuch App zu öffnen
+    window.location.href = deepLink;
+
+    // Fallback: wenn App nicht installiert → bleib auf Seite
+    setTimeout(() => {
+      console.log("App nicht geöffnet → bleibe auf Webseite");
+    }, 1200);
+  };
+
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>📱 App erforderlich</h2>
+      
+      <h2 style={styles.title}>📲 Beitrag in der App öffnen</h2>
 
+      {/* 🔥 1. OPEN APP BUTTON */}
+      <button onClick={openApp} style={styles.openButton}>
+        📲 In der App öffnen
+      </button>
+
+      {/* INFO TEXT */}
       <p style={styles.text}>
-        Du hast die App „Momentry by MamaTochterOnTour“ nicht installiert.
-        <br />
-        Dieser Beitrag kann nur in der App angezeigt werden.
+        Dieser Beitrag ist nur in der App vollständig verfügbar.
       </p>
 
       <p style={styles.subtext}>
-        Installiere die App, um diesen Post vollständig zu sehen.
+        Falls du die App noch nicht hast, lade sie dir hier herunter:
       </p>
 
+      {/* STORE BUTTONS */}
       <div style={styles.buttonContainer}>
         <a href={appStoreLink} style={styles.buttonIOS}>
           📲 iOS App herunterladen
@@ -32,6 +50,11 @@ export default function PostPage() {
           🤖 Android App herunterladen
         </a>
       </div>
+
+      {/* RETURN INFO */}
+      <p style={styles.returnText}>
+        Nach der Installation kommst du hierher zurück und öffnest den Link erneut.
+      </p>
 
       <p style={styles.postId}>Post-ID: {postId}</p>
     </div>
@@ -47,25 +70,41 @@ const styles = {
     textAlign: "center",
     fontFamily: "sans-serif",
   },
+
   title: {
-    fontSize: "24px",
-    marginBottom: "10px",
+    fontSize: "22px",
+    marginBottom: "20px",
   },
+
+  openButton: {
+    padding: "14px 20px",
+    backgroundColor: "#6c5ce7",
+    color: "white",
+    borderRadius: "12px",
+    border: "none",
+    fontSize: "16px",
+    cursor: "pointer",
+    marginBottom: "20px",
+  },
+
   text: {
     fontSize: "16px",
     marginBottom: "10px",
     maxWidth: "400px",
   },
+
   subtext: {
     fontSize: "14px",
     color: "#666",
-    marginBottom: "30px",
+    marginBottom: "20px",
   },
+
   buttonContainer: {
     display: "flex",
     flexDirection: "column",
     gap: "12px",
   },
+
   buttonIOS: {
     padding: "12px 20px",
     backgroundColor: "black",
@@ -73,6 +112,7 @@ const styles = {
     borderRadius: "10px",
     textDecoration: "none",
   },
+
   buttonAndroid: {
     padding: "12px 20px",
     backgroundColor: "#3ddc84",
@@ -80,8 +120,15 @@ const styles = {
     borderRadius: "10px",
     textDecoration: "none",
   },
+
+  returnText: {
+    marginTop: "25px",
+    fontSize: "13px",
+    color: "#777",
+  },
+
   postId: {
-    marginTop: "30px",
+    marginTop: "20px",
     fontSize: "12px",
     color: "#aaa",
   },
