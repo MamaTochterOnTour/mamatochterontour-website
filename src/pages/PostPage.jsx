@@ -15,29 +15,25 @@ export default function PostPage() {
     // Versuch App zu öffnen
     window.location.href = deepLink;
 
-    // Fallback: wenn App nicht installiert → bleib auf Seite
+    // Optionaler Fallback (bleibt einfach auf Seite)
     setTimeout(() => {
-      console.log("App nicht geöffnet → bleibe auf Webseite");
+      console.log("App nicht geöffnet");
     }, 1200);
   };
 
   return (
     <div style={styles.container}>
       
-      <h2 style={styles.title}>📲 Beitrag in der App öffnen</h2>
+      <h2 style={styles.title}>✨ Schau dir diesen Beitrag an</h2>
 
-      {/* 🔥 1. OPEN APP BUTTON */}
+      {/* OPEN APP BUTTON */}
       <button onClick={openApp} style={styles.openButton}>
-        📲 In der App öffnen
+        🚀 In der App öffnen
       </button>
 
-      {/* INFO TEXT */}
-      <p style={styles.text}>
-        Dieser Beitrag ist nur in der App vollständig verfügbar.
-      </p>
-
+      {/* DOWNLOAD TEXT */}
       <p style={styles.subtext}>
-        Falls du die App noch nicht hast, lade sie dir hier herunter:
+        Noch nicht installiert? Lade dir die App kostenlos herunter:
       </p>
 
       {/* STORE BUTTONS */}
@@ -53,7 +49,7 @@ export default function PostPage() {
 
       {/* RETURN INFO */}
       <p style={styles.returnText}>
-        Nach der Installation kommst du hierher zurück und öffnest den Link erneut.
+        💡 Nach der Installation einfach diesen Link erneut öffnen.
       </p>
 
       <p style={styles.postId}>Post-ID: {postId}</p>
@@ -77,20 +73,15 @@ const styles = {
   },
 
   openButton: {
-    padding: "14px 20px",
-    backgroundColor: "#6c5ce7",
+    padding: "16px 24px",
+    background: "linear-gradient(135deg, #6c5ce7, #a29bfe)",
     color: "white",
-    borderRadius: "12px",
+    borderRadius: "14px",
     border: "none",
-    fontSize: "16px",
+    fontSize: "17px",
+    fontWeight: "600",
     cursor: "pointer",
     marginBottom: "20px",
-  },
-
-  text: {
-    fontSize: "16px",
-    marginBottom: "10px",
-    maxWidth: "400px",
   },
 
   subtext: {
