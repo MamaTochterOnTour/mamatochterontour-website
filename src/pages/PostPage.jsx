@@ -51,8 +51,6 @@ export default function PostPage() {
       <p style={styles.returnText}>
         💡 Nach der Installation einfach diesen Link erneut öffnen.
       </p>
-
-      <p style={styles.postId}>Post-ID: {postId}</p>
     </div>
   );
 }
@@ -118,9 +116,4 @@ const styles = {
     color: "#777",
   },
 
-  postId: {
-    marginTop: "20px",
-    fontSize: "12px",
-    color: "#aaa",
-  },
 };
