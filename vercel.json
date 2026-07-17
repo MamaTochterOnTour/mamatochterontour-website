@@ -1,4 +1,7 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+
   "rewrites": [
     {
       "source": "/app",
@@ -13,6 +16,7 @@
       "destination": "/index.html"
     }
   ],
+
   "headers": [
     {
       "source": "/.well-known/(.*)",
