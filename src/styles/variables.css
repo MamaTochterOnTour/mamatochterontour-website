@@ -1,0 +1,27 @@
+:root {
+
+  --color-background: #FCFBF8;
+  --color-surface: #FFFFFF;
+
+  --color-text: #222222;
+  --color-text-light: #6B6B6B;
+
+
+  /* Elegantes Reise-Grün */
+  --color-primary: #496B5B;
+
+  /* Dezentes Lila */
+  --color-secondary: #75658A;
+
+
+  /* Warmer Premium-Ton */
+  --color-accent: #D8C7A5;
+
+
+  --border-light: rgba(0,0,0,0.08);
+
+
+  --shadow-small:
+    0 5px 20px rgba(0,0,0,0.06);
+
+}
