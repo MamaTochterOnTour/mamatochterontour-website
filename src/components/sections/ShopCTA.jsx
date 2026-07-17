@@ -15,9 +15,13 @@ export default function ShopCTA(){
       </p>
 
 
-      <a href="#">
-        Zum Online-Shop
-      </a>
+      <a
+  href="https://mamatochterontour.com"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Zum Online-Shop
+</a>
 
 
     </section>

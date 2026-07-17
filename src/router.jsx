@@ -8,6 +8,8 @@ import Shop from "./pages/Shop";
 import Business from "./pages/Business";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Impressum from "./pages/Impressum";
+import Datenschutz from "./pages/Datenschutz";
 
 
 export default function Router() {
@@ -54,6 +56,16 @@ export default function Router() {
           <Route 
   path="/kontakt" 
   element={<Contact />} 
+/>
+
+<Route
+  path="/impressum"
+  element={<Impressum />}
+/>
+
+<Route
+  path="/datenschutz"
+  element={<Datenschutz />}
 />
 
 

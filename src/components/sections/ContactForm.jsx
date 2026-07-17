@@ -1,5 +1,37 @@
 export default function ContactForm(){
 
+  function handleSubmit(e){
+
+    e.preventDefault();
+
+
+    const form = e.target;
+
+
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+
+    const subject = `Kontaktanfrage von ${name}`;
+
+
+    const body = 
+`Name: ${name}
+
+E-Mail: ${email}
+
+Nachricht:
+
+${message}`;
+
+
+    window.location.href =
+      `mailto:mamatochterontour@outlook.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  }
+
+
   return (
 
     <section className="contact-section">
@@ -25,7 +57,7 @@ export default function ContactForm(){
           <p>
             E-Mail:
             <br />
-            hallo@mamatochterontour.de
+            mamatochterontour@outlook.de
           </p>
 
 
@@ -33,7 +65,10 @@ export default function ContactForm(){
 
 
 
-        <form className="contact-form">
+        <form 
+          className="contact-form"
+          onSubmit={handleSubmit}
+        >
 
 
           <label>

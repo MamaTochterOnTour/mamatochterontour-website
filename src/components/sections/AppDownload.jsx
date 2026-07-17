@@ -16,15 +16,23 @@ export default function AppDownload(){
       </p>
 
 
-      <div>
+      <div className="app-download-buttons">
 
 
-        <a href="#">
+        <a
+          href="https://apps.apple.com/de/app/momentry-by-mamatochterontour/id6754201898"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           iOS App
         </a>
 
 
-        <a href="#">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.mycompany.reisetagebuch"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Android App
         </a>
 

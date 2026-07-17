@@ -1,27 +1,24 @@
-export default function AboutHero(){
+import heroImage from "../../assets/images/home/hero.jpg";
+
+export default function AboutHero() {
 
   return (
 
     <section className="about-hero">
 
-
       <div className="about-hero-container">
 
-
         <div className="about-hero-text">
-
 
           <p className="about-label">
             Über uns
           </p>
-
 
           <h1>
             Reisen verbindet.
             <br />
             Geschichten bleiben.
           </h1>
-
 
           <p className="about-description">
 
@@ -31,22 +28,19 @@ export default function AboutHero(){
 
           </p>
 
-
         </div>
-
 
 
         <div className="about-hero-image">
 
-          <div className="about-image-placeholder">
-            MamaTochterOnTour
-          </div>
+          <img
+            src={heroImage}
+            alt="MamaTochterOnTour auf Reisen"
+          />
 
         </div>
 
-
       </div>
-
 
     </section>
 

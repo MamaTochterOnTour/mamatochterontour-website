@@ -64,37 +64,54 @@ export default function Footer() {
             Kontakt
           </a>
 
-          <a href="#">
-            Events
-          </a>
-
-          <a href="#">
-            Film & TV
-          </a>
-
         </div>
 
 
 
         <div className="footer-column">
 
-          <h4>
-            Social Media
-          </h4>
+  <h4>
+    Social Media
+  </h4>
 
-          <a href="#">
-            Instagram
-          </a>
 
-          <a href="#">
-            TikTok
-          </a>
+  <a
+    href="https://www.instagram.com/mamatochterontour"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Instagram
+  </a>
 
-          <a href="#">
-            YouTube
-          </a>
 
-        </div>
+  <a
+    href="https://www.tiktok.com/@mamatochterontour"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    TikTok
+  </a>
+
+
+  <a
+    href="https://youtube.com/@mamatochterontour?si=j9jcrCVpttqMsJUf"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    YouTube
+  </a>
+
+
+  <a
+    href="https://open.spotify.com/show/291wzQv8KAKkD8t8c4y4UP?si=hoAoIn7FRBqTc0B1exnQeA&utm_source=copy-link"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Podcast
+  </a>
+
+
+</div>
 
 
       </div>

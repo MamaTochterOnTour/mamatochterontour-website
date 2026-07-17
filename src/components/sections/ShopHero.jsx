@@ -36,12 +36,14 @@ export default function ShopHero(){
           </p>
 
 
-          <a
-            href="#"
-            className="shop-button"
-          >
-            Zum Online-Shop
-          </a>
+         <a
+  href="https://mamatochterontour.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="shop-button"
+>
+  Zum Online-Shop
+</a>
 
 
         </div>

@@ -46,14 +46,6 @@ export default function AppHero() {
             </a>
 
 
-            <a
-              href="#"
-              className="app-button-outline"
-            >
-              Mobile App herunterladen
-            </a>
-
-
           </div>
 
 
