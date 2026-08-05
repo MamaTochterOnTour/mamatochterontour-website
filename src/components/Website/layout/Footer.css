@@ -1,0 +1,1080 @@
+/* =========================================================
+   FOOTER – HELLE FARBWELT
+   Passend zum About-Preview und Online-Shop
+========================================================= */
+
+.footer {
+  --footer-cream: #f7f3ec;
+  --footer-cream-soft: #fbf8f3;
+  --footer-white: #ffffff;
+
+  --footer-green: #355b49;
+  --footer-green-dark: #203d31;
+  --footer-green-muted: #789080;
+  --footer-green-soft: #dfe9e2;
+
+  --footer-text: #66736b;
+  --footer-border: rgba(53, 91, 73, 0.14);
+  --footer-border-strong: rgba(53, 91, 73, 0.23);
+
+  position: relative;
+  overflow: hidden;
+
+  background: var(--footer-cream);
+  color: var(--footer-green-dark);
+
+  border-top: 1px solid rgba(53, 91, 73, 0.1);
+}
+
+
+/* =========================================================
+   HINTERGRUND-DEKORATION
+========================================================= */
+
+.footer__decoration {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.footer__decoration::before {
+  position: absolute;
+  top: -330px;
+  left: 17%;
+
+  width: 700px;
+  height: 700px;
+
+  border: 1px solid rgba(53, 91, 73, 0.07);
+  border-radius: 50%;
+
+  content: "";
+}
+
+.footer__decoration::after {
+  position: absolute;
+  right: -190px;
+  bottom: -340px;
+
+  width: 580px;
+  height: 580px;
+
+  border: 1px solid rgba(53, 91, 73, 0.06);
+  border-radius: 50%;
+
+  content: "";
+}
+
+.footer__glow {
+  position: absolute;
+
+  border-radius: 50%;
+  filter: blur(110px);
+
+  pointer-events: none;
+}
+
+.footer__glow--green {
+  top: -180px;
+  left: -130px;
+
+  width: 440px;
+  height: 440px;
+
+  background: rgba(178, 204, 184, 0.31);
+}
+
+.footer__glow--soft {
+  right: -140px;
+  bottom: -220px;
+
+  width: 470px;
+  height: 470px;
+
+  background: rgba(225, 210, 188, 0.32);
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.footer__container {
+  position: relative;
+  z-index: 1;
+
+  width: min(calc(100% - 48px), 1320px);
+  margin: 0 auto;
+  padding: 95px 0 32px;
+}
+
+
+/* =========================================================
+   OBERER BEREICH
+========================================================= */
+
+.footer__top {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.65fr);
+  gap: clamp(70px, 9vw, 140px);
+}
+
+.footer__social-section{
+  margin-top:34px;
+  padding-top:28px;
+
+  border-top:1px solid rgba(53,91,73,.14);
+}
+
+
+/* =========================================================
+   MARKE
+========================================================= */
+
+.footer__brand {
+  max-width: 390px;
+}
+
+.footer__logo{
+  display:flex;
+  justify-content:flex-start;
+  width:100%;
+  margin-top:18px;
+
+  color:var(--footer-green-dark);
+  text-decoration:none;
+
+  transition:
+    color .2s ease,
+    transform .2s ease;
+}
+
+.footer__logo-image{
+  width:150px;
+  height:auto;
+  transform:translateX(-30px);
+  transition:
+    transform .2s ease;
+}
+
+.footer__logo:hover .footer__logo-image{
+  transform: translateX(-15px);
+}
+
+.footer__logo:hover {
+  color: var(--footer-green);
+  transform: translateY(-2px);
+}
+
+
+
+.footer__logo:hover .footer__logo-image{
+  transform:translateY(-2px);
+}
+
+.footer__logo-image{
+  transition:transform .2s ease;
+}
+
+.footer__newsletter{
+  margin-top:34px;
+}
+
+.footer__newsletter h3{
+  margin:0 0 8px;
+
+  font-size:1rem;
+  font-weight:700;
+
+  color:var(--footer-green-dark);
+}
+
+.footer__newsletter p{
+  margin:0 0 18px;
+
+  color:var(--footer-text);
+
+  font-size:.9rem;
+  line-height:1.6;
+}
+
+.footer__newsletter-form{
+  display:flex;
+  gap:12px;
+}
+
+.footer__newsletter-form input{
+
+  flex:1;
+
+  height:50px;
+
+  padding:0 18px;
+
+  border-radius:14px;
+
+  border:1px solid rgba(53,91,73,.15);
+
+  background:#fff;
+
+  font:inherit;
+}
+
+.footer__newsletter-form input:focus{
+
+  outline:none;
+
+  border-color:#8FC9A8;
+}
+
+.footer__newsletter-form button{
+
+  height:50px;
+
+  padding:0 24px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#355B49;
+
+  color:white;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.footer__newsletter-form button:hover{
+
+  background:#27473A;
+}
+
+.footer__description {
+  margin: 24px 0 0;
+
+  color: var(--footer-text);
+
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   SOCIAL MEDIA
+========================================================= */
+
+.footer__socials{
+  display:flex;
+  align-items:center;
+  gap:22px;
+
+  margin-top:12px;
+}
+
+.footer__socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  color: var(--footer-green-dark);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+
+  text-decoration: none;
+
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
+
+.footer__socials a:hover {
+  color: var(--footer-green);
+  transform: translateY(-3px);
+}
+
+.footer__socials svg {
+  width: 28px;
+  height: 28px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.footer__navigation {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 38px;
+}
+
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.footer__column-title {
+  margin-bottom: 8px;
+
+  color: var(--footer-green-dark);
+
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footer__column a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: var(--footer-text);
+
+  font-size: 0.9rem;
+  line-height: 1.45;
+  text-decoration: none;
+
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.footer__column a:hover {
+  color: var(--footer-green-dark);
+  transform: translateX(3px);
+}
+
+.footer__external-icon {
+  color: var(--footer-green);
+  font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   TRENNLINIE
+========================================================= */
+
+.footer__divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 20px 0 28px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(53, 91, 73, 0.16) 16%,
+      rgba(53, 91, 73, 0.16) 84%,
+      transparent
+    );
+}
+
+.footer__social-text{
+
+  margin:8px 0 0;
+
+  color:var(--footer-text);
+
+  font-size:.88rem;
+
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   UNTERER BEREICH
+========================================================= */
+
+.footer__bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 30px;
+}
+
+.footer__bottom p {
+  margin: 0;
+
+  color: var(--footer-green-muted);
+
+  font-size: 0.78rem;
+}
+
+.footer__bottom-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.footer__bottom-links a {
+  color: var(--footer-green-muted);
+
+  font-size: 0.78rem;
+  text-decoration: none;
+
+  transition: color 200ms ease;
+}
+
+.footer__bottom-links a:hover {
+  color: var(--footer-green-dark);
+}
+
+
+/* =========================================================
+   NACH-OBEN-BUTTON
+========================================================= */
+
+.footer__back-top {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+
+  color: var(--footer-green);
+
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-decoration: none;
+
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.footer__back-top span {
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--footer-border);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.62);
+
+  box-shadow: 0 7px 20px rgba(53, 91, 73, 0.05);
+
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.footer__back-top:hover {
+  color: var(--footer-green-dark);
+  transform: translateY(-2px);
+}
+
+.footer__back-top:hover span {
+  border-color: var(--footer-border-strong);
+
+  background: var(--footer-white);
+
+  box-shadow: 0 10px 26px rgba(53, 91, 73, 0.11);
+}
+
+.footer__newsletter-label {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}
+
+.footer__newsletter-form input:disabled,
+.footer__newsletter-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.footer__newsletter-message {
+  margin-top: 14px;
+
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.footer__newsletter-message--success {
+  color: #355b49;
+}
+
+.footer__newsletter-message--error {
+  color: #b44343;
+}
+
+/* =========================================================
+   ZAHLUNGSMETHODEN
+========================================================= */
+
+.footer__payments {
+  margin-top: 42px;
+  padding-top: 26px;
+  padding-bottom: 0;
+
+  border-top: 1px solid rgba(53, 91, 73, 0.12);
+}
+
+.footer__payments-row{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:40px;
+
+    flex-wrap:wrap;
+}
+
+.footer__payments-text{
+
+    color:var(--footer-text);
+
+    font-size:.9rem;
+}
+
+.footer__payment-methods{
+
+    display:flex;
+    align-items:center;
+    gap:28px;
+}
+
+.footer__payment-methods img{
+
+    height:26px;
+    width:auto;
+
+    object-fit:contain;
+}
+
+.footer__payment-icon{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:var(--footer-green-dark);
+
+    font-size:.9rem;
+    font-weight:600;
+}
+
+.footer__payment-icon svg{
+
+    width:20px;
+    height:20px;
+}
+
+/* =========================================================
+   TABLET
+   bis 1050 px
+========================================================= */
+
+@media (max-width: 1050px) {
+  .footer__container {
+    width: min(calc(100% - 48px), 920px);
+    padding-top: 75px;
+  }
+
+  /*
+   * Newsletter und Navigation stehen untereinander.
+   * Dadurch werden die vier Navigationsspalten
+   * nicht zu eng.
+   */
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: 58px;
+  }
+
+  .footer__brand {
+    max-width: 620px;
+  }
+
+  .footer__newsletter {
+    margin-top: 0;
+  }
+
+  .footer__newsletter-form {
+    max-width: 580px;
+  }
+
+  .footer__social-section {
+    max-width: 580px;
+    margin-top: 30px;
+    padding-top: 24px;
+  }
+
+  /*
+   * Navigation bleibt auf größeren Tablets
+   * noch vierspaltig.
+   */
+  .footer__navigation {
+    grid-template-columns:
+      repeat(4, minmax(120px, 1fr));
+
+    gap: 34px 26px;
+  }
+
+  .footer__payments {
+    margin-top: 38px;
+    padding-top: 24px;
+  }
+
+  .footer__payments-row {
+    gap: 25px;
+  }
+
+  .footer__payment-methods {
+    gap: 24px;
+  }
+
+  .footer__bottom {
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+  }
+}
+
+
+/* =========================================================
+   TABLET HOCHKANT
+   bis 800 px
+========================================================= */
+
+@media (max-width: 800px) {
+  .footer__container {
+    width: min(calc(100% - 40px), 700px);
+    padding-top: 68px;
+  }
+
+  .footer__top {
+    gap: 50px;
+  }
+
+  /*
+   * Zwei Navigationsspalten pro Reihe.
+   */
+  .footer__navigation {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 42px 34px;
+  }
+
+  .footer__column {
+    min-width: 0;
+  }
+
+  .footer__column a {
+    font-size: 0.88rem;
+  }
+
+  /*
+   * Zahlungsmethoden stehen kompakt
+   * unter der Beschreibung.
+   */
+  .footer__payments-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer__payment-methods {
+    justify-content: flex-start;
+  }
+
+  .footer__bottom {
+    align-items: center;
+  }
+
+  .footer__bottom p {
+    line-height: 1.55;
+  }
+}
+
+
+/* =========================================================
+   HANDY
+   bis 600 px
+========================================================= */
+
+@media (max-width: 600px) {
+  .footer__container {
+    width: calc(100% - 32px);
+    padding: 55px 0 25px;
+  }
+
+  /*
+   * Dekoration auf kleinen Displays reduzieren.
+   */
+  .footer__decoration::before {
+    top: -220px;
+    left: -180px;
+
+    width: 440px;
+    height: 440px;
+  }
+
+  .footer__decoration::after {
+    right: -220px;
+    bottom: -210px;
+
+    width: 410px;
+    height: 410px;
+  }
+
+  .footer__glow--green {
+    top: -130px;
+    left: -170px;
+
+    width: 330px;
+    height: 330px;
+  }
+
+  .footer__glow--soft {
+    right: -180px;
+    bottom: -150px;
+
+    width: 340px;
+    height: 340px;
+  }
+
+  .footer__top {
+    gap: 45px;
+  }
+
+  .footer__brand {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* -------------------------
+     Newsletter
+  ------------------------- */
+
+  .footer__newsletter {
+    margin-top: 0;
+  }
+
+  .footer__newsletter h3 {
+    font-size: 0.98rem;
+  }
+
+  .footer__newsletter p {
+    max-width: 440px;
+
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  .footer__newsletter-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    width: 100%;
+    max-width: none;
+  }
+
+  .footer__newsletter-form input,
+  .footer__newsletter-form button {
+    width: 100%;
+    height: 48px;
+
+    box-sizing: border-box;
+  }
+
+  .footer__newsletter-form button {
+    padding-inline: 18px;
+  }
+
+  .footer__newsletter-message {
+    font-size: 0.82rem;
+  }
+
+  /* -------------------------
+     Community
+  ------------------------- */
+
+  .footer__social-section {
+    margin-top: 27px;
+    padding-top: 23px;
+  }
+
+  .footer__social-text {
+    max-width: 330px;
+
+    font-size: 0.84rem;
+  }
+
+  .footer__socials {
+    gap: 21px;
+    margin-top: 15px;
+  }
+
+  .footer__socials svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  /* -------------------------
+     Navigation
+  ------------------------- */
+
+  .footer__navigation {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 38px 24px;
+  }
+
+  .footer__column {
+    gap: 11px;
+  }
+
+  .footer__column-title {
+    margin-bottom: 5px;
+
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .footer__column a {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  /*
+   * Das Logo wird im Rechtliches-Bereich
+   * auf dem Handy kleiner und nicht mehr
+   * weit nach links verschoben.
+   */
+  .footer__logo {
+    margin-top: 12px;
+  }
+
+  .footer__logo-image {
+    width: 115px;
+    transform: translateX(-21px);
+  }
+
+  .footer__logo:hover .footer__logo-image {
+    transform: translateX(-21px);
+  }
+
+  /* -------------------------
+     Zahlungsmethoden
+  ------------------------- */
+
+  .footer__payments {
+    margin-top: 40px;
+    padding-top: 22px;
+  }
+
+  .footer__payments-row {
+    gap: 14px;
+  }
+
+  .footer__payments-text {
+    font-size: 0.82rem;
+  }
+
+  .footer__payment-methods {
+    width: 100%;
+
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer__payment-methods img {
+    height: 22px;
+    max-width: 82px;
+  }
+
+  .footer__payment-icon {
+    gap: 7px;
+
+    font-size: 0.82rem;
+  }
+
+  .footer__payment-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* -------------------------
+     Unterer Bereich
+  ------------------------- */
+
+  .footer__divider {
+    margin: 17px 0 22px;
+  }
+
+  .footer__bottom {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .footer__bottom p {
+    max-width: 215px;
+
+    font-size: 0.7rem;
+    line-height: 1.55;
+  }
+
+  .footer__back-top {
+    flex: 0 0 auto;
+    gap: 7px;
+
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .footer__back-top span {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+
+/* =========================================================
+   SEHR KLEINE HANDYS
+   bis 390 px
+========================================================= */
+
+@media (max-width: 390px) {
+  .footer__container {
+    width: calc(100% - 26px);
+  }
+
+  /*
+   * Auf sehr schmalen Handys nur noch
+   * eine Navigationsspalte.
+   */
+  .footer__navigation {
+    grid-template-columns: 1fr;
+    gap: 31px;
+  }
+
+  .footer__column {
+    padding-bottom: 2px;
+  }
+
+  .footer__payment-methods {
+    gap: 16px;
+  }
+
+  .footer__payment-methods img {
+    height: 20px;
+    max-width: 72px;
+  }
+
+  .footer__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .footer__bottom p {
+    max-width: none;
+  }
+
+  .footer__back-top {
+    align-self: flex-end;
+  }
+}
+
+/* =========================================================
+   BALD-VERFÜGBAR-LINKS IM FOOTER
+========================================================= */
+
+.footer__coming-soon-link {
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: var(--footer-text);
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: inherit;
+  line-height: 1.45;
+  text-align: left;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.footer__coming-soon-link:hover {
+  color: var(--footer-green-dark);
+  transform: translateX(3px);
+}
+
+.footer__coming-soon-link:focus-visible {
+  color: var(--footer-green-dark);
+
+  outline: 2px solid
+    rgba(53, 91, 73, 0.35);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+@media (max-width: 800px) {
+  .footer__coming-soon-link {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer__coming-soon-link {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+}
+
+@media (hover: none) {
+  .footer__coming-soon-link:hover {
+    transform: none;
+  }
+}

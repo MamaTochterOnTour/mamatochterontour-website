@@ -1,7 +1,13 @@
-import Router from "./router";
+import AppRouter from "./router/AppRouter";
+import SmoothScroll from "./components/Website/common/SmoothScroll";
 
-export default function App() {
-
-  return <Router />;
-
+function App() {
+  return (
+    <>
+      <SmoothScroll />
+      <AppRouter />
+    </>
+  );
 }
+
+export default App;

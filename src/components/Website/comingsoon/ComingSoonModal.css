@@ -1,0 +1,366 @@
+/* =========================================================
+   COMING-SOON-POPUP
+========================================================= */
+
+.coming-soon-modal {
+  position: fixed;
+  z-index: 20000;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  background: rgba(8, 14, 11, 0.66);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  animation:
+    comingSoonBackdropIn 220ms ease;
+}
+
+.coming-soon-modal__card {
+  position: relative;
+
+  width: min(100%, 540px);
+  padding: 47px 44px 42px;
+
+  overflow: hidden;
+
+  border: 1px solid
+    rgba(53, 91, 73, 0.13);
+  border-radius: 32px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f7f3ec 58%,
+      #edf3ee 100%
+    );
+
+  color: #243229;
+  text-align: center;
+
+  box-shadow:
+    0 35px 100px
+      rgba(4, 12, 8, 0.34);
+
+  animation:
+    comingSoonCardIn 420ms
+      cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.coming-soon-modal__decoration {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.coming-soon-modal__decoration span:first-child {
+  position: absolute;
+  top: -135px;
+  right: -115px;
+
+  width: 280px;
+  height: 280px;
+
+  border: 1px solid
+    rgba(53, 91, 73, 0.1);
+  border-radius: 50%;
+}
+
+.coming-soon-modal__decoration span:last-child {
+  position: absolute;
+  bottom: -115px;
+  left: -95px;
+
+  width: 230px;
+  height: 230px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(180, 205, 186, 0.23);
+}
+
+.coming-soon-modal__close {
+  position: absolute;
+  z-index: 3;
+  top: 17px;
+  right: 17px;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    rgba(53, 91, 73, 0.13);
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.72);
+  color: #203d31;
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.coming-soon-modal__close:hover {
+  border-color:
+    rgba(53, 91, 73, 0.27);
+
+  background: #ffffff;
+
+  transform: rotate(5deg);
+}
+
+.coming-soon-modal__close svg {
+  width: 19px;
+  height: 19px;
+}
+
+.coming-soon-modal__icon {
+  position: relative;
+  z-index: 2;
+
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 24px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #203d31,
+      #4e7561
+    );
+
+  box-shadow:
+    0 17px 36px
+      rgba(32, 61, 49, 0.22);
+}
+
+.coming-soon-modal__icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.coming-soon-modal__eyebrow {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  color: #5f7d6c;
+
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.coming-soon-modal h2 {
+  position: relative;
+  z-index: 2;
+
+  max-width: 430px;
+  margin: 14px auto 0;
+
+  color: #203d31;
+
+  font-size:
+    clamp(2.2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.coming-soon-modal p {
+  position: relative;
+  z-index: 2;
+
+  max-width: 430px;
+  margin: 21px auto 0;
+
+  color: #66736b;
+
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.coming-soon-modal__button {
+  position: relative;
+  z-index: 2;
+
+  min-height: 51px;
+  margin-top: 27px;
+  padding: 0 23px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: #203d31;
+  color: #ffffff;
+
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 14px 30px
+      rgba(32, 61, 49, 0.2);
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.coming-soon-modal__button:hover {
+  background: #355b49;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 18px 38px
+      rgba(32, 61, 49, 0.25);
+}
+
+.coming-soon-modal__button svg {
+  width: 17px;
+  height: 17px;
+
+  transition: transform 180ms ease;
+}
+
+.coming-soon-modal__button:hover svg {
+  transform: translateX(3px);
+}
+
+@keyframes comingSoonBackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes comingSoonCardIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(22px)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+/* =========================================================
+   HANDY
+========================================================= */
+
+@media (max-width: 600px) {
+  .coming-soon-modal {
+    place-items: center;
+    padding: 16px;
+  }
+
+  .coming-soon-modal__card {
+    width: 100%;
+    padding: 43px 22px 30px;
+    border-radius: 28px;
+  }
+
+  .coming-soon-modal__close {
+    top: 14px;
+    right: 14px;
+
+    width: 37px;
+    height: 37px;
+  }
+
+  .coming-soon-modal__icon {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 21px;
+
+    border-radius: 19px;
+  }
+
+  .coming-soon-modal__icon svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .coming-soon-modal h2 {
+    font-size:
+      clamp(2.15rem, 10vw, 2.8rem);
+  }
+
+  .coming-soon-modal p {
+    margin-top: 18px;
+
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  .coming-soon-modal__button {
+    width: 100%;
+    margin-top: 24px;
+  }
+}
+
+@media (hover: none) {
+  .coming-soon-modal__button:hover,
+  .coming-soon-modal__close:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coming-soon-modal,
+  .coming-soon-modal__card {
+    animation: none;
+  }
+
+  .coming-soon-modal__button,
+  .coming-soon-modal__button svg,
+  .coming-soon-modal__close {
+    transition: none;
+  }
+}

@@ -1,0 +1,1105 @@
+/* =========================================================
+   MOMENTRY
+   Einheitliche helle Farbwelt
+========================================================= */
+
+.momentry-page {
+  --momentry-cream: #f7f3ec;
+  --momentry-cream-soft: #fbf8f3;
+  --momentry-white: #ffffff;
+
+  --momentry-green: #355b49;
+  --momentry-green-dark: #203d31;
+  --momentry-green-muted: #789080;
+  --momentry-green-soft: #dfe9e2;
+  --momentry-green-pale: #edf3ee;
+
+  --momentry-text: #243229;
+  --momentry-text-soft: #66736b;
+
+  --momentry-border: rgba(53, 91, 73, 0.14);
+  --momentry-border-strong: rgba(53, 91, 73, 0.24);
+
+  --momentry-shadow-soft:
+    0 18px 55px rgba(54, 66, 57, 0.08);
+
+  --momentry-shadow-card:
+    0 28px 75px rgba(54, 66, 57, 0.13);
+
+  overflow: hidden;
+
+  color: var(--momentry-text);
+  background: var(--momentry-cream);
+}
+
+.momentry-page *,
+.momentry-page *::before,
+.momentry-page *::after {
+  box-sizing: border-box;
+}
+
+.momentry-page img {
+  display: block;
+  max-width: 100%;
+}
+
+.momentry-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.momentry-container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.momentry-hero {
+  position: relative;
+  isolation: isolate;
+
+  min-height: 760px;
+  padding: 132px 0 75px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  /*
+   * Exakt dieselbe Hintergrundfarbe
+   * wie der restliche Seitenbereich.
+   */
+  background: var(--momentry-cream);
+}
+
+.momentry-hero-grid {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.95fr)
+    minmax(470px, 0.85fr);
+
+  align-items: center;
+  gap: clamp(55px, 8vw, 115px);
+}
+
+.momentry-hero-content {
+  align-self: center;
+
+  max-width: 690px;
+
+  /*
+   * Nur der Textblock wird nach oben verschoben.
+   * Die beiden Handys bleiben unverändert.
+   */
+  transform: translateY(-42px);
+}
+
+.momentry-eyebrow {
+  width: fit-content;
+  margin-bottom: 23px;
+  padding: 9px 15px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border: 1px solid var(--momentry-border);
+  border-radius: 999px;
+
+  color: var(--momentry-green-dark);
+  background: rgba(255, 255, 255, 0.68);
+
+  box-shadow: 0 8px 26px rgba(53, 91, 73, 0.06);
+
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+
+  font-size: 0.69rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.momentry-hero h1 {
+  max-width: 720px;
+  margin: 0;
+
+  color: var(--momentry-green-dark);
+
+  font-size: clamp(3.4rem, 5.6vw, 6.2rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.065em;
+}
+
+.momentry-hero h1 span {
+  display: block;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--momentry-green-dark) 0%,
+      var(--momentry-green) 58%,
+      #8ca393 100%
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+}
+
+.momentry-hero-lead {
+  max-width: 610px;
+  margin: 25px 0 0;
+
+  color: var(--momentry-text-soft);
+
+  font-size: clamp(0.98rem, 1.3vw, 1.1rem);
+  line-height: 1.72;
+}
+
+/* =========================================================
+   OFFIZIELLE STORE-BADGES
+========================================================= */
+
+.momentry-store-buttons {
+  margin-top: 31px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.momentry-store-badge-link {
+  display: inline-flex;
+  align-items: center;
+
+  line-height: 0;
+
+  border-radius: 8px;
+
+  transition:
+    transform 250ms ease,
+    filter 250ms ease;
+}
+
+.momentry-store-badge-link:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.04);
+}
+
+.momentry-store-badge-link:focus-visible {
+  outline: 2px solid var(--momentry-green);
+  outline-offset: 4px;
+}
+
+.momentry-store-badge {
+  display: block;
+
+  width: auto;
+  height: 50px;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   HERO – HANDYS
+========================================================= */
+
+.momentry-hero-visual {
+  position: relative;
+
+  min-height: 600px;
+}
+
+.momentry-phone {
+  position: absolute;
+
+  filter: none;
+}
+
+.momentry-phone--primary {
+  top: 0;
+  left: 8%;
+  z-index: 3;
+
+  width: min(270px, 46%);
+}
+
+.momentry-phone--secondary {
+  right: 7%;
+  bottom: 0;
+  z-index: 2;
+
+  width: min(245px, 42%);
+
+  transform: rotate(5deg);
+}
+
+.momentry-phone-frame {
+  position: relative;
+
+  padding: 9px;
+
+  overflow: hidden;
+
+  border: 1px solid #343a37;
+  border-radius: 40px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #343836 0%,
+      #151817 42%,
+      #050606 100%
+    );
+
+  box-shadow:
+  inset 0 0 0 2px rgba(255, 255, 255, 0.08),
+  inset 0 0 0 5px rgba(0, 0, 0, 0.52);
+}
+
+.momentry-phone-frame img {
+  width: 100%;
+
+  aspect-ratio: 9 / 19.5;
+
+  border-radius: 32px;
+
+  object-fit: cover;
+  object-position: top center;
+}
+
+.momentry-phone-speaker {
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  z-index: 4;
+
+  width: 31%;
+  height: 20px;
+
+  border-radius: 999px;
+
+  background: #050606;
+
+  transform: translateX(-50%);
+}
+
+.momentry-floating-card {
+  position: absolute;
+  z-index: 5;
+
+  padding: 14px 17px;
+
+  border: 1px solid var(--momentry-border);
+  border-radius: 17px;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  box-shadow: 0 18px 45px rgba(53, 91, 73, 0.12);
+
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+}
+
+.momentry-floating-card span {
+  display: block;
+
+  color: var(--momentry-green-muted);
+
+  font-size: 0.58rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.momentry-floating-card strong {
+  display: block;
+  margin-top: 5px;
+
+  color: var(--momentry-green-dark);
+
+  font-size: 0.83rem;
+}
+
+.momentry-floating-card--top {
+  top: 15%;
+  right: 0;
+}
+
+.momentry-floating-card--bottom {
+  bottom: 14%;
+  left: 0;
+}
+
+/* =========================================================
+   GEMEINSAME ÜBERSCHRIFT
+========================================================= */
+
+.momentry-section-heading {
+  max-width: 850px;
+}
+
+.momentry-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 20px;
+
+  color: var(--momentry-green);
+
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.momentry-section-label::before {
+  width: 25px;
+  height: 1px;
+
+  background: var(--momentry-green);
+
+  content: "";
+}
+
+.momentry-section-heading h2 {
+  margin: 0;
+
+  color: var(--momentry-green-dark);
+
+  font-size: clamp(2.8rem, 4.6vw, 5.1rem);
+  font-weight: 800;
+  line-height: 0.97;
+  letter-spacing: -0.06em;
+}
+
+.momentry-section-heading h2 span {
+  display: inline;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--momentry-green-dark) 0%,
+      var(--momentry-green) 58%,
+      #8ca393 100%
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+}
+
+.momentry-section-heading > p {
+  max-width: 680px;
+  margin: 24px 0 0;
+
+  color: var(--momentry-text-soft);
+
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   GEMEINSAMER FUNKTIONSBEREICH
+========================================================= */
+
+.momentry-functions {
+  position: relative;
+  z-index: 3;
+
+  margin-top: -70px;
+  padding: 30px 0 115px;
+
+  background: var(--momentry-cream);
+}
+
+.momentry-function-rail {
+  margin-top: 55px;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  overflow: hidden;
+
+  border: 1px solid var(--momentry-border);
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.63);
+
+  box-shadow: var(--momentry-shadow-card);
+
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+
+.momentry-function-column {
+  min-height: 410px;
+  padding: 31px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.momentry-function-column:not(:last-child) {
+  border-right: 1px solid var(--momentry-border);
+}
+
+.momentry-function-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.momentry-function-number {
+  color: var(--momentry-green-muted);
+
+  font-size: 0.65rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+.momentry-function-label {
+  padding: 7px 11px;
+
+  border: 1px solid var(--momentry-border);
+  border-radius: 999px;
+
+  color: var(--momentry-green);
+  background: var(--momentry-green-pale);
+
+  font-size: 0.58rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.momentry-function-column h3 {
+  margin: 53px 0 0;
+
+  color: var(--momentry-green-dark);
+
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+
+.momentry-function-description {
+  margin: 13px 0 0;
+
+  color: var(--momentry-text-soft);
+
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.momentry-function-list {
+  margin: 28px 0 0;
+  padding: 0;
+
+  display: grid;
+  gap: 12px;
+
+  list-style: none;
+}
+
+.momentry-function-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  color: var(--momentry-text);
+
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.momentry-function-list li span {
+  flex: 0 0 auto;
+
+  width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: var(--momentry-green);
+
+  font-size: 0.58rem;
+  font-weight: 800;
+}
+
+.momentry-function-bottom {
+  margin-top: 18px;
+  padding: 23px 27px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  border: 1px solid var(--momentry-border);
+  border-radius: 21px;
+
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.momentry-function-bottom-icon {
+  flex: 0 0 auto;
+
+  width: 45px;
+  height: 45px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  color: var(--momentry-green-dark);
+  background: var(--momentry-green-soft);
+
+  font-size: 1rem;
+}
+
+.momentry-function-bottom strong {
+  display: block;
+
+  color: var(--momentry-green-dark);
+
+  font-size: 0.95rem;
+}
+
+.momentry-function-bottom p {
+  margin: 5px 0 0;
+
+  color: var(--momentry-text-soft);
+
+  font-size: 0.79rem;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1120px) {
+  .momentry-hero-grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(400px, 0.75fr);
+
+    gap: 45px;
+  }
+
+  .momentry-hero-visual {
+    min-height: 550px;
+  }
+
+  .momentry-phone--primary {
+    width: min(245px, 46%);
+  }
+
+  .momentry-phone--secondary {
+    width: min(225px, 42%);
+  }
+
+  .momentry-function-column {
+    padding: 27px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   bis 920 px
+========================================================= */
+
+@media (max-width: 920px) {
+  .momentry-container {
+    width: min(calc(100% - 44px), 760px);
+  }
+
+  /* =======================================================
+     HERO
+  ======================================================= */
+
+  .momentry-hero {
+    min-height: auto;
+    padding: 125px 0 20px;
+
+    align-items: flex-start;
+  }
+
+  .momentry-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  /*
+   * Da Text und Handys auf dem Tablet untereinander
+   * stehen, brauchen wir die Laptop-Verschiebung nicht.
+   */
+  .momentry-hero-content {
+    width: 100%;
+    max-width: 720px;
+
+    align-self: auto;
+    transform: none;
+  }
+
+  .momentry-eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .momentry-hero h1 {
+    max-width: 720px;
+
+    font-size: clamp(4.1rem, 10vw, 5.7rem);
+  }
+
+  .momentry-hero-lead {
+    max-width: 620px;
+    margin-top: 22px;
+
+    font-size: 1.02rem;
+  }
+
+  /* =======================================================
+     STORE-BADGES
+  ======================================================= */
+
+  .momentry-store-buttons {
+    margin-top: 27px;
+    gap: 12px;
+  }
+
+  .momentry-store-badge {
+    height: 48px;
+  }
+
+  /* =======================================================
+     HANDYS
+  ======================================================= */
+
+  .momentry-hero-visual {
+    width: min(100%, 620px);
+    min-height: 550px;
+    margin: 6px auto 0;
+  }
+
+  .momentry-phone--primary {
+    top: 0;
+    left: 10%;
+
+    width: min(255px, 45%);
+  }
+
+  .momentry-phone--secondary {
+    right: 9%;
+    bottom: 0;
+
+    width: min(230px, 41%);
+  }
+
+  /* =======================================================
+     FUNKTIONSBEREICH
+  ======================================================= */
+
+  .momentry-functions {
+    margin-top: -30px;
+    padding: 35px 0 95px;
+  }
+
+  .momentry-section-heading {
+    max-width: 720px;
+  }
+
+  .momentry-section-heading h2 {
+    font-size: clamp(3.5rem, 9vw, 4.8rem);
+  }
+
+  .momentry-section-heading > p {
+    max-width: 620px;
+  }
+
+  .momentry-function-rail {
+    margin-top: 45px;
+
+    grid-template-columns: 1fr;
+
+    border-radius: 26px;
+  }
+
+  .momentry-function-column {
+    min-height: auto;
+    padding: 29px;
+  }
+
+  .momentry-function-column:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid var(--momentry-border);
+  }
+
+  .momentry-function-column h3 {
+    margin-top: 34px;
+  }
+
+  .momentry-function-list {
+    margin-top: 24px;
+  }
+
+  .momentry-function-bottom {
+    margin-top: 16px;
+  }
+}
+
+
+/* =========================================================
+   HANDY
+   bis 650 px
+========================================================= */
+
+@media (max-width: 650px) {
+  .momentry-container {
+    width: calc(100% - 30px);
+  }
+
+  /* =======================================================
+     HERO
+  ======================================================= */
+
+  .momentry-hero {
+    min-height: auto;
+    padding: 100px 0 12px;
+  }
+
+  .momentry-hero-grid {
+    gap: 20px;
+  }
+
+  .momentry-hero-content {
+    width: 100%;
+    max-width: none;
+    transform: none;
+  }
+
+  .momentry-eyebrow {
+    max-width: 100%;
+    margin-bottom: 18px;
+    padding: 8px 12px;
+
+    font-size: 0.59rem;
+    line-height: 1.35;
+    letter-spacing: 0.1em;
+  }
+
+  .momentry-hero h1 {
+    width: 100%;
+    max-width: none;
+
+    font-size: clamp(3rem, 15vw, 4.25rem);
+    line-height: 0.93;
+    letter-spacing: -0.062em;
+  }
+
+  .momentry-hero-lead {
+    max-width: none;
+    margin-top: 20px;
+
+    font-size: 0.94rem;
+    line-height: 1.68;
+  }
+
+  /* =======================================================
+     STORE-BADGES
+  ======================================================= */
+
+  .momentry-store-buttons {
+    width: 100%;
+    margin-top: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  .momentry-store-badge-link {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .momentry-store-badge {
+    width: auto;
+    height: 44px;
+    max-width: 100%;
+
+    object-fit: contain;
+  }
+
+  .momentry-store-badge-link:hover {
+    transform: none;
+  }
+
+  /* =======================================================
+     HANDYS
+  ======================================================= */
+
+  .momentry-hero-visual {
+    width: 100%;
+    min-height: 540px;
+    margin-top: 18px;
+
+    overflow: visible;
+  }
+
+  .momentry-phone--primary {
+    top: 0;
+    left: 2%;
+    z-index: 3;
+
+    width: 52%;
+  }
+
+  .momentry-phone--secondary {
+    right: 1%;
+    bottom: 10px;
+    z-index: 2;
+
+    width: 47%;
+
+    transform: rotate(4deg);
+  }
+
+  .momentry-phone-frame {
+    padding: 7px;
+
+    border-radius: 30px;
+  }
+
+  .momentry-phone-frame img {
+    border-radius: 24px;
+  }
+
+  .momentry-phone-speaker {
+    top: 13px;
+    height: 15px;
+  }
+
+  /* =======================================================
+     FUNKTIONSBEREICH
+  ======================================================= */
+
+  .momentry-functions {
+    margin-top: 0;
+    padding: 22px 0 80px;
+  }
+
+  .momentry-section-label {
+    margin-bottom: 16px;
+
+    font-size: 0.59rem;
+    letter-spacing: 0.14em;
+  }
+
+  .momentry-section-label::before {
+    width: 20px;
+  }
+
+  .momentry-section-heading h2 {
+    font-size: clamp(2.8rem, 13vw, 4rem);
+    line-height: 0.98;
+  }
+
+  /*
+   * Jeder Begriff bekommt auf dem Handy
+   * eine eigene Zeile.
+   */
+  .momentry-section-heading h2 span {
+    display: block;
+  }
+
+  .momentry-section-heading > p {
+    margin-top: 19px;
+
+    font-size: 0.91rem;
+    line-height: 1.68;
+  }
+
+  .momentry-function-rail {
+    margin-top: 35px;
+
+    grid-template-columns: 1fr;
+
+    border-radius: 22px;
+  }
+
+  .momentry-function-column {
+    min-height: auto;
+    padding: 24px 21px;
+  }
+
+  .momentry-function-column:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid var(--momentry-border);
+  }
+
+  .momentry-function-top {
+    gap: 14px;
+  }
+
+  .momentry-function-label {
+    padding: 6px 9px;
+
+    font-size: 0.53rem;
+  }
+
+  .momentry-function-column h3 {
+    margin-top: 27px;
+
+    font-size: 1.75rem;
+  }
+
+  .momentry-function-description {
+    margin-top: 10px;
+
+    font-size: 0.82rem;
+  }
+
+  .momentry-function-list {
+    margin-top: 21px;
+    gap: 11px;
+  }
+
+  .momentry-function-list li {
+    font-size: 0.78rem;
+  }
+
+  .momentry-function-bottom {
+    padding: 18px;
+
+    align-items: flex-start;
+    gap: 14px;
+
+    border-radius: 18px;
+  }
+
+  .momentry-function-bottom-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 13px;
+  }
+
+  .momentry-function-bottom strong {
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .momentry-function-bottom p {
+    font-size: 0.75rem;
+  }
+}
+
+
+/* =========================================================
+   SEHR KLEINE HANDYS
+   bis 410 px
+========================================================= */
+
+@media (max-width: 410px) {
+  .momentry-container {
+    width: calc(100% - 24px);
+  }
+
+  .momentry-hero {
+    padding-top: 92px;
+  }
+
+  .momentry-eyebrow {
+    font-size: 0.54rem;
+    letter-spacing: 0.075em;
+  }
+
+  .momentry-hero h1 {
+    font-size: clamp(2.8rem, 14.5vw, 3.55rem);
+  }
+
+  .momentry-hero-lead {
+    font-size: 0.89rem;
+  }
+
+  .momentry-store-buttons {
+    gap: 8px;
+  }
+
+  .momentry-store-badge {
+    height: 40px;
+  }
+
+  .momentry-hero-visual {
+    min-height: 475px;
+  }
+
+  .momentry-phone--primary {
+    left: 1%;
+    width: 53%;
+  }
+
+  .momentry-phone--secondary {
+    right: 0;
+    bottom: 8px;
+
+    width: 48%;
+  }
+
+  .momentry-section-heading h2 {
+    font-size: clamp(2.55rem, 12.5vw, 3.4rem);
+  }
+
+  .momentry-function-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .momentry-function-column {
+    padding: 22px 18px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .momentry-page *,
+  .momentry-page *::before,
+  .momentry-page *::after {
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}

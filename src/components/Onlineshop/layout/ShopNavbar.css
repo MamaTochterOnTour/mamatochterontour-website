@@ -1,0 +1,1144 @@
+/* =========================================================
+   SHOP-NAVBAR – LAPTOP
+========================================================= */
+
+.shop-navbar {
+  --navbar-green-dark: #183c31;
+  --navbar-green: #285c4b;
+  --navbar-green-light: #9bbdaa;
+  --navbar-soft: #edf4ef;
+  --navbar-white: #ffffff;
+  --navbar-text: #1c2722;
+  --navbar-text-soft: #69736e;
+  --navbar-border: rgba(24, 60, 49, 0.12);
+
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   ROTIERENDE INFOLEISTE
+========================================================= */
+
+.shop-announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 24px;
+  overflow: hidden;
+  background: var(--navbar-green-dark);
+  color: var(--navbar-white);
+}
+
+.shop-announcement-bar__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.shop-announcement-bar__content > span:last-child {
+  animation: shopAnnouncementFade 450ms ease;
+}
+
+.shop-announcement-bar__dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--navbar-green-light);
+  box-shadow: 0 0 0 5px rgba(155, 189, 170, 0.12);
+}
+
+@keyframes shopAnnouncementFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   HAUPTNAVIGATION
+========================================================= */
+
+.shop-navbar__main {
+  border-bottom: 1px solid var(--navbar-border);
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 10px 35px rgba(24, 60, 49, 0.055);
+  backdrop-filter: blur(18px);
+}
+
+.shop-navbar__container {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: min(calc(100% - 48px), 1460px);
+  min-height: 82px;
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.shop-navbar__logo {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.shop-navbar__logo-main {
+  color: var(--navbar-green-dark);
+  font-size: 1.17rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.shop-navbar__logo-subtitle {
+  margin-top: 5px;
+  color: var(--navbar-text-soft);
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.shop-navbar__navigation {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 2vw, 34px);
+
+  min-width: max-content;
+}
+
+.shop-navbar__nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 30px 0 27px;
+  border: 0;
+  background: transparent;
+  color: var(--navbar-text);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.shop-navbar__nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 19px;
+  left: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--navbar-green);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 200ms ease;
+}
+
+.shop-navbar__nav-link:hover,
+.shop-navbar__nav-link.is-active {
+  color: var(--navbar-green);
+}
+
+.shop-navbar__nav-link:hover::after,
+.shop-navbar__nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.shop-navbar__dropdown-button {
+  appearance: none;
+}
+
+.shop-navbar__chevron {
+  font-size: 0.9rem;
+  transition: transform 200ms ease;
+}
+
+.shop-navbar__dropdown-button.is-active .shop-navbar__chevron {
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.shop-navbar__dropdown {
+  position: relative;
+}
+
+.shop-navbar__dropdown-menu {
+  position: absolute;
+  top: calc(100% - 8px);
+  left: 50%;
+  z-index: 20;
+
+  border: 1px solid var(--navbar-border);
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 24px 60px rgba(24, 60, 49, 0.16);
+
+  transform: translateX(-50%);
+  animation: shopDropdownOpen 180ms ease;
+
+  backdrop-filter: blur(20px);
+}
+
+/* Zweispaltiges großes Dropdown */
+.shop-navbar__dropdown-menu--mega {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 18px;
+
+  width: 470px;
+  padding: 18px;
+}
+
+/* Einzelne Spalte */
+.shop-navbar__dropdown-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Trennlinie zwischen beiden Spalten */
+.shop-navbar__dropdown-column + .shop-navbar__dropdown-column {
+  padding-left: 18px;
+  border-left: 1px solid var(--navbar-border);
+}
+
+/* Spaltenüberschrift */
+.shop-navbar__dropdown-label {
+  display: block;
+
+  padding: 8px 11px 12px;
+
+  color: var(--navbar-text-soft);
+
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+/* Links im Dropdown */
+.shop-navbar__dropdown-menu a {
+  display: block;
+
+  padding: 12px 11px;
+  border-radius: 12px;
+
+  color: var(--navbar-text);
+
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.shop-navbar__dropdown-menu a:hover {
+  background: var(--navbar-soft);
+  color: var(--navbar-green-dark);
+  transform: translateX(3px);
+}
+
+.shop-navbar__dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-navbar__dropdown-menu svg {
+  flex-shrink: 0;
+  color: var(--navbar-green);
+  font-size: 1rem;
+}
+
+.shop-navbar__flag {
+  width: 18px;
+  height: 13px;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+
+  box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+}
+
+@keyframes shopDropdownOpen {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+
+/* =========================================================
+   RECHTER BEREICH
+========================================================= */
+
+.shop-navbar__actions {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-left: auto;
+}
+
+
+/* =========================================================
+   SUCHE
+========================================================= */
+
+.shop-navbar__search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 190px;
+  min-height: 42px;
+  margin-right: 3px;
+  padding: 0 14px;
+  border: 1px solid var(--navbar-border);
+  border-radius: 999px;
+  background: rgba(246, 249, 247, 0.9);
+  color: var(--navbar-green);
+  transition:
+    width 250ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.shop-navbar__search:focus-within {
+  width: 230px;
+  border-color: rgba(40, 92, 75, 0.34);
+  background: var(--navbar-white);
+  box-shadow: 0 0 0 4px rgba(40, 92, 75, 0.07);
+}
+
+.shop-navbar__search svg {
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+
+.shop-navbar__search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--navbar-text);
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+.shop-navbar__search input::placeholder {
+  color: #87918c;
+}
+
+
+/* =========================================================
+   ICON-BUTTONS
+========================================================= */
+
+.shop-navbar__icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border: 1px solid var(--navbar-border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--navbar-green-dark);
+  font-size: 1.08rem;
+  text-decoration: none;
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.shop-navbar__icon-button:hover {
+  border-color: rgba(40, 92, 75, 0.28);
+  background: var(--navbar-soft);
+  color: var(--navbar-green);
+  box-shadow: 0 10px 25px rgba(24, 60, 49, 0.1);
+  transform: translateY(-2px);
+}
+
+.shop-navbar__cart-count {
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border: 2px solid var(--navbar-white);
+  border-radius: 999px;
+  background: var(--navbar-green-dark);
+  color: var(--navbar-white);
+  font-size: 0.58rem;
+  font-weight: 800;
+}
+
+.shop-navbar__favorites {
+  position: relative;
+}
+
+.shop-navbar__favorite-count {
+  position: absolute;
+  top: -6px;
+  right: -7px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+
+  background: #c93f4b;
+  color: #ffffff;
+
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* =========================================================
+   TABLET- UND HANDY-MENÜ – GRUNDZUSTAND
+========================================================= */
+
+.shop-navbar__mobile-toggle {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--navbar-border);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--navbar-green-dark);
+
+  font: inherit;
+  cursor: pointer;
+
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.shop-navbar__mobile-toggle:hover {
+  border-color: rgba(40, 92, 75, 0.28);
+  background: var(--navbar-soft);
+  color: var(--navbar-green);
+}
+
+.shop-navbar__mobile-toggle svg {
+  width: 21px;
+  height: 21px;
+}
+
+.shop-navbar__mobile-menu {
+  display: none;
+}
+
+.shop-navbar__mobile-only-link {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE SUCHMODUS
+========================================================= */
+
+.shop-navbar__mobile-search-toggle {
+  display: none;
+}
+
+.shop-navbar__inline-mobile-search {
+  display: none;
+}
+
+
+/* =========================================================
+   TABLET
+   Navigation wird zum Hamburger-Menü
+========================================================= */
+
+@media (max-width: 1100px) {
+  .shop-navbar__container {
+    width: min(calc(100% - 36px), 960px);
+    min-height: 72px;
+  }
+
+  .shop-navbar__navigation {
+    display: none;
+  }
+
+  .shop-navbar__search--desktop {
+    width: 170px;
+  }
+
+  .shop-navbar__search--desktop:focus-within {
+    width: 200px;
+  }
+
+  .shop-navbar__mobile-toggle {
+    display: inline-flex;
+  }
+
+  /*
+   * Das äußere Menü bleibt immer vorhanden.
+   * Nur seine Höhe wird animiert.
+   */
+  .shop-navbar__mobile-menu {
+    display: grid;
+    grid-template-rows: 0fr;
+
+    width: min(calc(100% - 36px), 960px);
+    margin: 0 auto;
+
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+      grid-template-rows 380ms
+        cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 200ms ease;
+  }
+
+  .shop-navbar__mobile-menu-inner {
+    min-height: 0;
+    overflow: hidden;
+
+    padding: 0 0 0;
+
+    transform: translateY(-8px);
+
+    transition:
+      padding-bottom 380ms
+        cubic-bezier(0.22, 1, 0.36, 1),
+      transform 380ms
+        cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .shop-navbar--mobile-open
+    .shop-navbar__mobile-menu {
+    grid-template-rows: 1fr;
+
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .shop-navbar--mobile-open
+    .shop-navbar__mobile-menu-inner {
+    padding-bottom: 20px;
+    transform: translateY(0);
+  }
+
+  .shop-navbar--mobile-open
+    .shop-navbar__main {
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+
+  /* -------------------------
+     Mobile Suche
+  ------------------------- */
+
+  .shop-navbar__mobile-search {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 11px;
+
+    min-height: 52px;
+    margin-top: 2px;
+    padding: 0 7px 0 17px;
+
+    border: 1px solid var(--navbar-border);
+    border-radius: 15px;
+
+    background: var(--navbar-soft);
+    color: var(--navbar-green);
+  }
+
+  .shop-navbar__mobile-search svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .shop-navbar__mobile-search input {
+    width: 100%;
+    min-width: 0;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+    color: var(--navbar-text);
+
+    font: inherit;
+    font-size: 0.84rem;
+  }
+
+  .shop-navbar__mobile-search input::placeholder {
+    color: #87918c;
+  }
+
+  .shop-navbar__mobile-search button {
+    min-height: 38px;
+    padding: 0 16px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: var(--navbar-green-dark);
+    color: var(--navbar-white);
+
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 750;
+
+    cursor: pointer;
+  }
+
+
+  /* -------------------------
+     Mobile Navigation
+  ------------------------- */
+
+  .shop-navbar__mobile-navigation {
+    display: grid;
+    gap: 3px;
+
+    margin-top: 13px;
+    padding-top: 13px;
+
+    border-top: 1px solid var(--navbar-border);
+  }
+
+  .shop-navbar__mobile-link {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: transparent;
+    color: var(--navbar-text);
+
+    font: inherit;
+    font-size: 0.87rem;
+    font-weight: 650;
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .shop-navbar__mobile-link:hover,
+  .shop-navbar__mobile-link.is-active {
+    background: var(--navbar-soft);
+    color: var(--navbar-green-dark);
+  }
+
+  .shop-navbar__mobile-guides-button svg {
+    width: 18px;
+    height: 18px;
+
+    transition: transform 250ms ease;
+  }
+
+  .shop-navbar__mobile-guides-button.is-active svg {
+    transform: rotate(180deg);
+  }
+
+
+  /* -------------------------
+     Aufklappbare Guide-Links
+  ------------------------- */
+
+  .shop-navbar__mobile-guides-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+
+    opacity: 0;
+
+    transition:
+      grid-template-rows 320ms
+        cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 180ms ease;
+  }
+
+  .shop-navbar__mobile-guides-inner {
+    min-height: 0;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 24px;
+
+    padding: 0 13px;
+  }
+
+  .shop-navbar__mobile-guides
+    > .shop-navbar__mobile-guides-button.is-active
+    + .shop-navbar__mobile-guides-panel {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .shop-navbar__mobile-guides
+    > .shop-navbar__mobile-guides-button.is-active
+    + .shop-navbar__mobile-guides-panel
+    .shop-navbar__mobile-guides-inner {
+    padding-top: 10px;
+    padding-bottom: 17px;
+  }
+
+  .shop-navbar__mobile-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .shop-navbar__mobile-label {
+    margin-bottom: 6px;
+    padding: 0 9px;
+
+    color: var(--navbar-text-soft);
+
+    font-size: 0.61rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .shop-navbar__mobile-column a {
+    min-height: 38px;
+    padding: 0 9px;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 10px;
+
+    color: var(--navbar-text);
+
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-decoration: none;
+
+    transition:
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .shop-navbar__mobile-column a:hover {
+    background: var(--navbar-soft);
+    color: var(--navbar-green-dark);
+  }
+
+  .shop-navbar__mobile-count {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+
+    background: var(--navbar-green-dark);
+    color: var(--navbar-white);
+
+    font-size: 0.61rem;
+    font-weight: 800;
+  }
+}
+
+
+/* =========================================================
+   TABLET KLEIN
+========================================================= */
+
+@media (max-width: 780px) {
+  .shop-navbar__search--desktop {
+    display: none;
+  }
+
+  .shop-navbar__container {
+    width: calc(100% - 28px);
+  }
+
+  .shop-navbar__mobile-menu {
+    width: calc(100% - 28px);
+  }
+
+  .shop-navbar__logo-main {
+    font-size: 1.05rem;
+  }
+
+  .shop-navbar__icon-button,
+  .shop-navbar__mobile-toggle {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .shop-navbar__mobile-search-toggle {
+  display: inline-flex;
+}
+
+.shop-navbar__inline-mobile-search {
+  width: 100%;
+  min-height: 48px;
+
+  display: grid;
+  grid-template-columns:
+    auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+
+  padding: 0 5px 0 16px;
+
+  border: 1px solid var(--navbar-border);
+  border-radius: 999px;
+
+  background: var(--navbar-soft);
+  color: var(--navbar-green);
+}
+
+.shop-navbar__inline-mobile-search > svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+}
+
+.shop-navbar__inline-mobile-search input {
+  width: 100%;
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: var(--navbar-text);
+
+  font: inherit;
+  font-size: 0.84rem;
+}
+
+.shop-navbar__inline-mobile-search input::placeholder {
+  color: #87918c;
+}
+
+.shop-navbar__inline-search-close {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: var(--navbar-green-dark);
+
+  cursor: pointer;
+}
+
+.shop-navbar__inline-search-close:hover {
+  background: rgba(24, 60, 49, 0.08);
+}
+
+.shop-navbar__inline-search-close svg {
+  width: 21px;
+  height: 21px;
+}
+
+}
+
+
+/* =========================================================
+   HANDY
+========================================================= */
+
+@media (max-width: 600px) {
+  .shop-announcement-bar {
+    min-height: 34px;
+    padding: 7px 14px;
+  }
+
+  .shop-announcement-bar__content {
+    width: 100%;
+    gap: 8px;
+
+    font-size: 0.66rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .shop-announcement-bar__dot {
+    width: 5px;
+    height: 5px;
+
+    box-shadow:
+      0 0 0 4px
+      rgba(155, 189, 170, 0.12);
+  }
+
+  .shop-navbar__container {
+    width: calc(100% - 20px);
+    min-height: 58px;
+  }
+
+  .shop-navbar__mobile-menu {
+    width: calc(100% - 20px);
+  }
+
+  .shop-navbar__logo {
+    min-width: 0;
+  }
+
+  .shop-navbar__logo-main {
+    display: block;
+
+    max-width: calc(100vw - 214px);
+    overflow: hidden;
+
+    font-size: 0.94rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .shop-navbar__actions {
+    gap: 5px;
+  }
+
+  .shop-navbar__icon-button,
+  .shop-navbar__mobile-toggle {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+
+    border: 0;
+    background: transparent;
+
+    font-size: 1rem;
+  }
+
+  .shop-navbar__icon-button:hover,
+  .shop-navbar__mobile-toggle:hover {
+    border: 0;
+    background: var(--navbar-soft);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .shop-navbar__mobile-toggle svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .shop-navbar__cart-count,
+  .shop-navbar__favorite-count {
+    top: -3px;
+    right: -4px;
+
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+
+    border-width: 2px;
+
+    font-size: 0.54rem;
+  }
+
+  .shop-navbar__mobile-search {
+    min-height: 49px;
+    padding-left: 14px;
+  }
+
+  .shop-navbar__mobile-search button {
+    min-height: 36px;
+    padding: 0 13px;
+
+    font-size: 0.7rem;
+  }
+
+  .shop-navbar__mobile-guides-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .shop-navbar__mobile-link {
+    min-height: 44px;
+    padding-inline: 11px;
+
+    font-size: 0.84rem;
+  }
+
+  .shop-navbar__mobile-column a {
+    min-height: 36px;
+
+    font-size: 0.77rem;
+  }
+
+  .shop-navbar__inline-mobile-search {
+  min-height: 42px;
+  padding-left: 13px;
+
+  border-radius: 13px;
+}
+
+.shop-navbar__inline-mobile-search input {
+  font-size: 0.8rem;
+}
+
+.shop-navbar__inline-search-close {
+  width: 34px;
+  height: 34px;
+}
+
+.shop-navbar__mobile-search-toggle {
+  display: inline-flex;
+}
+}
+
+
+/* =========================================================
+   SEHR KLEINE HANDYS
+========================================================= */
+
+@media (max-width: 390px) {
+  .shop-navbar__account {
+    display: none;
+  }
+
+  .shop-navbar__mobile-only-link {
+    display: flex;
+  }
+
+  .shop-navbar__logo-main {
+    max-width: calc(100vw - 190px);
+    font-size: 0.84rem;
+  }
+
+  .shop-navbar__actions {
+    gap: 1px;
+  }
+
+  .shop-navbar__icon-button,
+  .shop-navbar__mobile-toggle {
+    width: 33px;
+    height: 33px;
+    flex-basis: 33px;
+  }
+}
+
+
+/* =========================================================
+   REDUZIERTE BEWEGUNG
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-navbar__mobile-menu,
+  .shop-navbar__mobile-menu-inner,
+  .shop-navbar__mobile-guides-panel,
+  .shop-navbar__mobile-guides-button svg {
+    transition: none;
+  }
+}

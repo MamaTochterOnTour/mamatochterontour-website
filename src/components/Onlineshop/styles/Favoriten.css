@@ -1,0 +1,843 @@
+.favorites-page {
+  --favorites-green-dark: #183c31;
+  --favorites-green: #285c4b;
+  --favorites-green-light: #8fc9a8;
+  --favorites-green-light-hover: #73b38e;
+  --favorites-cream: #f7f4ee;
+  --favorites-soft: #edf4ef;
+  --favorites-white: #ffffff;
+  --favorites-text: #1c2722;
+  --favorites-text-soft: #69736e;
+  --favorites-red: #c93f4b;
+  --favorites-red-soft: #fff1f2;
+  --favorites-border: rgba(24, 60, 49, 0.12);
+
+  min-height: 100vh;
+
+  color: var(--favorites-text);
+  background: var(--favorites-cream);
+
+  overflow-x: hidden;
+}
+
+/* =======================================================
+   HERO
+======================================================= */
+
+.favorites-hero {
+  padding:
+    clamp(58px, 7vw, 80px)
+    clamp(18px, 4vw, 32px)
+    clamp(48px, 6vw, 65px);
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(155, 189, 170, 0.22),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(255, 255, 255, 0.6),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f7f4ee 0%,
+      #edf4ef 100%
+    );
+}
+
+.favorites-hero__icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: var(--favorites-red);
+  background: rgba(255, 255, 255, 0.82);
+
+  box-shadow:
+    0 12px 30px rgba(24, 60, 49, 0.08);
+}
+
+.favorites-hero__icon svg {
+  width: 24px;
+  height: 24px;
+
+  fill: currentColor;
+}
+
+.favorites-hero h1 {
+  margin: 0;
+
+  color: var(--favorites-green-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(3rem, 6vw, 5rem);
+
+  line-height: 1;
+  letter-spacing: -0.03em;
+
+  overflow-wrap: anywhere;
+}
+
+.favorites-hero p {
+  max-width: 680px;
+  margin: 20px auto 0;
+
+  color: var(--favorites-text-soft);
+
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.favorites-hero__count {
+  margin-top: 20px;
+  padding: 8px 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--favorites-border);
+  border-radius: 999px;
+
+  color: var(--favorites-green-dark);
+  background: rgba(255, 255, 255, 0.74);
+
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+/* =======================================================
+   INHALT
+======================================================= */
+
+.favorites-content {
+  width: min(calc(100% - 48px), 1280px);
+  margin: 0 auto;
+
+  padding:
+    32px
+    0
+    110px;
+}
+
+/* =======================================================
+   GRID
+======================================================= */
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  align-items: stretch;
+
+  gap: 28px;
+}
+
+/* =======================================================
+   KARTE
+======================================================= */
+
+.favorite-card {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border: 1px solid var(--favorites-border);
+  border-radius: 24px;
+
+  color: inherit;
+  background: var(--favorites-white);
+
+  text-decoration: none;
+
+  box-shadow:
+    0 18px 45px rgba(24, 60, 49, 0.065);
+
+  cursor: pointer;
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.favorite-card:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(40, 92, 75, 0.22);
+
+  box-shadow:
+    0 25px 60px rgba(24, 60, 49, 0.12);
+}
+
+.favorite-card:focus-visible {
+  outline:
+    3px solid
+    rgba(40, 92, 75, 0.24);
+
+  outline-offset: 4px;
+}
+
+/* =======================================================
+   PRODUKTBILD
+======================================================= */
+
+.favorite-card__image {
+  width: 100%;
+
+  display: block;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: var(--favorites-soft);
+}
+
+.favorite-card__image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 500ms ease;
+}
+
+.favorite-card:hover
+  .favorite-card__image
+  img {
+  transform: scale(1.045);
+}
+
+/* =======================================================
+   KARTENINHALT
+======================================================= */
+
+.favorite-card__content {
+  min-width: 0;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  padding: 22px;
+}
+
+.favorite-card h2 {
+  margin: 0;
+
+  color: var(--favorites-green-dark);
+
+  font-size: 1.35rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+
+  overflow-wrap: anywhere;
+}
+
+.favorite-card p {
+  margin: 13px 0 0;
+
+  color: var(--favorites-text-soft);
+
+  font-size: 0.84rem;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+.favorite-card strong {
+  display: block;
+
+  margin-top: 18px;
+
+  color: var(--favorites-green-dark);
+
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+/* =======================================================
+   AKTIONEN
+======================================================= */
+
+.favorite-card__actions {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 10px;
+}
+
+.favorite-card__cart {
+  min-width: 0;
+  min-height: 52px;
+
+  flex: 1;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 14px;
+
+  border: 0;
+  border-radius: 14px;
+
+  color: var(--favorites-white);
+  background: var(--favorites-green-light);
+
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.3;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.favorite-card__cart:hover {
+  background:
+    var(--favorites-green-light-hover);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 10px 24px rgba(40, 92, 75, 0.16);
+}
+
+.favorite-card__cart.is-in-cart {
+  background: var(--favorites-green-dark);
+}
+
+.favorite-card__cart.is-in-cart:hover {
+  background: var(--favorites-green);
+}
+
+.favorite-card__cart:focus-visible,
+.favorite-card__remove:focus-visible {
+  outline:
+    3px solid
+    rgba(40, 92, 75, 0.22);
+
+  outline-offset: 3px;
+}
+
+.favorite-card__remove {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+
+  flex: 0 0 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(24, 60, 49, 0.12);
+
+  border-radius: 50%;
+
+  color: var(--favorites-red);
+  background: rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 8px 22px rgba(24, 60, 49, 0.1);
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.favorite-card__remove:hover {
+  color: #aa303a;
+  background: var(--favorites-red-soft);
+
+  transform: scale(1.05);
+
+  box-shadow:
+    0 11px 28px rgba(24, 60, 49, 0.14);
+}
+
+.favorite-card__remove svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =======================================================
+   LEERER ZUSTAND UND LADESTATUS
+======================================================= */
+
+.favorites-empty,
+.favorites-status {
+  width: min(100%, 670px);
+  margin: 25px auto 0;
+  padding: 65px 38px;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--favorites-border);
+  border-radius: 26px;
+
+  background: var(--favorites-white);
+
+  text-align: center;
+
+  box-shadow:
+    0 18px 45px rgba(24, 60, 49, 0.06);
+}
+
+.favorites-empty__icon {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: var(--favorites-green);
+  background: var(--favorites-soft);
+}
+
+.favorites-empty__icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.favorites-empty h2,
+.favorites-status h2 {
+  margin: 0;
+
+  color: var(--favorites-green-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.favorites-empty p,
+.favorites-status p {
+  max-width: 520px;
+  margin: 14px auto 0;
+
+  color: var(--favorites-text-soft);
+
+  line-height: 1.7;
+}
+
+.favorites-empty__button {
+  min-height: 46px;
+  margin-top: 25px;
+  padding: 0 23px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  color: var(--favorites-white);
+  background: var(--favorites-green-dark);
+
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.favorites-empty__button:hover {
+  background: var(--favorites-green);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px rgba(24, 60, 49, 0.16);
+}
+
+.favorites-status--error {
+  border-color:
+    rgba(201, 63, 75, 0.2);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fff7f7
+    );
+}
+
+.favorites-status--error h2 {
+  color: var(--favorites-red);
+}
+
+/* =======================================================
+   KLEINER DESKTOP / GROSSES TABLET
+======================================================= */
+
+@media (max-width: 1050px) {
+  .favorites-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+  }
+
+  .favorites-content {
+    width:
+      min(calc(100% - 40px), 920px);
+  }
+}
+
+/* =======================================================
+   TABLET
+======================================================= */
+
+@media (max-width: 760px) {
+  .favorites-hero {
+    padding:
+      62px
+      24px
+      52px;
+  }
+
+  .favorites-hero h1 {
+    font-size:
+      clamp(2.8rem, 9vw, 4rem);
+  }
+
+  .favorites-hero p {
+    max-width: 580px;
+
+    font-size: 0.96rem;
+  }
+
+  .favorites-content {
+    width:
+      min(calc(100% - 32px), 680px);
+
+    padding:
+      28px
+      0
+      82px;
+  }
+
+  .favorites-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+  }
+
+  .favorite-card {
+    border-radius: 21px;
+  }
+
+  .favorite-card__content {
+    padding: 19px;
+  }
+
+  .favorite-card h2 {
+    font-size: 1.18rem;
+  }
+
+  .favorite-card p {
+    font-size: 0.8rem;
+  }
+
+  .favorite-card__cart {
+    min-height: 48px;
+
+    font-size: 0.82rem;
+  }
+
+  .favorite-card__remove {
+    width: 44px;
+    height: 44px;
+
+    flex-basis: 44px;
+  }
+}
+
+/* =======================================================
+   HANDY
+======================================================= */
+
+@media (max-width: 560px) {
+  .favorites-hero {
+    padding:
+      48px
+      18px
+      42px;
+  }
+
+  .favorites-hero__icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 17px;
+  }
+
+  .favorites-hero__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .favorites-hero h1 {
+    font-size:
+      clamp(2.65rem, 13vw, 3.6rem);
+  }
+
+  .favorites-hero p {
+    margin-top: 16px;
+
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .favorites-hero__count {
+    margin-top: 17px;
+
+    font-size: 0.69rem;
+  }
+
+  .favorites-content {
+    width:
+      min(calc(100% - 24px), 480px);
+
+    padding:
+      22px
+      0
+      68px;
+  }
+
+  .favorites-grid {
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    gap: 18px;
+  }
+
+  .favorite-card {
+    width: 100%;
+
+    border-radius: 20px;
+  }
+
+  .favorite-card:hover {
+    transform: none;
+  }
+
+  .favorite-card__image {
+    aspect-ratio: 1 / 1;
+  }
+
+  .favorite-card__content {
+    padding: 20px;
+  }
+
+  .favorite-card h2 {
+    font-size: 1.28rem;
+  }
+
+  .favorite-card p {
+    margin-top: 11px;
+
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .favorite-card strong {
+    margin-top: 15px;
+
+    font-size: 1.1rem;
+  }
+
+  .favorite-card__actions {
+    padding-top: 18px;
+
+    gap: 9px;
+  }
+
+  .favorite-card__cart {
+    min-height: 50px;
+    padding:
+      9px
+      12px;
+
+    font-size: 0.84rem;
+  }
+
+  .favorite-card__remove {
+    width: 46px;
+    height: 46px;
+
+    flex-basis: 46px;
+  }
+
+  .favorites-empty,
+  .favorites-status {
+    margin-top: 12px;
+    padding:
+      46px
+      22px;
+
+    border-radius: 22px;
+  }
+
+  .favorites-empty__icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .favorites-empty h2,
+  .favorites-status h2 {
+    font-size: 1.8rem;
+  }
+
+  .favorites-empty p,
+  .favorites-status p {
+    font-size: 0.88rem;
+  }
+
+  .favorites-empty__button {
+    width: 100%;
+    min-height: 49px;
+    padding:
+      0
+      18px;
+
+    box-sizing: border-box;
+  }
+}
+
+/* =======================================================
+   SEHR KLEINE HANDYS
+======================================================= */
+
+@media (max-width: 370px) {
+  .favorites-hero {
+    padding:
+      40px
+      14px
+      36px;
+  }
+
+  .favorites-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .favorites-content {
+    width:
+      calc(100% - 16px);
+  }
+
+  .favorite-card__content {
+    padding: 17px;
+  }
+
+  .favorite-card__actions {
+    align-items: stretch;
+  }
+
+  .favorite-card__cart {
+    min-height: 48px;
+
+    font-size: 0.77rem;
+  }
+
+  .favorite-card__remove {
+    width: 44px;
+    height: 44px;
+
+    flex-basis: 44px;
+  }
+
+  .favorites-empty,
+  .favorites-status {
+    padding:
+      38px
+      17px;
+  }
+}
+
+/* =======================================================
+   TOUCH-GERÄTE
+======================================================= */
+
+@media (hover: none) {
+  .favorite-card:hover,
+  .favorite-card__cart:hover,
+  .favorite-card__remove:hover,
+  .favorites-empty__button:hover {
+    transform: none;
+  }
+
+  .favorite-card:hover
+    .favorite-card__image
+    img {
+    transform: none;
+  }
+}
+
+/* =======================================================
+   WENIGER BEWEGUNG
+======================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .favorite-card,
+  .favorite-card__image img,
+  .favorite-card__cart,
+  .favorite-card__remove,
+  .favorites-empty__button {
+    transition: none;
+  }
+}

@@ -1,0 +1,584 @@
+.newsletter-confirmed {
+  --newsletter-green-dark: #203d31;
+  --newsletter-green: #355b49;
+  --newsletter-green-hover: #27473a;
+  --newsletter-green-soft: #eef5f1;
+  --newsletter-green-border: #d8e6de;
+  --newsletter-cream: #f8f5ef;
+  --newsletter-white: #ffffff;
+  --newsletter-text-soft: #66736b;
+  --newsletter-warm-soft: #fff8ec;
+  --newsletter-border:
+    rgba(32, 61, 49, 0.1);
+
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  min-height: calc(100svh - 80px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    clamp(70px, 9vw, 100px)
+    24px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(53, 91, 73, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(220, 194, 137, 0.12),
+      transparent 32%
+    ),
+    var(--newsletter-cream);
+
+  overflow-x: hidden;
+}
+
+/* =======================================================
+   KARTE
+======================================================= */
+
+.newsletter-confirmed__card {
+  width: min(100%, 820px);
+
+  padding:
+    clamp(36px, 6vw, 56px);
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    var(--newsletter-border);
+
+  border-radius: 28px;
+
+  background:
+    var(--newsletter-white);
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0, 0, 0, 0.08);
+}
+
+/* =======================================================
+   ICON
+======================================================= */
+
+.newsletter-confirmed__icon {
+  width: 84px;
+  height: 84px;
+
+  margin:
+    0
+    auto
+    28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    var(--newsletter-green);
+
+  color:
+    var(--newsletter-white);
+
+  box-shadow:
+    0 16px 34px
+    rgba(53, 91, 73, 0.22);
+
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* =======================================================
+   TYPOGRAFIE
+======================================================= */
+
+.newsletter-confirmed__eyebrow {
+  display: inline-block;
+
+  margin-bottom: 12px;
+
+  color:
+    var(--newsletter-green);
+
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.newsletter-confirmed h1 {
+  max-width: 680px;
+
+  margin:
+    0
+    auto
+    18px;
+
+  color:
+    var(--newsletter-green-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(2.2rem, 5vw, 3.5rem);
+
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+
+  overflow-wrap: anywhere;
+}
+
+.newsletter-confirmed p {
+  max-width: 640px;
+
+  margin:
+    0
+    auto;
+
+  color:
+    var(--newsletter-text-soft);
+
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* =======================================================
+   VORTEILE
+======================================================= */
+
+.newsletter-confirmed__benefits {
+  margin:
+    36px
+    0;
+
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+
+  text-align: left;
+}
+
+.newsletter-confirmed__benefits div {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  padding:
+    20px
+    22px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    var(--newsletter-green-border);
+
+  border-radius: 16px;
+
+  background:
+    var(--newsletter-green-soft);
+
+  color:
+    var(--newsletter-green-dark);
+
+  font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.5;
+
+  box-shadow:
+    0 8px 24px
+    rgba(32, 61, 49, 0.035);
+}
+
+/* =======================================================
+   GUTSCHEIN-HINWEIS
+======================================================= */
+
+.newsletter-confirmed__mail {
+  margin:
+    42px
+    0;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(196, 154, 83, 0.14);
+
+  border-radius: 20px;
+
+  background:
+    var(--newsletter-warm-soft);
+}
+
+.newsletter-confirmed__mail p {
+  max-width: 580px;
+
+  color:
+    var(--newsletter-green-dark);
+
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+/* =======================================================
+   BUTTON
+======================================================= */
+
+.newsletter-confirmed__button {
+  min-height: 52px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    14px
+    34px;
+
+  box-sizing: border-box;
+
+  border-radius: 16px;
+
+  background:
+    var(--newsletter-green);
+
+  color:
+    var(--newsletter-white);
+
+  box-shadow:
+    0 13px 28px
+    rgba(53, 91, 73, 0.18);
+
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.newsletter-confirmed__button:hover {
+  background:
+    var(--newsletter-green-hover);
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 17px 34px
+    rgba(53, 91, 73, 0.24);
+}
+
+.newsletter-confirmed__button:active {
+  transform:
+    translateY(0);
+}
+
+.newsletter-confirmed__button:focus-visible {
+  outline:
+    3px solid
+    rgba(53, 91, 73, 0.3);
+
+  outline-offset: 4px;
+}
+
+/* =======================================================
+   TABLET
+======================================================= */
+
+@media (max-width: 900px) {
+  .newsletter-confirmed {
+    align-items:
+      flex-start;
+
+    padding:
+      80px
+      22px
+      60px;
+  }
+
+  .newsletter-confirmed__card {
+    max-width: 720px;
+
+    padding:
+      46px
+      40px;
+
+    border-radius: 26px;
+  }
+
+  .newsletter-confirmed__benefits {
+    grid-template-columns: 1fr;
+
+    max-width: 580px;
+
+    margin:
+      32px
+      auto;
+
+    gap: 13px;
+  }
+
+  .newsletter-confirmed__benefits div {
+    padding:
+      18px
+      20px;
+  }
+
+  .newsletter-confirmed__mail {
+    max-width: 620px;
+
+    margin:
+      38px
+      auto;
+
+    padding: 25px;
+  }
+}
+
+/* =======================================================
+   HANDY
+======================================================= */
+
+@media (max-width: 600px) {
+  .newsletter-confirmed {
+    min-height:
+      calc(100svh - 70px);
+
+    align-items:
+      flex-start;
+
+    padding:
+      54px
+      14px
+      38px;
+
+    background:
+      radial-gradient(
+        circle at 15% 10%,
+        rgba(53, 91, 73, 0.07),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 90% 85%,
+        rgba(220, 194, 137, 0.1),
+        transparent 40%
+      ),
+      var(--newsletter-cream);
+  }
+
+  .newsletter-confirmed__card {
+    width: 100%;
+
+    padding:
+      32px
+      22px;
+
+    border-radius: 22px;
+
+    box-shadow:
+      0 16px 42px
+      rgba(0, 0, 0, 0.07);
+  }
+
+  .newsletter-confirmed__icon {
+    width: 68px;
+    height: 68px;
+
+    margin-bottom: 22px;
+
+    font-size: 1.65rem;
+  }
+
+  .newsletter-confirmed__eyebrow {
+    margin-bottom: 10px;
+
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+  }
+
+  .newsletter-confirmed h1 {
+    margin-bottom: 16px;
+
+    font-size:
+      clamp(2rem, 10vw, 2.75rem);
+
+    line-height: 1.02;
+  }
+
+  .newsletter-confirmed p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .newsletter-confirmed__benefits {
+    margin:
+      28px
+      0;
+
+    gap: 11px;
+  }
+
+  .newsletter-confirmed__benefits div {
+    padding:
+      16px
+      17px;
+
+    border-radius: 14px;
+
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .newsletter-confirmed__mail {
+    margin:
+      30px
+      0;
+
+    padding:
+      21px
+      18px;
+
+    border-radius: 17px;
+  }
+
+  .newsletter-confirmed__mail p {
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  .newsletter-confirmed__button {
+    width: 100%;
+    min-height: 52px;
+
+    padding:
+      13px
+      20px;
+
+    border-radius: 14px;
+
+    font-size: 0.88rem;
+  }
+}
+
+/* =======================================================
+   SEHR KLEINE HANDYS
+======================================================= */
+
+@media (max-width: 370px) {
+  .newsletter-confirmed {
+    padding:
+      38px
+      8px
+      28px;
+  }
+
+  .newsletter-confirmed__card {
+    padding:
+      27px
+      17px;
+
+    border-radius: 18px;
+  }
+
+  .newsletter-confirmed__icon {
+    width: 60px;
+    height: 60px;
+
+    font-size: 1.45rem;
+  }
+
+  .newsletter-confirmed h1 {
+    font-size: 1.95rem;
+  }
+
+  .newsletter-confirmed p {
+    font-size: 0.84rem;
+  }
+
+  .newsletter-confirmed__benefits div {
+    padding:
+      14px
+      15px;
+
+    font-size: 0.81rem;
+  }
+
+  .newsletter-confirmed__mail {
+    padding:
+      18px
+      15px;
+  }
+}
+
+/* =======================================================
+   NIEDRIGE BILDSCHIRME
+======================================================= */
+
+@media (
+  max-height: 720px
+) and (
+  min-width: 601px
+) {
+  .newsletter-confirmed {
+    align-items:
+      flex-start;
+
+    padding-top: 55px;
+    padding-bottom: 45px;
+  }
+}
+
+/* =======================================================
+   TOUCH-GERÄTE
+======================================================= */
+
+@media (hover: none) {
+  .newsletter-confirmed__button:hover {
+    background:
+      var(--newsletter-green);
+
+    transform: none;
+
+    box-shadow:
+      0 13px 28px
+      rgba(53, 91, 73, 0.18);
+  }
+}
+
+/* =======================================================
+   WENIGER BEWEGUNG
+======================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-confirmed__button {
+    transition: none;
+  }
+}

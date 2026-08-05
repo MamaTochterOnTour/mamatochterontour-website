@@ -1,0 +1,618 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+   match /Users/{uid} {
+      allow read: if true;
+
+      // Eigene Dokumente: alles updaten erlaubt
+      allow create: if request.auth != null && request.auth.uid == uid;
+      allow update: if request.auth != null && request.auth.uid == uid;
+      allow delete: if request.auth != null && request.auth.uid == uid;
+
+      // Fremde Dokumente: nur followers ändern erlaubt
+      allow update: if request.auth != null
+                    && request.auth.uid != uid
+                    && request.resource.data.keys().hasOnly(['followers'])
+                    && request.resource.data.followers is list;
+  	}
+
+    match /Comments/{commentId} {
+      allow create: if request.auth != null;
+      allow read: if true;
+
+      allow update: if request.auth != null && (
+        // User darf eigenen Kommentar komplett ändern
+        request.auth.uid == resource.data.userId
+
+        ||
+
+        // Andere dürfen NUR likes ändern
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['likesCount', 'likedBy'])
+      );
+
+      allow delete: if request.auth.uid == resource.data.userId;
+    }
+
+
+    match /Reisetagebcher/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+
+    match /Posts/{document} {
+      allow create: if request.auth != null;
+      allow read: if true;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+      allow update: if request.auth != null
+  && request.resource.data.diff(resource.data)
+    .affectedKeys()
+    .hasOnly(['hearts']);
+    }
+    
+    
+    match /Follow/{followId} {
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.followerId;
+      allow read: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.followerId;
+      allow update: if false;
+    }
+  
+    
+    // ---------------- Questions ----------------
+    match /Questions/{questionId} {
+      
+        // Nur authentifizierte Nutzer können Fragen erstellen
+        allow create: if request.auth != null 
+                      && request.resource.data.keys().hasAll(['question', 'userId', 'username', 'createdTime'])
+                      && request.resource.data.question is string
+                      && request.resource.data.userId == request.auth.uid;
+
+        // Jeder kann Fragen lesen
+        allow read: if true;
+
+        allow update: if request.auth != null && (
+          // Besitzer darf alles ändern
+          resource.data.userId == request.auth.uid
+
+          ||
+
+          // Andere dürfen NUR likes ändern
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['likes'])
+        );
+
+        allow delete: if request.auth != null 
+                      && resource.data.userId == request.auth.uid;
+
+        // ---------------- Answers Subcollection ----------------
+        match /Answers/{answerId} {
+
+          // Nur authentifizierte Nutzer können Antworten erstellen
+          allow create: if request.auth != null
+                        && request.resource.data.keys().hasAll(['answer', 'userId', 'username', 'createdTime'])
+                        && request.resource.data.userId == request.auth.uid;
+
+          // Jeder kann Antworten lesen
+          allow read: if true;
+
+          // Antworten dürfen nur vom Ersteller gelöscht/aktualisiert werden
+          allow update: if request.auth != null && (
+  resource.data.userId == request.auth.uid
+  ||
+  request.resource.data.diff(resource.data)
+    .affectedKeys()
+    .hasOnly(['likes'])
+);
+
+          allow delete: if request.auth != null 
+                        && resource.data.userId == request.auth.uid;
+
+        match /Replies/{replyId} {
+
+  allow create: if request.auth != null
+    && request.resource.data.userId == request.auth.uid;
+
+  allow read: if request.auth != null;
+
+  allow update: if request.auth != null && (
+    resource.data.userId == request.auth.uid
+    ||
+    request.resource.data.diff(resource.data)
+      .affectedKeys()
+      .hasOnly(['likes'])
+  );
+
+  allow delete: if request.auth != null
+    && resource.data.userId == request.auth.uid;
+}
+      }
+    }
+    
+    // ================= StoryViews =================
+    match /storyViews/{viewId} {
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.keys().hasAll([
+                        'storyId', 'userId', 'username', 'profilePicture', 'viewedAt'
+                      ]);
+      allow read: if request.auth != null;
+      allow update, delete: if false; // User darf StoryViews nicht ändern/löschen
+    }
+
+    // ================= StoryReports =================
+    match /storyReports/{reportId} {
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasAll([
+                        'storyId', 'reportedBy', 'reason', 'createdAt'
+                      ])
+                    && request.resource.data.reportedBy == request.auth.uid;
+      allow read: if request.auth != null; // Optional: nur Admins sollten lesen
+      allow update, delete: if false; // Reports dürfen nicht geändert werden
+    }
+    
+    // ================= UserReports =================
+    match /userReports/{reportId} {
+      // Nur authentifizierte User können einen Report erstellen
+      allow create: if request.auth != null 
+                    && request.resource.data.keys().hasAll(['reportedBy', 'reportedUserId', 'reason', 'createdAt'])
+                    && request.resource.data.reportedBy == request.auth.uid;
+
+      // Lesen nur für Admins oder falls du willst für interne Verarbeitung
+      allow read: if false; // z.B. nur Admins könnten hier Zugriff bekommen
+
+      // Niemand darf Reports aktualisieren oder löschen
+      allow update, delete: if false;
+    }
+
+    // ================= BlockedUser =================
+    match /blockedUsers/{userId} {
+      // Nur der aktuelle User darf sein eigenes Blocked-Subcollection ändern
+      allow read, create, delete: if request.auth != null && request.auth.uid == userId;
+      allow update: if false;
+
+      // Subcollection "blocked" für jeden einzelnen geblockten User
+      match /blocked/{blockedUserId} {
+        allow read, create, delete: if request.auth != null && request.auth.uid == userId;
+        allow update: if false;
+    	}
+    }
+    
+    // ================= PostReports =================
+    match /postReports/{reportId} {
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasAll(['reportedBy','reportedPostId','reason','createdAt'])
+                    && request.resource.data.reportedBy == request.auth.uid
+                    && request.resource.data.reason is string;
+      allow read, update, delete: if false; // Nur Admins oder Backend können ggf. lesen/löschen
+    }
+    
+    // ================= CommentReports =================
+    match /commentReports/{reportId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false; // nur Admins via Backend können lesen/löschen
+    }
+    
+    // ================= Trips =================
+ 		match /trips/{tripId} {
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+
+      match /dailyPlans/{dateKey} {
+
+        // Erstellung eines Tagesplans: nur der Besitzer darf, nur 'activities' Feld muss vorhanden sein
+        allow create: if request.auth != null
+                      && exists(/databases/$(database)/documents/trips/$(tripId))
+                      && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId
+                      && request.resource.data.keys().hasOnly(['activities'])
+                      && request.resource.data.activities is list;
+
+        // Lesen nur für den Besitzer
+        allow read: if request.auth != null
+                    && exists(/databases/$(database)/documents/trips/$(tripId))
+                    && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+
+        // Update nur für Besitzer, erlaubt 'activities' Liste zu ändern oder neue Items hinzuzufügen
+        allow update: if request.auth != null
+                      && exists(/databases/$(database)/documents/trips/$(tripId))
+                      && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId
+                      // Wir erlauben jetzt beliebige Aktivitätenliste als Update
+                      && (request.resource.data.keys().hasOnly(['activities']) 
+                          || request.resource.data.keys().hasAny(['activities']))
+                      && request.resource.data.activities is list;
+
+        // Löschen nur durch den Besitzer erlaubt
+        allow delete: if request.auth != null
+                      && exists(/databases/$(database)/documents/trips/$(tripId))
+                      && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+      }
+    }
+  
+  // ----------------- todos -----------------
+  match /trips/{tripId}/todos/{todoId} {
+
+    allow create: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId
+                  && request.resource.data.keys().hasAll(['title', 'done'])
+                  && request.resource.data.title is string
+                  && request.resource.data.done is bool;
+
+    allow read: if request.auth != null
+                && exists(/databases/$(database)/documents/trips/$(tripId))
+                && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+
+    allow update: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId
+                  && request.resource.data.title is string
+                  && request.resource.data.done is bool;
+
+    allow delete: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+  }
+
+  match /trips/{tripId}/packlisten/{packlisteId} {
+
+  function isTripOwner() {
+    return request.auth != null &&
+      get(/databases/$(database)/documents/trips/$(tripId)).data.userId == request.auth.uid;
+  }
+
+  // ---------------- PACKLISTE ----------------
+
+  allow create: if isTripOwner();
+
+  allow read: if isTripOwner();
+
+  allow update: if isTripOwner();
+
+  allow delete: if isTripOwner();
+
+
+  // ---------------- ITEMS ----------------
+
+  match /items/{itemId} {
+
+    allow create: if isTripOwner();
+
+    allow read: if isTripOwner();
+
+    allow update: if isTripOwner();
+
+    allow delete: if isTripOwner();
+  }
+}
+
+  // ----------------- budget -----------------
+  match /trips/{tripId}/budget/{categoryId} {
+
+    // Nur der Besitzer des Trips darf eine Budget-Kategorie erstellen
+    allow create: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId
+                  && request.resource.data.keys().hasAll(['title', 'target', 'spent', 'history', 'createdAt'])
+                  && request.resource.data.title is string
+                  && request.resource.data.target is number
+                  && request.resource.data.spent is number
+                  && request.resource.data.history is list
+                  && request.resource.data.createdAt is string;
+
+    // Nur der Besitzer darf die Daten lesen
+    allow read: if request.auth != null
+                && exists(/databases/$(database)/documents/trips/$(tripId))
+                && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+
+    // Nur Besitzer darf Budget-Kategorien aktualisieren
+    allow update: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId
+                  // Erlaubt nur bestimmte Felder zu ändern
+                  && request.resource.data.keys().hasAll(['title', 'target', 'spent', 'history'])
+                  && request.resource.data.title is string
+                  && request.resource.data.target is number
+                  && request.resource.data.spent is number
+                  && request.resource.data.history is list;
+
+    // Nur Besitzer darf löschen
+    allow delete: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+  }
+  
+  // ----------------- notes -----------------
+  match /trips/{tripId}/notes/{noteId} {
+
+    // Nur der Besitzer des Trips darf Notizen erstellen
+    allow create: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+
+    // Nur der Besitzer darf Notizen lesen
+    allow read: if request.auth != null
+                && exists(/databases/$(database)/documents/trips/$(tripId))
+                && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+
+    // Nur der Besitzer darf Notizen aktualisieren
+    allow update: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+
+    // Nur der Besitzer darf Notizen löschen
+    allow delete: if request.auth != null
+                  && exists(/databases/$(database)/documents/trips/$(tripId))
+                  && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+  }
+  
+  match /trips/{tripId}/contacts/{contactId} {
+    allow create, read, update, delete: if request.auth != null
+      && exists(/databases/$(database)/documents/trips/$(tripId))
+      && request.auth.uid == get(/databases/$(database)/documents/trips/$(tripId)).data.userId;
+  }
+  
+  // =========================
+    // REPORTS
+    // =========================
+    match /Reports/{reportId} {
+
+      // nur eingeloggte User dürfen melden
+      allow create: if request.auth != null;
+
+      // niemand darf Reports lesen (optional, aber empfohlen)
+      allow read: if false;
+
+      allow update, delete: if false;
+    } 
+    
+    // =========================
+    // Aktivität
+    // =========================
+    match /activities/{activityId} {
+
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+                    && request.resource.data.fromUserId == request.auth.uid;
+
+      allow update: if false;
+      allow delete: if false;
+    }
+    
+    /// 🌴 Mallorca Liveboard
+    match /mallorca_liveboard/{postId} {
+
+      // ✅ Lesen darf jeder (du kannst hier später Premium prüfen)
+      allow read: if true;
+
+      // ✅ Erstellen nur erlaubte Creator
+      allow create: if request.auth != null
+        && request.auth.uid in [
+          "8j5OQgROFyXxpTAj8RrVPga42RX2"
+        ];
+
+      // ✅ Updaten nur Creator ODER User für Likes/Saves
+      allow update: if request.auth != null
+        && (
+          request.auth.uid == resource.data.createdBy
+          ||
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['savedBy', 'likedBy', 'likesCount'])
+        );
+
+      // ❌ Löschen nur Creator
+      allow delete: if request.auth != null
+        && request.auth.uid == resource.data.createdBy;
+    }
+    
+    // ================= GROUPS =================
+match /groups/{groupId} {
+
+  allow read: if true;
+
+  allow create: if request.auth != null
+    && request.resource.data.creatorId == request.auth.uid;
+
+
+  allow update: if request.auth != null && (
+
+    // Gründer darf alles ändern
+    resource.data.creatorId == request.auth.uid
+
+
+    ||
+
+    // Mitglieder dürfen nur Beschreibung ändern
+    (
+      request.auth.uid in resource.data.members
+      &&
+      request.resource.data.diff(resource.data)
+        .affectedKeys()
+        .hasOnly(['description'])
+    )
+
+
+    ||
+
+    // Mitgliederverwaltung
+    (
+      request.resource.data.diff(resource.data)
+        .affectedKeys()
+        .hasOnly(['members', 'pinnedBy'])
+    )
+
+  );
+
+
+  allow delete: if request.auth != null
+    && resource.data.creatorId == request.auth.uid;
+
+
+
+  // 💬 MESSAGES
+  match /messages/{messageId} {
+
+
+    allow read: if request.auth != null
+      && request.auth.uid in get(
+        /databases/$(database)/documents/groups/$(groupId)
+      ).data.members;
+
+
+    allow create: if request.auth != null
+      && request.resource.data.userId == request.auth.uid
+      && request.auth.uid in get(
+        /databases/$(database)/documents/groups/$(groupId)
+      ).data.members;
+
+
+    allow update: if request.auth != null
+      && request.auth.uid == resource.data.userId;
+
+
+    allow delete: if request.auth != null
+      && request.auth.uid == resource.data.userId;
+  }
+}
+
+		// =========================
+    // Forum Beiträge
+    // =========================
+
+    match /forumPosts/{postId} {
+
+      // Jeder eingeloggte Nutzer darf Beiträge lesen
+      allow read: if request.auth != null;
+
+
+      // Nur eingeloggte Nutzer dürfen Beiträge erstellen
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.topic is string
+        && request.resource.data.createdAt != null;
+
+
+      // Nur der Ersteller darf seinen Beitrag bearbeiten
+      allow update: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+
+
+      // Nur der Ersteller darf seinen Beitrag löschen
+      allow delete: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+        
+        // ---------------- Answers Subcollection ----------------
+        match /Answers/{answerId} {
+
+          // Nur authentifizierte Nutzer können Antworten erstellen
+          allow create: if request.auth != null
+                        && request.resource.data.keys().hasAll(['answer', 'userId', 'username', 'createdTime'])
+                        && request.resource.data.userId == request.auth.uid;
+
+          // Jeder kann Antworten lesen
+          allow read: if true;
+
+          // Antworten dürfen nur vom Ersteller gelöscht/aktualisiert werden
+          allow update: if request.auth != null && (
+  resource.data.userId == request.auth.uid
+  ||
+  request.resource.data.diff(resource.data)
+    .affectedKeys()
+    .hasOnly(['likes'])
+);
+
+          allow delete: if request.auth != null 
+                        && resource.data.userId == request.auth.uid;
+
+        match /Replies/{replyId} {
+
+  allow create: if request.auth != null
+    && request.resource.data.userId == request.auth.uid;
+
+  allow read: if request.auth != null;
+
+  allow update: if request.auth != null && (
+    resource.data.userId == request.auth.uid
+    ||
+    request.resource.data.diff(resource.data)
+      .affectedKeys()
+      .hasOnly(['likes'])
+  );
+
+  allow delete: if request.auth != null
+    && resource.data.userId == request.auth.uid;
+}
+      }
+    }
+    
+    match /shopUsers/{userId} {
+  allow read, create, update, delete:
+    if request.auth != null
+    && request.auth.uid == userId;
+
+  match /favorites/{productId} {
+    allow read, delete:
+      if request.auth != null
+      && request.auth.uid == userId;
+
+    allow create, update:
+      if request.auth != null
+      && request.auth.uid == userId
+      && request.resource.data.keys().hasOnly([
+        "productId",
+        "createdAt"
+      ])
+      && request.resource.data.productId is string
+      && request.resource.data.productId == productId;
+  }
+  
+  match /shopUsers/{userId} {
+
+      allow read, write: if request.auth != null
+                         && request.auth.uid == userId;
+    }
+}
+
+match /products/{productId}/reviews/{reviewId} {
+  allow read: if true;
+
+  allow create: if
+    request.auth != null
+    && request.resource.data.userId
+      == request.auth.uid
+    && request.resource.data.rating is int
+    && request.resource.data.rating >= 1
+    && request.resource.data.rating <= 5
+    && request.resource.data.text is string
+    && request.resource.data.text.size() <= 1000;
+
+  allow update: if
+    request.auth != null
+    && resource.data.userId
+      == request.auth.uid
+    && request.resource.data.userId
+      == resource.data.userId
+    && request.resource.data.productId
+      == resource.data.productId
+    && request.resource.data.rating is int
+    && request.resource.data.rating >= 1
+    && request.resource.data.rating <= 5
+    && request.resource.data.text is string
+    && request.resource.data.text.size() <= 1000;
+
+  allow delete: if
+    request.auth != null
+    && resource.data.userId
+      == request.auth.uid;
+}
+    
+    }
+	}

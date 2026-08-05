@@ -1,0 +1,875 @@
+.checkout-success-page {
+  --success-green-dark: #183c31;
+  --success-green: #285c4b;
+  --success-green-soft: #e3f2e9;
+  --success-cream: #f7f4ee;
+  --success-white: #ffffff;
+  --success-text: #1c2722;
+  --success-text-soft: #69736e;
+  --success-red: #a8444c;
+  --success-red-soft: #fff0f1;
+  --success-border: rgba(24, 60, 49, 0.12);
+
+  min-height: 80vh;
+
+  display: grid;
+  place-items: center;
+
+  padding:
+    clamp(64px, 8vw, 100px)
+    clamp(18px, 4vw, 32px);
+
+  color: var(--success-text);
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(155, 189, 170, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 88% 88%,
+      rgba(227, 242, 233, 0.65),
+      transparent 32%
+    ),
+    var(--success-cream);
+}
+
+/* =======================================================
+   HAUPTKARTE
+======================================================= */
+
+.checkout-success-card {
+  width: min(100%, 780px);
+
+  box-sizing: border-box;
+
+  padding:
+    clamp(38px, 7vw, 70px);
+
+  border: 1px solid var(--success-border);
+  border-radius: 32px;
+
+  background: var(--success-white);
+
+  text-align: center;
+
+  box-shadow:
+    0 24px 70px rgba(24, 60, 49, 0.1);
+}
+
+.checkout-success-state {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =======================================================
+   STATUS-ICON
+======================================================= */
+
+.checkout-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 82px;
+  height: 82px;
+  margin-bottom: 26px;
+
+  flex: 0 0 82px;
+
+  border-radius: 50%;
+}
+
+.checkout-success-icon svg {
+  width: 34px;
+  height: 34px;
+
+  stroke-width: 2.4;
+}
+
+.checkout-success-icon--success,
+.checkout-success-icon--loading {
+  color: var(--success-green-dark);
+  background: var(--success-green-soft);
+}
+
+.checkout-success-icon--loading svg {
+  animation:
+    checkout-success-spin
+    900ms
+    linear
+    infinite;
+}
+
+.checkout-success-icon--error {
+  color: var(--success-red);
+  background: var(--success-red-soft);
+}
+
+/* =======================================================
+   TEXTE
+======================================================= */
+
+.checkout-success-eyebrow {
+  margin: 0 0 12px;
+
+  color: var(--success-green);
+
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.checkout-success-card h1 {
+  max-width: 680px;
+  margin: 0;
+
+  color: var(--success-green-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(2.6rem, 6vw, 4.3rem);
+
+  line-height: 1;
+  letter-spacing: -0.035em;
+
+  overflow-wrap: anywhere;
+}
+
+.checkout-success-description {
+  max-width: 590px;
+  margin: 23px auto 0;
+
+  color: var(--success-text-soft);
+
+  font-size: 0.98rem;
+  line-height: 1.75;
+
+  overflow-wrap: anywhere;
+}
+
+.checkout-success-description strong {
+  color: var(--success-green-dark);
+}
+
+.checkout-success-email {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* =======================================================
+   GESAMTBETRAG
+======================================================= */
+
+.checkout-success-summary {
+  width: min(100%, 470px);
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-top: 34px;
+  padding: 21px 24px;
+
+  border: 1px solid var(--success-border);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fafcfb,
+      #f4f8f5
+    );
+}
+
+.checkout-success-summary span {
+  color: var(--success-text-soft);
+
+  font-size: 0.84rem;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.checkout-success-summary strong {
+  flex: 0 0 auto;
+
+  color: var(--success-green-dark);
+
+  font-size: 1.18rem;
+  white-space: nowrap;
+}
+
+/* =======================================================
+   ALLGEMEINE BUTTONS
+======================================================= */
+
+.checkout-success-button {
+  min-height: 52px;
+  margin-top: 34px;
+  padding: 0 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  box-sizing: border-box;
+
+  border-radius: 999px;
+
+  background: var(--success-green-dark);
+  color: var(--success-white);
+
+  font-size: 0.83rem;
+  font-weight: 750;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+
+  box-shadow:
+    0 13px 28px rgba(24, 60, 49, 0.16);
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.checkout-success-button:hover {
+  background: var(--success-green);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 17px 34px rgba(24, 60, 49, 0.21);
+}
+
+.checkout-success-button:focus-visible {
+  outline:
+    3px solid
+    rgba(40, 92, 75, 0.25);
+
+  outline-offset: 4px;
+}
+
+.checkout-success-button svg {
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 auto;
+}
+
+/* =======================================================
+   GEKAUFTE REISEGUIDES
+======================================================= */
+
+.checkout-success-downloads {
+  width: 100%;
+
+  margin-top: 42px;
+  padding-top: 38px;
+
+  border-top:
+    1px solid
+    var(--success-border);
+
+  text-align: left;
+}
+
+.checkout-success-downloads__header {
+  text-align: center;
+}
+
+.checkout-success-downloads__header > p {
+  margin: 0 0 7px;
+
+  color: var(--success-green);
+
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.checkout-success-downloads__header h2 {
+  margin: 0;
+
+  color: var(--success-green-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(2rem, 5vw, 2.8rem);
+
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.checkout-success-downloads__header > span {
+  display: block;
+
+  margin-top: 10px;
+
+  color: var(--success-text-soft);
+
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.checkout-success-downloads__list {
+  display: grid;
+  gap: 15px;
+
+  margin-top: 25px;
+}
+
+/* =======================================================
+   EINZELNER REISEGUIDE
+======================================================= */
+
+.checkout-success-download {
+  display: grid;
+  grid-template-columns:
+    145px
+    minmax(0, 1fr);
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(--success-border);
+
+  border-radius: 20px;
+
+  background: #fafcfb;
+
+  box-shadow:
+    0 12px 34px
+    rgba(24, 60, 49, 0.055);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.checkout-success-download:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 17px 40px
+    rgba(24, 60, 49, 0.09);
+}
+
+.checkout-success-download__image {
+  display: block;
+
+  width: 145px;
+  height: 145px;
+
+  align-self: center;
+
+  object-fit: cover;
+
+  background:
+    var(--success-green-soft);
+}
+
+.checkout-success-download__content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.checkout-success-download__format {
+  color: var(--success-green);
+
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  line-height: 1.45;
+  text-transform: uppercase;
+
+  overflow-wrap: anywhere;
+}
+
+.checkout-success-download h3 {
+  margin: 7px 0 0;
+
+  color: var(--success-green-dark);
+
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.35;
+
+  overflow-wrap: anywhere;
+}
+
+.checkout-success-download-button {
+  min-height: 40px;
+  margin-top: 15px;
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(24, 60, 49, 0.16);
+
+  border-radius: 999px;
+
+  background:
+    var(--success-green-soft);
+
+  color:
+    var(--success-green-dark);
+
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+
+.checkout-success-download-button:hover {
+  background: #d3e9dc;
+
+  border-color:
+    rgba(24, 60, 49, 0.26);
+
+  transform: translateY(-1px);
+}
+
+.checkout-success-download-button:focus-visible {
+  outline:
+    3px solid
+    rgba(40, 92, 75, 0.22);
+
+  outline-offset: 3px;
+}
+
+.checkout-success-download-button svg {
+  width: 16px;
+  height: 16px;
+
+  flex: 0 0 auto;
+}
+
+/* =======================================================
+   UNTERE AKTION
+======================================================= */
+
+.checkout-success-actions {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+/* =======================================================
+   FEHLERMELDUNG
+======================================================= */
+
+.checkout-success-downloads-error {
+  margin: 30px 0 0;
+  padding: 16px 18px;
+
+  border:
+    1px solid
+    rgba(168, 68, 76, 0.12);
+
+  border-radius: 15px;
+
+  background:
+    var(--success-red-soft);
+
+  color:
+    var(--success-red);
+
+  font-size: 0.8rem;
+  line-height: 1.55;
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+/* =======================================================
+   TABLET
+======================================================= */
+
+@media (max-width: 900px) {
+  .checkout-success-page {
+    min-height: 75vh;
+
+    padding:
+      72px
+      24px;
+  }
+
+  .checkout-success-card {
+    width: min(100%, 720px);
+
+    padding:
+      54px
+      46px;
+
+    border-radius: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .checkout-success-page {
+    display: block;
+
+    min-height: auto;
+
+    padding:
+      54px
+      18px;
+  }
+
+  .checkout-success-card {
+    width: 100%;
+
+    padding:
+      44px
+      30px;
+
+    border-radius: 25px;
+  }
+
+  .checkout-success-icon {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 22px;
+
+    flex-basis: 72px;
+  }
+
+  .checkout-success-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .checkout-success-card h1 {
+    font-size:
+      clamp(2.4rem, 9vw, 3.5rem);
+  }
+
+  .checkout-success-description {
+    margin-top: 19px;
+
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .checkout-success-summary {
+    margin-top: 28px;
+  }
+
+  .checkout-success-downloads {
+    margin-top: 36px;
+    padding-top: 32px;
+  }
+
+  .checkout-success-download {
+    grid-template-columns:
+      120px
+      minmax(0, 1fr);
+  }
+
+  .checkout-success-download__image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .checkout-success-download__content {
+    padding: 17px;
+  }
+}
+
+/* =======================================================
+   HANDY
+======================================================= */
+
+@media (max-width: 520px) {
+  .checkout-success-page {
+    padding:
+      34px
+      12px;
+
+    background:
+      radial-gradient(
+        circle at 15% 5%,
+        rgba(155, 189, 170, 0.16),
+        transparent 26%
+      ),
+      var(--success-cream);
+  }
+
+  .checkout-success-card {
+    padding:
+      34px
+      18px;
+
+    border-radius: 22px;
+
+    box-shadow:
+      0 16px 45px
+      rgba(24, 60, 49, 0.08);
+  }
+
+  .checkout-success-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 19px;
+
+    flex-basis: 64px;
+  }
+
+  .checkout-success-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .checkout-success-eyebrow {
+    margin-bottom: 10px;
+
+    font-size: 0.66rem;
+    letter-spacing: 0.11em;
+  }
+
+  .checkout-success-card h1 {
+    font-size:
+      clamp(2.15rem, 11vw, 3rem);
+
+    line-height: 1.02;
+  }
+
+  .checkout-success-description {
+    margin-top: 17px;
+
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  .checkout-success-summary {
+    width: 100%;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+
+    margin-top: 25px;
+    padding: 17px 18px;
+
+    border-radius: 16px;
+
+    text-align: left;
+  }
+
+  .checkout-success-summary span {
+    font-size: 0.76rem;
+  }
+
+  .checkout-success-summary strong {
+    font-size: 1.25rem;
+  }
+
+  .checkout-success-button {
+    width: 100%;
+
+    min-height: 50px;
+    margin-top: 27px;
+    padding: 0 20px;
+
+    font-size: 0.78rem;
+  }
+
+  .checkout-success-downloads {
+    margin-top: 32px;
+    padding-top: 28px;
+  }
+
+  .checkout-success-downloads__header h2 {
+    font-size:
+      clamp(1.9rem, 9vw, 2.45rem);
+  }
+
+  .checkout-success-downloads__header > span {
+    font-size: 0.72rem;
+  }
+
+  .checkout-success-downloads__list {
+    gap: 14px;
+
+    margin-top: 21px;
+  }
+
+  .checkout-success-download {
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 18px;
+  }
+
+  .checkout-success-download__image {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+  }
+
+  .checkout-success-download__content {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    align-items: stretch;
+
+    padding: 18px;
+  }
+
+  .checkout-success-download__format {
+    font-size: 0.62rem;
+  }
+
+  .checkout-success-download h3 {
+    font-size: 0.96rem;
+  }
+
+  .checkout-success-download-button {
+    width: 100%;
+
+    min-height: 43px;
+
+    margin-top: 14px;
+    padding: 0 14px;
+  }
+
+  .checkout-success-downloads-error {
+    margin-top: 24px;
+    padding: 14px;
+
+    font-size: 0.75rem;
+  }
+
+  .checkout-success-actions {
+    display: block;
+  }
+}
+
+/* =======================================================
+   SEHR KLEINE HANDYS
+======================================================= */
+
+@media (max-width: 360px) {
+  .checkout-success-page {
+    padding:
+      24px
+      8px;
+  }
+
+  .checkout-success-card {
+    padding:
+      30px
+      14px;
+
+    border-radius: 19px;
+  }
+
+  .checkout-success-card h1 {
+    font-size: 2rem;
+  }
+
+  .checkout-success-description {
+    font-size: 0.82rem;
+  }
+
+  .checkout-success-summary {
+    padding:
+      15px
+      14px;
+  }
+
+  .checkout-success-download__content {
+    padding: 15px;
+  }
+
+  .checkout-success-button {
+    padding:
+      0
+      15px;
+
+    font-size: 0.74rem;
+  }
+}
+
+/* =======================================================
+   TOUCH-GERÄTE
+======================================================= */
+
+@media (hover: none) {
+  .checkout-success-button:hover,
+  .checkout-success-download:hover,
+  .checkout-success-download-button:hover {
+    transform: none;
+  }
+}
+
+/* =======================================================
+   WENIGER BEWEGUNG
+======================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .checkout-success-button,
+  .checkout-success-download,
+  .checkout-success-download-button {
+    transition: none;
+  }
+
+  .checkout-success-icon--loading svg {
+    animation-duration: 1.8s;
+  }
+}
+
+/* =======================================================
+   ANIMATION
+======================================================= */
+
+@keyframes checkout-success-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

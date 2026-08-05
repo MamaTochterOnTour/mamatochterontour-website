@@ -1,0 +1,1582 @@
+/* =========================================================
+   ONLINE-SHOP – GRUNDLAGEN
+========================================================= */
+
+.online-shop-page {
+  --shop-green-dark: #183c31;
+  --shop-green: #285c4b;
+  --shop-green-light: #87aa94;
+  --shop-green-soft: #dce9e1;
+  --shop-cream: #f6f2e9;
+  --shop-cream-light: #fbfaf6;
+  --shop-text: #1c2722;
+  --shop-text-soft: #647069;
+  --shop-white: #ffffff;
+  --shop-border: rgba(24, 60, 49, 0.14);
+  --shop-shadow:
+    0 30px 80px rgba(24, 60, 49, 0.16);
+
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      125deg,
+      #fbfaf6 0%,
+      #f3f4ed 48%,
+      #e2ece5 100%
+    );
+
+  color: var(--shop-text);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.shop-hero {
+  position: relative;
+
+  min-height: calc(100vh - 100px);
+
+  display: flex;
+  align-items: center;
+
+  padding:
+    70px
+    24px
+    90px;
+
+  overflow: hidden;
+}
+
+.shop-hero__background {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.shop-hero__background::before {
+  position: absolute;
+  top: -180px;
+  right: -160px;
+
+  width: 540px;
+  height: 540px;
+
+  border:
+    1px solid
+    rgba(40, 92, 75, 0.1);
+
+  border-radius: 50%;
+
+  content: "";
+}
+
+.shop-hero__background::after {
+  position: absolute;
+  bottom: -300px;
+  left: -200px;
+
+  width: 600px;
+  height: 600px;
+
+  border:
+    1px solid
+    rgba(40, 92, 75, 0.08);
+
+  border-radius: 50%;
+
+  content: "";
+}
+
+.shop-hero__glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(12px);
+  opacity: 0.55;
+}
+
+.shop-hero__glow--one {
+  top: 12%;
+  right: 8%;
+
+  width: 320px;
+  height: 320px;
+
+  background:
+    rgba(143, 184, 158, 0.25);
+}
+
+.shop-hero__glow--two {
+  bottom: 4%;
+  left: 12%;
+
+  width: 220px;
+  height: 220px;
+
+  background:
+    rgba(224, 205, 163, 0.24);
+}
+
+/* =========================================================
+   HERO-LAYOUT
+========================================================= */
+
+.shop-hero__container {
+  position: relative;
+  z-index: 2;
+
+  width: min(100%, 1320px);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(380px, 0.95fr);
+
+  align-items: center;
+
+  gap:
+    clamp(
+      60px,
+      8vw,
+      130px
+    );
+}
+
+.shop-hero__content {
+  min-width: 0;
+  max-width: 690px;
+}
+
+.shop-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  max-width: 100%;
+  margin-bottom: 24px;
+  padding: 9px 15px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(40, 92, 75, 0.15);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.62);
+
+  color: var(--shop-green);
+
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+
+  box-shadow:
+    0 8px 30px
+    rgba(24, 60, 49, 0.06);
+
+  backdrop-filter: blur(12px);
+}
+
+.shop-hero__eyebrow::before {
+  flex: 0 0 auto;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    var(--shop-green-light);
+
+  content: "";
+}
+
+.shop-hero__title {
+  max-width: 690px;
+  margin: 0;
+
+  color: var(--shop-text);
+
+  font-size:
+    clamp(
+      3rem,
+      5.2vw,
+      5.6rem
+    );
+
+  font-weight: 700;
+  line-height: 0.99;
+  letter-spacing: -0.055em;
+
+  overflow-wrap: anywhere;
+}
+
+.shop-hero__title span {
+  color: var(--shop-green);
+}
+
+.shop-hero__description {
+  max-width: 610px;
+  margin: 30px 0 0;
+
+  color: var(--shop-text-soft);
+
+  font-size:
+    clamp(
+      1.05rem,
+      1.5vw,
+      1.22rem
+    );
+
+  line-height: 1.75;
+}
+
+/* =========================================================
+   HERO-BUTTON
+========================================================= */
+
+.shop-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-top: 38px;
+}
+
+.shop-hero__button {
+  min-height: 56px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 25px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    transparent;
+
+  border-radius: 999px;
+
+  font-size: 0.96rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
+}
+
+.shop-hero__button--primary {
+  gap: 13px;
+
+  background:
+    var(--shop-green-dark);
+
+  color:
+    var(--shop-white);
+
+  box-shadow:
+    0 16px 36px
+    rgba(24, 60, 49, 0.22);
+}
+
+.shop-hero__button--primary:hover {
+  background:
+    var(--shop-green);
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 20px 42px
+    rgba(24, 60, 49, 0.28);
+}
+
+.shop-hero__button--primary span {
+  font-size: 1.2rem;
+
+  transition:
+    transform 220ms ease;
+}
+
+.shop-hero__button--primary:hover span {
+  transform:
+    translateX(4px);
+}
+
+/* =========================================================
+   HERO-VORTEILE
+========================================================= */
+
+.shop-hero__benefits {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap:
+    14px
+    20px;
+
+  margin-top: 30px;
+}
+
+.shop-hero__benefit {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color:
+    var(--shop-text-soft);
+
+  font-size: 0.87rem;
+  font-weight: 600;
+}
+
+.shop-hero__check {
+  flex: 0 0 21px;
+
+  width: 21px;
+  height: 21px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    var(--shop-green-soft);
+
+  color:
+    var(--shop-green);
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* =========================================================
+   BESTSELLER-PRODUKTKARTE
+========================================================= */
+
+.shop-hero__visual {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  justify-content: center;
+
+  padding:
+    45px
+    20px
+    55px;
+}
+
+.shop-hero__visual-decoration {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.shop-hero__visual-decoration--one {
+  top: 4%;
+  right: 0;
+
+  width: 110px;
+  height: 110px;
+
+  border:
+    1px solid
+    rgba(40, 92, 75, 0.14);
+}
+
+.shop-hero__visual-decoration--two {
+  bottom: 5%;
+  left: 2%;
+
+  width: 56px;
+  height: 56px;
+
+  background:
+    rgba(40, 92, 75, 0.08);
+}
+
+.shop-hero__product-card {
+  position: relative;
+  z-index: 2;
+
+  width: min(100%, 430px);
+  padding: 16px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.72);
+
+  border-radius: 32px;
+
+  background:
+    rgba(255, 255, 255, 0.72);
+
+  box-shadow:
+    var(--shop-shadow);
+
+  transform:
+    rotate(2deg);
+
+  backdrop-filter:
+    blur(20px);
+
+  transition:
+    transform 350ms ease,
+    box-shadow 350ms ease;
+}
+
+.shop-hero__product-card:hover {
+  transform:
+    rotate(0deg)
+    translateY(-7px);
+
+  box-shadow:
+    0 40px 100px
+    rgba(24, 60, 49, 0.21);
+}
+
+.shop-hero__image-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  border-radius: 23px;
+
+  background:
+    var(--shop-green-soft);
+}
+
+.shop-hero__image-wrapper a {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+.shop-hero__product-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 450ms ease;
+}
+
+.shop-hero__image-wrapper:hover
+  .shop-hero__product-image {
+  transform:
+    scale(1.035);
+}
+
+.shop-hero__product-badge {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  margin:
+    18px
+    8px
+    0;
+
+  padding:
+    8px
+    13px;
+
+  border-radius: 999px;
+
+  background:
+    var(--shop-green-dark);
+
+  color:
+    var(--shop-white);
+
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  box-shadow:
+    0 8px 22px
+    rgba(24, 60, 49, 0.16);
+}
+
+.shop-hero__product-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 15px;
+
+  padding:
+    24px
+    8px
+    8px;
+}
+
+.shop-hero__product-category {
+  color:
+    var(--shop-green);
+
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.shop-hero__product-info h2 {
+  margin: 0;
+
+  color:
+    var(--shop-text);
+
+  font-size:
+    clamp(
+      1.25rem,
+      2vw,
+      1.55rem
+    );
+
+  line-height: 1.25;
+}
+
+.shop-hero__product-price {
+  color:
+    var(--shop-green-dark);
+
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.shop-hero__actions-row {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+/* =========================================================
+   WARENKORB-BUTTONS
+========================================================= */
+
+.shop-cart-button,
+.guide-card__cart {
+  min-width: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+
+  background: #8fc9a8;
+  color: #ffffff;
+
+  font: inherit;
+  font-weight: 750;
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.shop-cart-button {
+  flex: 1;
+
+  min-height: 52px;
+  padding:
+    0
+    15px;
+
+  border-radius: 15px;
+
+  font-size: 0.9rem;
+}
+
+.guide-card__cart {
+  flex: 1;
+
+  min-height: 50px;
+  padding:
+    0
+    13px;
+
+  border-radius: 14px;
+
+  font-size: 0.86rem;
+}
+
+.shop-cart-button:hover,
+.guide-card__cart:hover {
+  background: #73b38e;
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 10px 24px
+    rgba(40, 92, 75, 0.16);
+}
+
+/* =========================================================
+   FAVORITEN-BUTTONS
+========================================================= */
+
+.travel-guide-card__favorite {
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(24, 60, 49, 0.12);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  color:
+    var(--shop-green-dark);
+
+  box-shadow:
+    0 8px 22px
+    rgba(24, 60, 49, 0.1);
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.travel-guide-card__favorite:hover {
+  background: #ffffff;
+
+  transform:
+    scale(1.05);
+
+  box-shadow:
+    0 11px 28px
+    rgba(24, 60, 49, 0.14);
+}
+
+.travel-guide-card__favorite.is-favorite {
+  color: #c93f4b;
+}
+
+.travel-guide-card__favorite:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.travel-guide-card__favorite svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* =========================================================
+   BELIEBTE REISEGUIDES
+========================================================= */
+
+.popular-guides {
+  position: relative;
+
+  padding:
+    20px
+    24px
+    120px;
+}
+
+.popular-guides__container {
+  width: min(100%, 1380px);
+  margin: 0 auto;
+
+  padding:
+    72px
+    40px
+    60px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(24, 60, 49, 0.11);
+
+  border-radius: 38px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(242, 248, 244, 0.76) 48%,
+      rgba(226, 240, 231, 0.72) 100%
+    );
+
+  box-shadow:
+    0 30px 80px
+    rgba(24, 60, 49, 0.1);
+
+  backdrop-filter:
+    blur(18px);
+}
+
+.popular-guides__header {
+  max-width: 700px;
+
+  margin:
+    0
+    auto
+    52px;
+
+  text-align: center;
+}
+
+.popular-guides__header h2 {
+  margin:
+    0
+    0
+    16px;
+
+  color:
+    var(--shop-text);
+
+  font-size:
+    clamp(
+      2.3rem,
+      4vw,
+      3.5rem
+    );
+
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.popular-guides__header p {
+  margin: 0;
+
+  color:
+    var(--shop-text-soft);
+
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.popular-guides__grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 28px;
+}
+
+/* =========================================================
+   GUIDE-KARTEN
+========================================================= */
+
+.guide-card {
+  min-width: 0;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(24, 60, 49, 0.08);
+
+  border-radius: 26px;
+
+  background:
+    rgba(255, 255, 255, 0.9);
+
+  color:
+    var(--shop-text);
+
+  text-decoration: none;
+
+  box-shadow:
+    0 18px 45px
+    rgba(24, 60, 49, 0.09);
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.guide-card:hover {
+  transform:
+    translateY(-8px);
+
+  box-shadow:
+    0 28px 60px
+    rgba(24, 60, 49, 0.15);
+}
+
+.guide-card > img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  object-fit: cover;
+
+  background:
+    var(--shop-green-soft);
+
+  transition:
+    transform 450ms ease;
+}
+
+.guide-card:hover > img {
+  transform:
+    scale(1.035);
+}
+
+.guide-card__content {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding:
+    24px
+    24px
+    26px;
+}
+
+.guide-card__category {
+  color:
+    var(--shop-green);
+
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.guide-card h3 {
+  margin:
+    13px
+    0
+    0;
+
+  color:
+    var(--shop-text);
+
+  font-size:
+    clamp(
+      1.2rem,
+      1.6vw,
+      1.55rem
+    );
+
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+
+  overflow-wrap: anywhere;
+}
+
+.guide-card__price {
+  display: block;
+
+  margin-top: 17px;
+
+  color:
+    var(--shop-green-dark);
+
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.guide-card__actions {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.popular-guides__button {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 52px;
+}
+
+/* =========================================================
+   SWIPER
+========================================================= */
+
+.popular-guides__mobile-slider {
+  display: none;
+}
+
+.popular-guides__swiper {
+  width: 100%;
+
+  padding-bottom: 44px;
+}
+
+.popular-guides__swiper
+  .swiper-slide {
+  height: auto;
+}
+
+.popular-guides__swiper
+  .guide-card {
+  height: 100%;
+}
+
+.popular-guides__swiper
+  .swiper-pagination {
+  bottom: 8px;
+}
+
+.popular-guides__swiper
+  .swiper-pagination-bullet {
+  width: 7px;
+  height: 7px;
+
+  margin:
+    0
+    5px !important;
+
+  background:
+    rgba(24, 60, 49, 0.22);
+
+  opacity: 1;
+
+  transition:
+    width 200ms ease,
+    background-color 200ms ease;
+}
+
+.popular-guides__swiper
+  .swiper-pagination-bullet-active {
+  width: 22px;
+
+  border-radius: 999px;
+
+  background:
+    var(--shop-green);
+}
+
+/* =========================================================
+   KLEINERE LAPTOPS
+========================================================= */
+
+@media (max-width: 1150px) {
+  .shop-hero {
+    min-height: auto;
+
+    padding:
+      65px
+      28px
+      80px;
+  }
+
+  .shop-hero__container {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(330px, 0.8fr);
+
+    gap: 48px;
+  }
+
+  .shop-hero__product-card {
+    max-width: 390px;
+  }
+
+  .popular-guides__grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap: 24px;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+  .shop-hero {
+    min-height: auto;
+
+    padding:
+      70px
+      22px
+      65px;
+  }
+
+  .shop-hero__container {
+    width: min(100%, 720px);
+
+    grid-template-columns: 1fr;
+
+    gap: 48px;
+  }
+
+  .shop-hero__content {
+    max-width: 720px;
+  }
+
+  .shop-hero__title {
+    max-width: 720px;
+
+    font-size:
+      clamp(
+        3.5rem,
+        10vw,
+        5.2rem
+      );
+  }
+
+  .shop-hero__description {
+    max-width: 650px;
+
+    font-size: 1.04rem;
+  }
+
+  .shop-hero__visual {
+    width: min(100%, 550px);
+
+    margin: 0 auto;
+
+    padding:
+      20px
+      40px
+      35px;
+
+    box-sizing: border-box;
+  }
+
+  .shop-hero__product-card {
+    width: min(100%, 430px);
+
+    transform:
+      rotate(1deg);
+  }
+
+  .popular-guides {
+    padding:
+      15px
+      22px
+      100px;
+  }
+
+  .popular-guides__container {
+    padding:
+      58px
+      28px
+      48px;
+
+    border-radius: 32px;
+  }
+
+  .popular-guides__header {
+    margin-bottom: 42px;
+  }
+
+  .popular-guides__grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap: 22px;
+  }
+}
+
+/* =========================================================
+   HANDY
+========================================================= */
+
+@media (max-width: 600px) {
+  .shop-hero {
+    padding:
+      42px
+      15px
+      50px;
+  }
+
+  .shop-hero__container {
+    gap: 38px;
+  }
+
+  .shop-hero__eyebrow {
+    margin-bottom: 19px;
+    padding:
+      8px
+      12px;
+
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+  }
+
+  .shop-hero__title {
+    width: 100%;
+
+    font-size:
+      clamp(
+        2.85rem,
+        14vw,
+        4.15rem
+      );
+
+    line-height: 0.97;
+    letter-spacing: -0.06em;
+  }
+
+  .shop-hero__description {
+    margin-top: 22px;
+
+    font-size: 0.94rem;
+    line-height: 1.68;
+  }
+
+  .shop-hero__actions {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    margin-top: 28px;
+  }
+
+  .shop-hero__button {
+    width: 100%;
+    min-height: 52px;
+
+    padding:
+      0
+      18px;
+
+    font-size: 0.87rem;
+  }
+
+  .shop-hero__benefits {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    margin-top: 24px;
+  }
+
+  .shop-hero__benefit {
+    font-size: 0.82rem;
+  }
+
+  .shop-hero__visual {
+    width: 100%;
+
+    padding:
+      7px
+      0
+      22px;
+  }
+
+  .shop-hero__visual-decoration {
+    display: none;
+  }
+
+  .shop-hero__product-card {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 11px;
+
+    border-radius: 25px;
+
+    transform: none;
+  }
+
+  .shop-hero__product-card:hover {
+    transform: none;
+  }
+
+  .shop-hero__image-wrapper {
+    border-radius: 19px;
+  }
+
+  .shop-hero__product-badge {
+    margin:
+      14px
+      6px
+      0;
+
+    padding:
+      7px
+      11px;
+
+    font-size: 0.65rem;
+  }
+
+  .shop-hero__product-info {
+    gap: 13px;
+
+    padding:
+      19px
+      6px
+      7px;
+  }
+
+  .shop-hero__product-category {
+    font-size: 0.62rem;
+  }
+
+  .shop-hero__product-info h2 {
+    font-size: 1.28rem;
+  }
+
+  .shop-hero__product-price {
+    font-size: 1.42rem;
+  }
+
+  .shop-hero__actions-row {
+    gap: 9px;
+  }
+
+  .shop-cart-button {
+    min-height: 49px;
+
+    padding:
+      0
+      10px;
+
+    border-radius: 14px;
+
+    font-size: 0.82rem;
+
+    white-space: nowrap;
+  }
+
+  .travel-guide-card__favorite {
+    flex-basis: 44px;
+
+    width: 44px;
+    height: 44px;
+  }
+
+  .shop-hero__background::before {
+    top: -150px;
+    right: -250px;
+
+    width: 430px;
+    height: 430px;
+  }
+
+  .shop-hero__background::after {
+    bottom: -310px;
+    left: -280px;
+
+    width: 500px;
+    height: 500px;
+  }
+
+  .shop-hero__glow--one {
+    right: -160px;
+
+    opacity: 0.35;
+  }
+
+  .shop-hero__glow--two {
+    left: -130px;
+
+    opacity: 0.3;
+  }
+
+  /* Beliebte Guides */
+
+  .popular-guides {
+    padding:
+      10px
+      14px
+      85px;
+  }
+
+  .popular-guides__container {
+    padding:
+      44px
+      14px
+      38px;
+
+    border-radius: 27px;
+  }
+
+  .popular-guides__header {
+    margin-bottom: 32px;
+
+    padding:
+      0
+      5px;
+  }
+
+  .popular-guides__header h2 {
+    font-size:
+      clamp(
+        2.1rem,
+        10vw,
+        3rem
+      );
+
+    line-height: 1.05;
+  }
+
+  .popular-guides__header p {
+    font-size: 0.91rem;
+    line-height: 1.65;
+  }
+
+  .popular-guides__grid--desktop {
+    display: none;
+  }
+
+  .popular-guides__mobile-slider {
+    display: block;
+
+    width: 100%;
+  }
+
+  .popular-guides__swiper {
+    overflow: hidden;
+
+    padding-bottom: 44px;
+  }
+
+  .popular-guides__swiper
+    .swiper-slide {
+    width: 100%;
+  }
+
+  .guide-card {
+    width: 100%;
+
+    border-radius: 23px;
+  }
+
+  .guide-card:hover {
+    transform: none;
+  }
+
+  .guide-card__content {
+    padding:
+      20px
+      18px
+      22px;
+  }
+
+  .guide-card__category {
+    font-size: 0.67rem;
+  }
+
+  .guide-card h3 {
+    margin-top: 11px;
+
+    font-size: 1.38rem;
+  }
+
+  .guide-card__price {
+    margin-top: 15px;
+
+    font-size: 1.32rem;
+  }
+
+  .guide-card__actions {
+    gap: 9px;
+
+    padding-top: 18px;
+  }
+
+  .guide-card__cart {
+    min-height: 48px;
+
+    padding:
+      0
+      10px;
+
+    border-radius: 13px;
+
+    font-size: 0.8rem;
+  }
+
+  .guide-card__actions
+    .travel-guide-card__favorite {
+    flex-basis: 43px;
+
+    width: 43px;
+    height: 43px;
+  }
+
+  .popular-guides__button {
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding:
+      0
+      5px;
+  }
+
+  .popular-guides__button
+    .shop-hero__button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   SEHR KLEINE HANDYS
+========================================================= */
+
+@media (max-width: 390px) {
+  .shop-hero {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .shop-hero__title {
+    font-size:
+      clamp(
+        2.65rem,
+        14vw,
+        3.4rem
+      );
+  }
+
+  .shop-hero__description {
+    font-size: 0.89rem;
+  }
+
+  .shop-hero__benefit {
+    font-size: 0.78rem;
+  }
+
+  .shop-hero__product-info h2 {
+    font-size: 1.18rem;
+  }
+
+  .shop-cart-button,
+  .guide-card__cart {
+    font-size: 0.75rem;
+  }
+
+  .popular-guides {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .popular-guides__container {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .guide-card__content {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+/* =========================================================
+   TOUCH-GERÄTE
+========================================================= */
+
+@media (hover: none) {
+  .shop-hero__product-card:hover,
+  .shop-hero__button:hover,
+  .guide-card:hover,
+  .shop-cart-button:hover,
+  .guide-card__cart:hover,
+  .travel-guide-card__favorite:hover {
+    transform: none;
+  }
+
+  .shop-hero__image-wrapper:hover
+    .shop-hero__product-image,
+  .guide-card:hover > img {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   REDUZIERTE BEWEGUNG
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-hero__button,
+  .shop-hero__product-card,
+  .shop-hero__product-image,
+  .guide-card,
+  .guide-card > img,
+  .shop-cart-button,
+  .guide-card__cart,
+  .travel-guide-card__favorite {
+    transition: none;
+  }
+}

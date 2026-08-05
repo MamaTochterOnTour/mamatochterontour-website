@@ -1,0 +1,307 @@
+.shop-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 130px 24px 70px;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(126, 90, 180, 0.18),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(85, 145, 104, 0.18),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      #0f1110 0%,
+      #171b18 48%,
+      #111310 100%
+    );
+
+  color: #f7f5f2;
+}
+
+.shop-login-card {
+  width: 100%;
+  max-width: 540px;
+  padding: 48px;
+
+  background: rgba(24, 28, 25, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.shop-login-eyebrow {
+  margin: 0 0 14px;
+
+  color: #a8d5b2;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.shop-login-card h1 {
+  margin: 0;
+
+  color: #ffffff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.shop-login-description {
+  margin: 20px 0 30px;
+
+  color: rgba(247, 245, 242, 0.7);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.shop-social-button {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  padding: 14px 20px;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 15px;
+
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.shop-social-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(168, 213, 178, 0.42);
+
+  box-shadow: 0 13px 28px rgba(0, 0, 0, 0.2);
+}
+
+.shop-social-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.shop-social-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.shop-login-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 26px 0;
+}
+
+.shop-login-divider::before,
+.shop-login-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.shop-login-divider span {
+  color: rgba(247, 245, 242, 0.45);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.shop-login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shop-login-card form input {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 17px;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 15px;
+  outline: none;
+
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.shop-login-card form input::placeholder {
+  color: rgba(247, 245, 242, 0.34);
+}
+
+.shop-login-card form input:hover {
+  border-color: rgba(168, 213, 178, 0.4);
+}
+
+.shop-login-card form input:focus {
+  background: rgba(255, 255, 255, 0.075);
+  border-color: #9bcaa6;
+
+  box-shadow:
+    0 0 0 4px rgba(155, 202, 166, 0.13),
+    0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.shop-login-error {
+  margin: 0;
+  padding: 14px 16px;
+
+  background: rgba(186, 66, 66, 0.12);
+  border: 1px solid rgba(255, 120, 120, 0.3);
+  border-radius: 14px;
+
+  color: #ffb5b5;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.shop-login-button {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 22px;
+
+  background: linear-gradient(
+    135deg,
+    #9fcfab 0%,
+    #75ad83 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+
+  box-shadow:
+    0 13px 28px rgba(80, 132, 93, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  color: #101611;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.shop-login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+
+  box-shadow:
+    0 17px 34px rgba(80, 132, 93, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.shop-login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.shop-login-button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.shop-forgot-password {
+  display: block;
+  width: fit-content;
+  margin: 19px auto 0;
+
+  color: #abd7b5;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.shop-forgot-password:hover {
+  color: #d3f0d9;
+}
+
+.shop-register-link {
+  margin-top: 28px;
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: rgba(247, 245, 242, 0.58);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.shop-register-link a {
+  color: #abd7b5;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.shop-register-link a:hover {
+  color: #d3f0d9;
+}
+
+.shop-social-button:focus-visible,
+.shop-login-card form input:focus-visible,
+.shop-login-button:focus-visible,
+.shop-forgot-password:focus-visible,
+.shop-register-link a:focus-visible {
+  outline: 3px solid rgba(173, 222, 183, 0.6);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-social-button,
+  .shop-login-card form input,
+  .shop-login-button,
+  .shop-forgot-password,
+  .shop-register-link a {
+    transition: none;
+  }
+}
