@@ -58,12 +58,13 @@ function Footer() {
       const result = await subscribeToNewsletter({ email });
 
       setNewsletterStatus("success");
-      setNewsletterMessage(
-        result.data?.message ||
-          "Bitte bestätige deine Anmeldung über die E-Mail, die wir dir geschickt haben."
-      );
 
-      setNewsletterEmail("");
+setNewsletterMessage(
+  result.data?.message ||
+    "Deine Newsletter-Anmeldung wurde verarbeitet."
+);
+
+setNewsletterEmail("");
     } catch (error) {
       console.error("Newsletter-Anmeldung fehlgeschlagen:", error);
 
@@ -217,30 +218,19 @@ function Footer() {
 </div>
 
            {/* Online-Shop */}
+{/* Online-Shop */}
 <div className="footer__column">
   <span className="footer__column-title">
     Online-Shop
   </span>
 
-  <button
-    type="button"
-    className="footer__coming-soon-link"
-    onClick={() =>
-      setFooterComingSoonType("shop")
-    }
-  >
+  <Link to="/shop">
     Shop-Startseite
-  </button>
+  </Link>
 
-  <button
-    type="button"
-    className="footer__coming-soon-link"
-    onClick={() =>
-      setFooterComingSoonType("shop")
-    }
-  >
+  <Link to="/shop/reiseguides">
     Reiseguides
-  </button>
+  </Link>
 </div>
 
             {/* Momentry */}

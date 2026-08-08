@@ -1785,159 +1785,45 @@
 }
 
 /* =========================================================
-   TABLET
-   bis 900 px
+   TABLET + HANDY:
+   IMMER 2 GUIDES NEBENEINANDER
 ========================================================= */
 
 @media (max-width: 900px) {
-  .cart-hero {
-    padding: 62px 22px 45px;
-  }
-
-  .cart-hero h1 {
-    font-size: clamp(
-      3.4rem,
-      9vw,
-      4.8rem
-    );
-  }
-
-  .cart-hero p {
-    max-width: 620px;
-
-    font-size: 0.98rem;
-    line-height: 1.7;
-  }
-
-  .cart-content {
-    width: min(calc(100% - 40px), 760px);
-    padding: 35px 0 90px;
-  }
-
-  /*
-   * Warenkorb und Bestellübersicht stehen
-   * auf dem Tablet untereinander.
-   */
   .cart-layout {
     grid-template-columns: 1fr;
-    gap: 38px;
+    gap: 36px;
   }
 
-  .cart-main {
-    width: 100%;
-  }
-
-  /*
-   * Sticky wird deaktiviert, da die Zusammenfassung
-   * nun unter den Produkten steht.
-   */
   .cart-summary {
     position: static;
     top: auto;
 
     width: 100%;
-    padding: 30px;
-
-    border-radius: 26px;
   }
 
-  .cart-summary h2 {
-    font-size: 2.25rem;
-  }
+  .cart-items {
+    display: grid;
 
-  .cart-checkout-mode {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
 
-    align-items: stretch;
+    gap: 18px;
   }
 
-  .cart-checkout-mode h3 {
-    grid-column: 1 / -1;
-  }
-
-  .cart-checkout-option {
-    height: 100%;
-  }
-
-  .cart-customer-email,
-  .cart-coupon {
-    width: 100%;
-  }
-
-  .cart-coupon {
-    margin-top: 24px;
-  }
-
-  .cart-empty {
-    margin-top: 10px;
-  }
-}
-
-/* =========================================================
-   KLEINE TABLETS UND GROSSE HANDYS
-   bis 700 px
-========================================================= */
-
-@media (max-width: 700px) {
-  .cart-hero {
-    padding: 52px 18px 42px;
-  }
-
-  .cart-hero__icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 17px;
-  }
-
-  .cart-hero__icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .cart-hero h1 {
-    font-size: clamp(
-      3rem,
-      11vw,
-      4rem
-    );
-  }
-
-  .cart-hero p {
-    margin-top: 17px;
-
-    font-size: 0.92rem;
-    line-height: 1.65;
-  }
-
-  .cart-hero__count {
-    margin-top: 17px;
-
-    font-size: 0.71rem;
-  }
-
-  .cart-content {
-    width: min(calc(100% - 30px), 650px);
-    padding: 28px 0 78px;
-  }
-
-  .cart-main__header {
-    align-items: flex-start;
-  }
-
-  /*
-   * Produktkarte:
-   * Bild oben, Produktinformationen darunter.
-   */
   .cart-item {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
 
-    border-radius: 22px;
+    min-width: 0;
+
+    border-radius: 20px;
   }
 
   .cart-item__image {
     width: 100%;
     min-height: 0;
+
     aspect-ratio: 1 / 1;
   }
 
@@ -1949,174 +1835,16 @@
   }
 
   .cart-item__content {
-    padding: 22px;
+    flex: 1;
+
+    padding: 17px;
   }
 
   .cart-item__top {
-    align-items: flex-start;
-  }
-
-  .cart-item__bottom {
-    padding-top: 21px;
-  }
-
-  .cart-checkout-mode {
-    grid-template-columns: 1fr;
-  }
-
-  .cart-checkout-mode h3 {
-    grid-column: auto;
-  }
-
-  .cart-summary {
-    padding: 24px;
-  }
-}
-
-/* =========================================================
-   HANDY
-   bis 560 px
-========================================================= */
-
-@media (max-width: 560px) {
-  .cart-hero {
-    padding: 43px 15px 38px;
-  }
-
-  .cart-hero h1 {
-    font-size: clamp(
-      2.8rem,
-      13vw,
-      3.7rem
-    );
-
-    line-height: 0.98;
-  }
-
-  .cart-hero p {
-    font-size: 0.88rem;
-  }
-
-  .cart-content {
-    width: min(calc(100% - 24px), 520px);
-    padding: 23px 0 68px;
-  }
-
-  .cart-layout {
-    gap: 32px;
-  }
-
-  /* -------------------------
-     Überschrift der Auswahl
-  ------------------------- */
-
-  .cart-main__header {
+    display: flex;
     flex-direction: column;
-    gap: 15px;
 
-    margin-bottom: 18px;
-    padding-inline: 2px;
-  }
-
-  .cart-main__header h2 {
-    font-size: 1.4rem;
-  }
-
-  .cart-clear-button {
-    min-height: 42px;
-    padding: 0 14px;
-
-    font-size: 0.72rem;
-  }
-
-  /* -------------------------
-     Rabatte
-  ------------------------- */
-
-  .cart-discount-progress {
-    margin-bottom: 13px;
-    padding: 16px;
-
-    border-radius: 17px;
-  }
-
-  .cart-discount-progress__top {
-    gap: 10px;
-  }
-
-  .cart-discount-progress__top strong {
-    font-size: 0.78rem;
-  }
-
-  .cart-discount-progress__top
-    > span {
-    padding: 5px 9px;
-
-    font-size: 0.65rem;
-  }
-
-  .cart-discount-progress p {
-    font-size: 0.75rem;
-  }
-
-  .cart-discount-progress small {
-    font-size: 0.64rem;
-  }
-
-  .cart-bundle-hint {
-    margin-bottom: 13px;
-    padding: 16px;
-
-    border-radius: 17px;
-  }
-
-  .cart-bundle-hint strong {
-    font-size: 0.79rem;
-  }
-
-  .cart-bundle-hint p {
-    font-size: 0.72rem;
-  }
-
-  /* -------------------------
-     Produkte
-  ------------------------- */
-
-  .cart-items {
-    gap: 14px;
-  }
-
-  .cart-item {
-    border-radius: 20px;
-  }
-
-  .cart-item:hover {
-    transform: none;
-  }
-
-  .cart-item:hover
-    .cart-item__image
-    img {
-    transform: none;
-  }
-
-  .cart-item__content {
-    padding: 19px 17px;
-  }
-
-  .cart-item__top {
-    gap: 12px;
-  }
-
-  .cart-item__type {
-    margin-bottom: 7px;
-
-    font-size: 0.61rem;
-  }
-
-  .cart-item h3 {
-    font-size: 1.17rem;
-    line-height: 1.3;
+    gap: 9px;
   }
 
   .cart-item__price {
@@ -2124,396 +1852,166 @@
   }
 
   .cart-item__description {
-    margin-top: 13px;
-
-    font-size: 0.79rem;
-    line-height: 1.6;
+    font-size: 0.76rem;
   }
 
   .cart-item__bottom {
     align-items: flex-start;
     flex-direction: column;
 
-    gap: 13px;
-    padding-top: 19px;
-  }
+    gap: 10px;
 
-  .cart-item__delivery {
-    font-size: 0.69rem;
+    margin-top: auto;
+    padding-top: 16px;
   }
 
   .cart-item__remove {
-    min-height: 39px;
-    padding: 0 12px;
-
-    background: var(--cart-red-soft);
-
-    font-size: 0.7rem;
-  }
-
-  .cart-continue-shopping {
-    margin-top: 20px;
-
-    font-size: 0.76rem;
-  }
-
-  /* -------------------------
-     Zusammenfassung
-  ------------------------- */
-
-  .cart-summary {
-    padding: 21px 17px;
-
-    border-radius: 22px;
-  }
-
-  .cart-summary h2 {
-    font-size: 2rem;
-  }
-
-  .cart-summary__eyebrow {
-    font-size: 0.64rem;
-  }
-
-  .cart-checkout-mode {
-    margin-top: 22px;
-    padding: 15px;
-
-    border-radius: 16px;
-  }
-
-  .cart-checkout-option {
-    gap: 10px;
-    padding: 13px;
-
-    border-radius: 14px;
-  }
-
-  .cart-checkout-option strong {
-    font-size: 0.78rem;
-  }
-
-  .cart-checkout-option p {
-    font-size: 0.68rem;
-  }
-
-  .cart-login-box,
-  .cart-account-ok {
-    padding: 14px;
-
-    border-radius: 15px;
-  }
-
-  .cart-summary__rows {
-    gap: 12px;
-
-    margin-top: 22px;
-    padding-bottom: 19px;
-  }
-
-  .cart-summary__row {
-    font-size: 0.79rem;
-  }
-
-  /* -------------------------
-     E-Mail und Gutschein
-  ------------------------- */
-
-  .cart-customer-email {
-    margin-top: 20px;
-  }
-
-  .cart-customer-email label,
-  .cart-coupon__title {
-    font-size: 0.77rem;
-  }
-
-  .cart-customer-email input,
-  .cart-coupon__wrapper input {
-    height: 47px;
-    padding: 0 14px;
-
-    border-radius: 13px;
-
-    font-size: 0.81rem;
-  }
-
-  .cart-coupon {
-    margin: 22px 0;
-    padding: 16px;
-
-    border-radius: 16px;
-  }
-
-  .cart-coupon__wrapper {
-    gap: 8px;
-  }
-
-  .cart-coupon__wrapper
-    .cart-coupon__apply {
-    width: 42px;
-    height: 42px;
-
-    flex-basis: 42px;
-  }
-
-  .cart-coupon__message {
-    font-size: 0.74rem;
-    line-height: 1.5;
-  }
-
-  /* -------------------------
-     Preisübersicht
-  ------------------------- */
-
-  .cart-price-summary {
-    gap: 12px;
-
-    margin-bottom: 21px;
-    padding: 16px;
-
-    border-radius: 16px;
-  }
-
-  .cart-price-summary__row {
-    align-items: flex-start;
-    gap: 12px;
-
-    font-size: 0.78rem;
-  }
-
-  .cart-price-summary__row strong {
-    font-size: 0.84rem;
-  }
-
-  .cart-price-summary__discount-copy {
-    padding-right: 5px;
-  }
-
-  .cart-price-summary__discount-copy
-    > small {
-    font-size: 0.62rem;
-  }
-
-  .cart-price-summary__total {
-    gap: 14px;
-  }
-
-  .cart-price-summary__total span {
-    font-size: 0.92rem;
-  }
-
-  .cart-price-summary__total small {
-    font-size: 0.62rem;
-  }
-
-  .cart-price-summary__total
-    > strong {
-    font-size: 1.25rem;
-  }
-
-  .cart-best-discount-note,
-  .cart-coupon__rule {
-    font-size: 0.64rem;
-  }
-
-  .cart-coupon-comparison {
-    padding: 13px;
-  }
-
-  /* -------------------------
-     Zustimmung
-  ------------------------- */
-
-  .cart-digital-consent {
-    margin: 18px 0 15px;
-  }
-
-  .cart-digital-consent__label {
-    grid-template-columns:
-      21px
-      minmax(0, 1fr);
-
-    gap: 10px;
-    padding: 13px;
-
-    border-radius: 13px;
-  }
-
-  .cart-digital-consent__checkmark {
-    width: 21px;
-    height: 21px;
-  }
-
-  .cart-digital-consent__text {
-    font-size: 0.7rem;
-    line-height: 1.55;
-  }
-
-  /* -------------------------
-     Checkout
-  ------------------------- */
-
-  .cart-checkout-button {
-    min-height: 50px;
-    padding: 0 18px;
-
-    font-size: 0.78rem;
-  }
-
-  .cart-checkout-button:hover {
-    transform: none;
-  }
-
-  .cart-summary__security {
-    font-size: 0.65rem;
-  }
-
-  .cart-summary__information {
-    margin-top: 21px;
-    padding: 15px;
-
-    border-radius: 15px;
-  }
-
-  .cart-summary__information h3 {
-    font-size: 0.81rem;
-  }
-
-  .cart-summary__information p {
-    font-size: 0.69rem;
-  }
-
-  /* -------------------------
-     Leerer Warenkorb
-  ------------------------- */
-
-  .cart-empty {
-    margin-top: 5px;
-    padding: 47px 20px;
-
-    border-radius: 22px;
-  }
-
-  .cart-empty__icon {
-    width: 56px;
-    height: 56px;
-  }
-
-  .cart-empty h2 {
-    font-size: 1.9rem;
-  }
-
-  .cart-empty p {
-    font-size: 0.87rem;
-  }
-
-  .cart-empty__button {
     width: 100%;
-    min-height: 49px;
-    padding-inline: 16px;
-  }
 
-  /* -------------------------
-     Dialog
-  ------------------------- */
+    min-height: 38px;
 
-  .cart-dialog-backdrop {
-    padding: 15px;
-  }
-
-  .cart-dialog {
-    padding: 27px 19px;
-
-    border-radius: 22px;
-  }
-
-  .cart-dialog h2 {
-    font-size: 1.8rem;
-  }
-
-  .cart-dialog p {
-    font-size: 0.82rem;
-  }
-
-  .cart-dialog__actions {
-    flex-direction: column-reverse;
-  }
-
-  .cart-dialog__cancel,
-  .cart-dialog__confirm {
-    width: 100%;
-    flex: none;
-
-    min-height: 46px;
+    background:
+      var(--cart-red-soft);
   }
 }
 
+
 /* =========================================================
-   SEHR KLEINE HANDYS
-   bis 390 px
+   HANDY
+   WEITERHIN 2 GUIDES NEBENEINANDER
 ========================================================= */
 
-@media (max-width: 390px) {
-  .cart-hero {
-    padding-inline: 12px;
-  }
-
-  .cart-hero h1 {
-    font-size: clamp(
-      2.55rem,
-      14vw,
-      3.25rem
-    );
-  }
-
-  .cart-hero p {
-    font-size: 0.84rem;
-  }
-
+@media (max-width: 560px) {
   .cart-content {
-    width: min(calc(100% - 18px), 370px);
+    width:
+      calc(100% - 18px);
+
+    padding:
+      22px
+      0
+      65px;
   }
 
-  .cart-item__content {
-    padding-inline: 15px;
-  }
+  .cart-items {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
 
-  .cart-item__top {
-    flex-direction: column;
     gap: 10px;
   }
 
+  .cart-item {
+    border-radius: 15px;
+  }
+
+  .cart-item__content {
+    padding:
+      11px
+      9px
+      12px;
+  }
+
+  .cart-item__type {
+    margin-bottom: 4px;
+
+    font-size: 0.5rem;
+
+    letter-spacing: 0.07em;
+  }
+
+  .cart-item h3 {
+    font-size: 0.82rem;
+
+    line-height: 1.2;
+  }
+
   .cart-item__price {
-    font-size: 1.05rem;
+    margin-top: 5px;
+
+    font-size: 0.82rem;
   }
 
-  .cart-summary {
-    padding-inline: 14px;
+  .cart-item__description {
+    margin-top: 7px;
+
+    font-size: 0.6rem;
+    line-height: 1.4;
   }
 
-  .cart-checkout-mode,
-  .cart-coupon,
-  .cart-price-summary {
-    padding-inline: 13px;
+  .cart-item__bottom {
+    gap: 7px;
+
+    padding-top: 10px;
   }
 
-  .cart-coupon__wrapper input {
-    min-width: 0;
+  .cart-item__delivery {
+    gap: 4px;
+
+    font-size: 0.54rem;
+    line-height: 1.3;
   }
 
-  .cart-price-summary__total {
-    align-items: flex-start;
-    flex-direction: column;
+  .cart-item__delivery svg {
+    width: 11px;
+    height: 11px;
   }
 
-  .cart-price-summary__total
-    > strong {
-    font-size: 1.4rem;
+  .cart-item__remove {
+    min-height: 32px;
+
+    padding:
+      0
+      6px;
+
+    font-size: 0.56rem;
   }
 
-  .cart-checkout-button {
-    font-size: 0.74rem;
+  .cart-item__remove svg {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+
+/* =========================================================
+   SEHR KLEINE HANDYS
+   AUCH HIER 2 NEBENEINANDER
+========================================================= */
+
+@media (max-width: 390px) {
+  .cart-content {
+    width:
+      calc(100% - 12px);
+  }
+
+  .cart-items {
+    gap: 7px;
+  }
+
+  .cart-item__content {
+    padding:
+      9px
+      7px
+      10px;
+  }
+
+  .cart-item h3 {
+    font-size: 0.75rem;
+  }
+
+  .cart-item__price {
+    font-size: 0.76rem;
+  }
+
+  .cart-item__description {
+    font-size: 0.56rem;
+  }
+
+  .cart-item__delivery {
+    font-size: 0.5rem;
+  }
+
+  .cart-item__remove {
+    font-size: 0.52rem;
   }
 }
 

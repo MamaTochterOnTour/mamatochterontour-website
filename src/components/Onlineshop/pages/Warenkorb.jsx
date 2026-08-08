@@ -919,14 +919,12 @@ if (!digitalContentConsent) {
     </span>
 
     <span className="cart-digital-consent__text">
-      Ich stimme ausdrücklich zu, dass
-      MamaTochterOnTour vor Ablauf der
-      Widerrufsfrist mit der Ausführung des
-      Vertrags beginnt. Mir ist bekannt, dass
-      ich mit Beginn der Bereitstellung der
-      digitalen Reiseguides mein
-      Widerrufsrecht verliere.
-    </span>
+  Ich stimme ausdrücklich zu, dass meine
+  digitalen Reiseguides direkt nach dem Kauf
+  bereitgestellt werden. Mir ist bekannt,
+  dass ich dadurch mein Widerrufsrecht
+  verliere, sobald die Bereitstellung beginnt.
+</span>
   </label>
 
   {consentError && (

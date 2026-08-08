@@ -49,10 +49,12 @@ function NewsletterConfirmed() {
           <div className="newsletter-confirmed__mail">
 
             <p>
-              Deinen persönlichen Willkommensgutschein
-              für deine erste Bestellung erhältst du
-              in wenigen Minuten per E-Mail.
-            </p>
+  Deinen persönlichen Willkommensgutschein
+  für deine Onlineshop-Bestellung erhältst du
+  in wenigen Minuten per E-Mail. Falls du
+  sie nicht findest, schau bitte auch in
+  deinem Spam- oder Junk-Ordner nach.
+</p>
 
           </div>
 

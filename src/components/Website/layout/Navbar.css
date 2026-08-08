@@ -152,6 +152,9 @@
   background: linear-gradient(135deg, #5ebc74, #3d9c5b);
   border: 1px solid transparent;
   box-shadow: 0 10px 30px rgba(94, 188, 116, 0.28);
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .app-button:hover {

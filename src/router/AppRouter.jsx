@@ -5,6 +5,8 @@ import Momentry from "../components/Website/Momentry/Momentry";
 import Contact from "../components/Website/contact/Contact";
 import Kooperationen from "../components/Website/Kooperationen/Kooperationen";
 
+import NewsletterAbmelden from "../components/Website/NewsletterAbmelden/NewsletterAbmelden";
+
 import Datenschutz from
   "../components/Website/legal/Datenschutz";
 
@@ -101,6 +103,11 @@ function AppRouter() {
       <Route
         path="/shop/login"
         element={<ShopLogin />}
+      />
+
+      <Route
+        path="/newsletter-abmelden"
+        element={<NewsletterAbmelden />}
       />
 
       <Route

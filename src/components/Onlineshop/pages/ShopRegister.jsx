@@ -232,7 +232,7 @@ await createShopUserProfileWithEmail(
                 value={formData.firstName}
                 onChange={handleInputChange}
                 autoComplete="given-name"
-                placeholder="Dein Vorname"
+                placeholder="Vorname"
                 disabled={loading}
                 required
               />
@@ -250,7 +250,7 @@ await createShopUserProfileWithEmail(
                 value={formData.lastName}
                 onChange={handleInputChange}
                 autoComplete="family-name"
-                placeholder="Dein Nachname"
+                placeholder="Nachname"
                 disabled={loading}
                 required
               />
@@ -277,7 +277,7 @@ await createShopUserProfileWithEmail(
 
             <p className="shop-register-field-hint">
               Dein Username wird auch in der
-              Momentry-Reise-App verwendet.
+              "Momentry by MamaTochterOnTour"-Reise-App verwendet.
             </p>
           </div>
 

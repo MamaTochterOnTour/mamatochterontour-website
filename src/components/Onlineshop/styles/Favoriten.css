@@ -545,25 +545,25 @@
 @media (max-width: 760px) {
   .favorites-hero {
     padding:
-      62px
-      24px
-      52px;
+      56px
+      22px
+      46px;
   }
 
   .favorites-hero h1 {
     font-size:
-      clamp(2.8rem, 9vw, 4rem);
+      clamp(2.8rem, 8vw, 4rem);
   }
 
   .favorites-hero p {
-    max-width: 580px;
+    max-width: 560px;
 
-    font-size: 0.96rem;
+    font-size: 0.92rem;
   }
 
   .favorites-content {
     width:
-      min(calc(100% - 32px), 680px);
+      min(calc(100% - 32px), 720px);
 
     padding:
       28px
@@ -579,97 +579,123 @@
   }
 
   .favorite-card {
-    border-radius: 21px;
+    border-radius: 20px;
   }
 
   .favorite-card__content {
-    padding: 19px;
+    padding: 18px;
   }
 
   .favorite-card h2 {
-    font-size: 1.18rem;
+    font-size: 1.12rem;
+    line-height: 1.28;
   }
 
   .favorite-card p {
-    font-size: 0.8rem;
+    margin-top: 10px;
+
+    font-size: 0.76rem;
+    line-height: 1.55;
+  }
+
+  .favorite-card strong {
+    margin-top: 14px;
+
+    font-size: 1.05rem;
+  }
+
+  .favorite-card__actions {
+    gap: 8px;
+
+    padding-top: 17px;
   }
 
   .favorite-card__cart {
-    min-height: 48px;
+    min-height: 46px;
 
-    font-size: 0.82rem;
+    padding:
+      8px
+      11px;
+
+    font-size: 0.77rem;
   }
 
   .favorite-card__remove {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
 
-    flex-basis: 44px;
+    flex: 0 0 42px;
+  }
+
+  .favorite-card__remove svg {
+    width: 17px;
+    height: 17px;
   }
 }
 
+
 /* =======================================================
-   HANDY
+   HANDY – IMMER 2 GUIDES NEBENEINANDER
 ======================================================= */
 
 @media (max-width: 560px) {
   .favorites-hero {
     padding:
-      48px
-      18px
-      42px;
+      43px
+      16px
+      37px;
   }
 
   .favorites-hero__icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 17px;
+    width: 46px;
+    height: 46px;
+
+    margin-bottom: 15px;
   }
 
   .favorites-hero__icon svg {
-    width: 22px;
-    height: 22px;
+    width: 21px;
+    height: 21px;
   }
 
   .favorites-hero h1 {
     font-size:
-      clamp(2.65rem, 13vw, 3.6rem);
+      clamp(2.45rem, 12vw, 3.35rem);
   }
 
   .favorites-hero p {
-    margin-top: 16px;
+    max-width: 400px;
 
-    font-size: 0.88rem;
-    line-height: 1.65;
-  }
+    margin-top: 14px;
 
-  .favorites-hero__count {
-    margin-top: 17px;
-
-    font-size: 0.69rem;
+    font-size: 0.84rem;
+    line-height: 1.6;
   }
 
   .favorites-content {
     width:
-      min(calc(100% - 24px), 480px);
+      calc(100% - 20px);
+
+    max-width: 520px;
 
     padding:
-      22px
+      20px
       0
-      68px;
+      65px;
   }
 
   .favorites-grid {
     grid-template-columns:
-      minmax(0, 1fr);
+      repeat(2, minmax(0, 1fr));
 
-    gap: 18px;
+    gap: 10px;
   }
 
   .favorite-card {
-    width: 100%;
+    width: auto;
+    min-width: 0;
 
-    border-radius: 20px;
+    border-radius: 16px;
   }
 
   .favorite-card:hover {
@@ -681,131 +707,214 @@
   }
 
   .favorite-card__content {
-    padding: 20px;
+    padding:
+      13px
+      11px
+      12px;
   }
 
   .favorite-card h2 {
-    font-size: 1.28rem;
+    font-size: 0.9rem;
+    line-height: 1.25;
+
+    letter-spacing: -0.015em;
   }
 
   .favorite-card p {
-    margin-top: 11px;
+    margin-top: 7px;
 
-    font-size: 0.82rem;
-    line-height: 1.6;
+    font-size: 0.67rem;
+    line-height: 1.45;
+
+    /*
+     * Verhindert extrem lange Karten,
+     * wenn die Beschreibung länger ist.
+     */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .favorite-card strong {
-    margin-top: 15px;
+    margin-top: 10px;
 
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 
   .favorite-card__actions {
-    padding-top: 18px;
+    display: grid;
 
-    gap: 9px;
+    grid-template-columns:
+      minmax(0, 1fr)
+      36px;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: auto;
+    padding-top: 12px;
   }
 
   .favorite-card__cart {
-    min-height: 50px;
-    padding:
-      9px
-      12px;
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
 
-    font-size: 0.84rem;
+    padding:
+      6px
+      6px;
+
+    border-radius: 10px;
+
+    font-size: 0.65rem;
+    line-height: 1.2;
   }
 
   .favorite-card__remove {
-    width: 46px;
-    height: 46px;
+    width: 36px;
+    height: 36px;
 
-    flex-basis: 46px;
+    flex: none;
+
+    border-radius: 50%;
+  }
+
+  .favorite-card__remove svg {
+    width: 15px;
+    height: 15px;
   }
 
   .favorites-empty,
   .favorites-status {
-    margin-top: 12px;
-    padding:
-      46px
-      22px;
+    margin-top: 10px;
 
-    border-radius: 22px;
+    padding:
+      42px
+      20px;
+
+    border-radius: 20px;
   }
 
   .favorites-empty__icon {
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
   }
 
   .favorites-empty h2,
   .favorites-status h2 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 
   .favorites-empty p,
   .favorites-status p {
-    font-size: 0.88rem;
+    font-size: 0.84rem;
   }
 
   .favorites-empty__button {
     width: 100%;
-    min-height: 49px;
+    min-height: 48px;
+
     padding:
       0
-      18px;
+      17px;
 
     box-sizing: border-box;
   }
 }
 
+
 /* =======================================================
    SEHR KLEINE HANDYS
+   AUCH HIER WEITERHIN 2 NEBENEINANDER
 ======================================================= */
 
 @media (max-width: 370px) {
   .favorites-hero {
     padding:
-      40px
-      14px
-      36px;
+      38px
+      12px
+      33px;
   }
 
   .favorites-hero h1 {
-    font-size: 2.5rem;
+    font-size: 2.35rem;
   }
 
   .favorites-content {
     width:
-      calc(100% - 16px);
+      calc(100% - 14px);
+  }
+
+  .favorites-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 7px;
+  }
+
+  .favorite-card {
+    border-radius: 14px;
   }
 
   .favorite-card__content {
-    padding: 17px;
+    padding:
+      10px
+      8px
+      9px;
+  }
+
+  .favorite-card h2 {
+    font-size: 0.8rem;
+  }
+
+  .favorite-card p {
+    font-size: 0.61rem;
+  }
+
+  .favorite-card strong {
+    margin-top: 8px;
+
+    font-size: 0.82rem;
   }
 
   .favorite-card__actions {
-    align-items: stretch;
+    grid-template-columns:
+      minmax(0, 1fr)
+      32px;
+
+    gap: 5px;
+
+    padding-top: 10px;
   }
 
   .favorite-card__cart {
-    min-height: 48px;
+    min-height: 35px;
 
-    font-size: 0.77rem;
+    padding:
+      5px
+      4px;
+
+    border-radius: 9px;
+
+    font-size: 0.59rem;
   }
 
   .favorite-card__remove {
-    width: 44px;
-    height: 44px;
+    width: 32px;
+    height: 32px;
+  }
 
-    flex-basis: 44px;
+  .favorite-card__remove svg {
+    width: 14px;
+    height: 14px;
   }
 
   .favorites-empty,
   .favorites-status {
     padding:
-      38px
-      17px;
+      36px
+      16px;
   }
 }
 

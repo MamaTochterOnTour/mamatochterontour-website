@@ -1,4 +1,7 @@
-import { useState } from "react";
+import {
+  useState,
+} from "react";
+
 import {
   NavLink,
   Link,
@@ -15,14 +18,19 @@ import ComingSoonModal from
   "../comingsoon/ComingSoonModal";
 
 function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [
+    menuOpen,
+    setMenuOpen,
+  ] = useState(false);
 
   const [
-  comingSoonType,
-  setComingSoonType,
-] = useState(null);
+  webAppComingSoonOpen,
+  setWebAppComingSoonOpen,
+] = useState(false);
 
-  const navLinkClass = ({ isActive }) =>
+  const navLinkClass = ({
+    isActive,
+  }) =>
     isActive
       ? "navbar-link navbar-link-active"
       : "navbar-link";
@@ -31,23 +39,19 @@ function Navbar() {
     setMenuOpen(false);
   }
 
-  function openComingSoon(type) {
-  closeMenu();
-  setComingSoonType(type);
-}
-
   return (
   <>
     <header
       className={`navbar ${
-        menuOpen ? "navbar--open" : ""
+        menuOpen
+          ? "navbar--open"
+          : ""
       }`}
     >
       <div className="navbar-main">
         <Link
-          className="logo"
           to="/"
-          aria-label="Zur Startseite"
+          className="logo"
           onClick={closeMenu}
         >
           MamaTochterOnTour
@@ -88,120 +92,131 @@ function Navbar() {
         </nav>
 
         <div className="navbar-actions">
-  <Link
-  to="/shop/reiseguides"
-  className="shop-button"
-  onClick={closeMenu}
->
-  Reiseguides entdecken
-</Link>
+          <Link
+            to="/shop"
+            className="shop-button"
+            onClick={closeMenu}
+          >
+            Reiseguides entdecken
+          </Link>
 
-  <button
-    type="button"
-    className="app-button navbar-coming-soon-button"
-    onClick={() =>
-      openComingSoon("webapp")
-    }
-  >
-    Web-App öffnen
-  </button>
-</div>
+          <button
+  type="button"
+  className="app-button"
+  onClick={() => {
+    closeMenu();
+    setWebAppComingSoonOpen(true);
+  }}
+>
+  Web-App öffnen
+</button>
+        </div>
 
         <button
           type="button"
           className="navbar-menu-button"
           onClick={() =>
-            setMenuOpen((current) => !current)
+            setMenuOpen(
+              (current) =>
+                !current
+            )
           }
           aria-label={
             menuOpen
               ? "Navigation schließen"
               : "Navigation öffnen"
           }
-          aria-expanded={menuOpen}
+          aria-expanded={
+            menuOpen
+          }
           aria-controls="mobile-navigation"
         >
           {menuOpen ? (
-            <FiX aria-hidden="true" />
+            <FiX
+              aria-hidden="true"
+            />
           ) : (
-            <FiMenu aria-hidden="true" />
+            <FiMenu
+              aria-hidden="true"
+            />
           )}
         </button>
       </div>
 
       <div
-  id="mobile-navigation"
-  className="navbar-mobile-menu"
-  aria-hidden={!menuOpen}
+        id="mobile-navigation"
+        className="navbar-mobile-menu"
+        aria-hidden={!menuOpen}
+      >
+        <div className="navbar-mobile-menu__inner">
+          <nav
+            className="navbar-mobile-navigation"
+            aria-label="Mobile Hauptnavigation"
+          >
+            <NavLink
+              to="/"
+              end
+              className={navLinkClass}
+              onClick={closeMenu}
+            >
+              Home
+            </NavLink>
+
+            <NavLink
+              to="/momentry"
+              className={navLinkClass}
+              onClick={closeMenu}
+            >
+              Momentry
+            </NavLink>
+
+            <NavLink
+              to="/kooperationen"
+              className={navLinkClass}
+              onClick={closeMenu}
+            >
+              Kooperationen
+            </NavLink>
+
+            <NavLink
+              to="/kontakt"
+              className={navLinkClass}
+              onClick={closeMenu}
+            >
+              Kontakt
+            </NavLink>
+          </nav>
+
+          <div className="navbar-mobile-actions">
+            <Link
+              to="/shop"
+              className="shop-button"
+              onClick={closeMenu}
+            >
+              Reiseguides entdecken
+            </Link>
+
+            <button
+  type="button"
+  className="app-button"
+  onClick={() => {
+    closeMenu();
+    setWebAppComingSoonOpen(true);
+  }}
 >
-  <div className="navbar-mobile-menu__inner">
-    <nav
-      className="navbar-mobile-navigation"
-      aria-label="Mobile Hauptnavigation"
-    >
-      <NavLink
-        to="/"
-        end
-        className={navLinkClass}
-        onClick={closeMenu}
-      >
-        Home
-      </NavLink>
+  Web-App öffnen
+</button>
+          </div>
+        </div>
+      </div>
 
-      <NavLink
-        to="/momentry"
-        className={navLinkClass}
-        onClick={closeMenu}
-      >
-        Momentry
-      </NavLink>
-
-      <NavLink
-        to="/kooperationen"
-        className={navLinkClass}
-        onClick={closeMenu}
-      >
-        Kooperationen
-      </NavLink>
-
-      <NavLink
-        to="/kontakt"
-        className={navLinkClass}
-        onClick={closeMenu}
-      >
-        Kontakt
-      </NavLink>
-    </nav>
-
-    <div className="navbar-mobile-actions">
-  <Link
-  to="/shop/reiseguides"
-  className="shop-button"
-  onClick={closeMenu}
->
-  Reiseguides entdecken
-</Link>
-
-  <button
-    type="button"
-    className="app-button navbar-coming-soon-button"
-    onClick={() =>
-      openComingSoon("webapp")
-    }
-  >
-    Web-App öffnen
-  </button>
-</div>
-  </div>
-</div>
-
-    </header>
+        </header>
 
     <ComingSoonModal
-      open={comingSoonType !== null}
-      type={comingSoonType || "shop"}
+      open={webAppComingSoonOpen}
+      type="webapp"
       onClose={() =>
-        setComingSoonType(null)
+        setWebAppComingSoonOpen(false)
       }
     />
   </>

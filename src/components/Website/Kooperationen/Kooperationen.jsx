@@ -5,16 +5,16 @@ import {
 
 import {
   FiArrowRight,
-  FiCamera,
+  FiBriefcase,
+  FiCheck,
+  FiCompass,
   FiDownload,
   FiHeart,
   FiMail,
-  FiMapPin,
-  FiMessageCircle,
   FiPackage,
-  FiPlay,
   FiShoppingBag,
   FiSmartphone,
+  FiStar,
   FiUsers,
 } from "react-icons/fi";
 
@@ -23,814 +23,585 @@ import Footer from "../layout/Footer";
 
 import "./Kooperationen.css";
 
-const CONTACT_EMAIL =
-  "mamatochterontour@outlook.de";
+/* =========================================================
+   KONSTANTEN
+========================================================= */
 
 const MEDIA_KIT_URL =
   "/downloads/media-kit-mamatochterontour.pdf";
 
-/* =========================================================
-   KOOPERATIONSBEREICHE
-========================================================= */
-
-const cooperationAreas = [
-  {
-    number: "01",
-    eyebrow: "Content & Kampagnen",
-    title: "Social Media",
-    text:
-      "Authentischer Content, der sich glaubwürdig in unsere Kanäle und unsere Reiseerlebnisse einfügt.",
-    services: [
-      "Reels, TikToks und Story-Content",
-      "Kreative Kampagnen und Markenpartnerschaften",
-    ],
-    className: "cooperations-area--social",
-    icon: FiPlay,
-  },
-  {
-    number: "02",
-    eyebrow: "Vor Ort erleben",
-    title: "Events & Reisen",
-    text:
-      "Wir begleiten passende Veranstaltungen, Reiseerlebnisse und Destinationen mit persönlichen Einblicken.",
-    services: [
-      "Pressereisen, Hotels und Kreuzfahrten",
-      "Events, Eröffnungen und Content vor Ort",
-    ],
-    className: "cooperations-area--travel",
-    icon: FiMapPin,
-  },
-  {
-    number: "03",
-    eyebrow: "Digitale Partnerschaften",
-    title: "Momentry",
-    text:
-      "Mit unserer Reise-App schaffen wir zusätzliche Berührungspunkte innerhalb einer aktiven Reise-Community.",
-    services: [
-      "Gemeinsame Community-Aktionen",
-      "Individuelle Integrationen und App-Konzepte",
-    ],
-    className: "cooperations-area--app",
-    icon: FiSmartphone,
-  },
-  {
-    number: "04",
-    eyebrow: "Produkte & Ideen",
-    title: "Online-Shop",
-    text:
-      "Gemeinsam entwickeln wir Produkte und Aktionen, die unsere Reiseangebote sinnvoll ergänzen.",
-    services: [
-      "Reiseprodukte und Accessoires",
-      "Reiseguides, Bundles und Sonderaktionen",
-    ],
-    className: "cooperations-area--shop",
-    icon: FiShoppingBag,
-  },
-];
+/*
+ * Hier bitte später eure echte
+ * Kooperations-Mail einsetzen.
+ */
+const CONTACT_EMAIL =
+  "mamatochterontour@outlook.de";
 
 /* =========================================================
-   GRÜNDE FÜR EINE ZUSAMMENARBEIT
+   KOOPERATIONS-BEREICHE
 ========================================================= */
 
-const cooperationAdvantages = [
+const COOPERATION_AREAS = [
   {
+    id: "content",
     number: "01",
     icon: FiUsers,
-    title: "Zwei Generationen",
+    eyebrow:
+      "MamaTochterOnTour",
+    title:
+      "Content, Social Media & Events",
     text:
-      "Als Mama-Tochter-Duo verbinden wir unterschiedliche Perspektiven, Erfahrungen und Zielgruppen.",
+      "Wir erzählen Geschichten aus unserem Alltag und von unseren Reisen – persönlich, nahbar und immer mit dem Anspruch, Kooperationen natürlich in unseren Content zu integrieren.",
+    items: [
+      "Social-Media-Kampagnen",
+      "Reels, TikToks, Stories & Posts",
+      "Events & Einladungen",
+      "Hotels & Unterkünfte",
+      "Kreuzfahrten & Reiseerlebnisse",
+      "Destinationen & Pressereisen",
+      "Produktintegrationen",
+      "Langfristige Partnerschaften",
+    ],
   },
+
   {
+    id: "momentry",
     number: "02",
     icon: FiSmartphone,
-    title: "Mehr als Social Media",
+    eyebrow:
+      "Momentry by MamaTochterOnTour",
+    title:
+      "Partnerschaften für unsere Reise-App",
     text:
-      "Mit Website, Momentry, Community und Online-Shop bieten wir mehrere eigene Berührungspunkte.",
+      "Mit Momentry by MamaTochterOnTour möchten wir eine Plattform schaffen, die Reisende vor, während und nach ihrer Reise begleitet. Dafür suchen wir Partner, deren Angebote und Produkte einen echten Mehrwert für Reisende schaffen.",
+    items: [
+      "Hotels & Unterkünfte",
+      "Destinationen & Tourismus",
+      "Kreuzfahrt & Mobilität",
+      "Reiseveranstalter",
+      "Freizeit & Erlebnisse",
+      "Reiseaccessoires",
+      "Praktische Reiseprodukte",
+      "Food, Drinks & To-go-Produkte",
+    ],
   },
+
   {
+    id: "shop",
     number: "03",
+    icon: FiShoppingBag,
+    eyebrow:
+      "Online-Shop",
+    title:
+      "Produkte, die gemeinsam entstehen",
+    text:
+      "Auch für unseren Online-Shop sind spannende Kooperationen denkbar – von ausgewählten Produkten bis hin zu gemeinsamen Produktideen rund um Reisen, Alltag und unterwegs sein.",
+    items: [
+      "Reiseaccessoires",
+      "Gemeinsame Produktlinien",
+      "Co-Branding",
+      "Limitierte Editionen",
+      "Praktische Reiseprodukte",
+      "Bundles & Aktionen",
+      "Produktkooperationen",
+      "Individuelle Shop-Konzepte",
+    ],
+  },
+];
+
+/* =========================================================
+   KOOPERATIONS-MÖGLICHKEITEN
+========================================================= */
+
+const POSSIBILITIES = [
+  {
     icon: FiHeart,
-    title: "Persönlich statt austauschbar",
+    title:
+      "Authentischer Content",
     text:
-      "Kooperationen werden bei uns nicht einfach platziert, sondern passend in unsere Inhalte und Projekte integriert.",
+      "Produkte, Marken und Erlebnisse werden so eingebunden, dass sie natürlich zu unseren bestehenden Inhalten passen.",
+  },
+
+  {
+    icon: FiCompass,
+    title:
+      "Reise & Erlebnis",
+    text:
+      "Hotels, Kreuzfahrten, Destinationen, Events und besondere Erlebnisse können wir redaktionell und auf Social Media begleiten.",
+  },
+
+  {
+    icon: FiSmartphone,
+    title:
+      "Momentry Partnerschaften",
+    text:
+      "Marken und Services können Teil der Momentry-Reisewelt werden und Reisenden einen echten praktischen Mehrwert bieten.",
+  },
+
+  {
+    icon: FiPackage,
+    title:
+      "Produktkooperationen",
+    text:
+      "Von passenden Reiseprodukten bis hin zu gemeinsam entwickelten Produkten oder Aktionen für unseren Online-Shop.",
+  },
+
+  {
+    icon: FiStar,
+    title:
+      "Individuelle Kampagnen",
+    text:
+      "Nicht jede Kooperation muss gleich aussehen. Wir entwickeln gerne individuelle Konzepte passend zur Marke und Zielsetzung.",
+  },
+
+  {
+    icon: FiBriefcase,
+    title:
+      "Langfristige Partnerschaften",
+    text:
+      "Besonders spannend finden wir Kooperationen, die über einzelne Kampagnen hinausgehen und langfristig wachsen können.",
   },
 ];
 
 /* =========================================================
-   ABLAUF
+   ANIMATION
 ========================================================= */
 
-const cooperationSteps = [
-  {
-    number: "01",
-    title: "Idee kennenlernen",
-    text:
-      "Ihr erzählt uns von eurem Unternehmen, eurem Ziel und der geplanten Zusammenarbeit.",
-  },
-  {
-    number: "02",
-    title: "Konzept entwickeln",
-    text:
-      "Gemeinsam entwickeln wir eine Idee, die zur Marke, zu uns und zu unserer Community passt.",
-  },
-  {
-    number: "03",
-    title: "Gemeinsam umsetzen",
-    text:
-      "Wir produzieren den vereinbarten Content oder setzen das gemeinsame Projekt zuverlässig um.",
-  },
-];
-
-/* =========================================================
-   MAIL-BUTTON
-========================================================= */
-
-function MailButton({
+function AnimatedSection({
+  children,
   className = "",
-  compact = false,
+  delay = 0,
 }) {
-  const subject = encodeURIComponent(
-    "Kooperationsanfrage an MamaTochterOnTour"
-  );
-
-  const body = encodeURIComponent(
-    `Hallo MamaTochterOnTour,
-
-wir interessieren uns für eine mögliche Zusammenarbeit und würden euch gerne unsere Idee vorstellen.
-
-Unternehmen:
-Ansprechperson:
-Art der Kooperation:
-Geplanter Zeitraum:
-Budgetrahmen:
-
-Weitere Informationen:`
-  );
+  const prefersReducedMotion =
+    useReducedMotion();
 
   return (
-    <a
-      href={`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`}
-      className={`cooperations-button cooperations-button--primary ${
-        compact
-          ? "cooperations-button--compact"
-          : ""
-      } ${className}`.trim()}
+    <motion.div
+      className={className}
+      initial={{
+        opacity: 0,
+        y: prefersReducedMotion
+          ? 0
+          : 34,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.14,
+      }}
+      transition={{
+        duration:
+          prefersReducedMotion
+            ? 0
+            : 0.75,
+
+        delay:
+          prefersReducedMotion
+            ? 0
+            : delay,
+
+        ease: [
+          0.22,
+          1,
+          0.36,
+          1,
+        ],
+      }}
     >
-      <FiMail aria-hidden="true" />
-
-      <span>
-        {!compact && (
-          <small>
-            Direkt Kontakt aufnehmen
-          </small>
-        )}
-
-        <strong>
-          Kooperation anfragen
-        </strong>
-      </span>
-
-      <FiArrowRight
-        className="cooperations-button-arrow"
-        aria-hidden="true"
-      />
-    </a>
+      {children}
+    </motion.div>
   );
 }
 
 /* =========================================================
-   HAUPTKOMPONENTE
+   SECTION LABEL
 ========================================================= */
 
-export default function Kooperationen() {
+function SectionLabel({
+  children,
+  light = false,
+}) {
+  return (
+    <span
+      className={`cooperation-section-label ${
+        light
+          ? "cooperation-section-label--light"
+          : ""
+      }`}
+    >
+      {children}
+    </span>
+  );
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+function CooperationHero() {
   const prefersReducedMotion =
     useReducedMotion();
 
-  const fadeUp = {
-    hidden: {
-      opacity: 0,
-      y: prefersReducedMotion ? 0 : 30,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion
-          ? 0
-          : 0.75,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+  return (
+    <section className="cooperation-hero">
+      <div
+        className="cooperation-hero__glow cooperation-hero__glow--one"
+        aria-hidden="true"
+      />
 
-  const fadeLeft = {
-    hidden: {
-      opacity: 0,
-      x: prefersReducedMotion ? 0 : -40,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: prefersReducedMotion
-          ? 0
-          : 0.85,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+      <div
+        className="cooperation-hero__glow cooperation-hero__glow--two"
+        aria-hidden="true"
+      />
 
-  const fadeRight = {
-    hidden: {
-      opacity: 0,
-      x: prefersReducedMotion ? 0 : 45,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: prefersReducedMotion
-          ? 0
-          : 0.9,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+      <div className="cooperation-container cooperation-hero__layout">
+        <motion.div
+          className="cooperation-hero__content"
+          initial={{
+            opacity: 0,
+            y: prefersReducedMotion
+              ? 0
+              : 35,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration:
+              prefersReducedMotion
+                ? 0
+                : 0.9,
 
-  const staggerContainer = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren:
-          prefersReducedMotion
-            ? 0
-            : 0.1,
-      },
-    },
-  };
+            ease: [
+              0.22,
+              1,
+              0.36,
+              1,
+            ],
+          }}
+        >
+          <span className="cooperation-hero__eyebrow">
+            Kooperationen
+          </span>
 
+          <h1>
+            Ideen, die
+            <span>
+              gemeinsam wachsen.
+            </span>
+          </h1>
+
+          <p className="cooperation-hero__lead">
+            Wir lieben Kooperationen,
+            die zu uns, unserer Community
+            und unseren Projekten passen.
+            Von Content und Events über
+            Momentry by MamaTochterOnTour bis hin zu gemeinsamen
+            Produktideen für unseren
+            Online-Shop.
+          </p>
+
+          <div className="cooperation-hero__actions">
+            <a
+              href={`mailto:${CONTACT_EMAIL}?subject=Kooperationsanfrage`}
+              className="cooperation-button cooperation-button--primary"
+            >
+              <FiMail
+                aria-hidden="true"
+              />
+
+              <span>
+                Kooperation anfragen
+              </span>
+
+              <FiArrowRight
+                aria-hidden="true"
+              />
+            </a>
+
+            <a
+              href={MEDIA_KIT_URL}
+              download
+              className="cooperation-button cooperation-button--secondary"
+            >
+              <FiDownload
+                aria-hidden="true"
+              />
+
+              <span>
+                Media Kit herunterladen
+              </span>
+            </a>
+          </div>
+        </motion.div>
+
+        <AnimatedSection
+          className="cooperation-hero__side"
+          delay={0.12}
+        >
+          <span className="cooperation-hero__side-label">
+            Drei Bereiche
+          </span>
+
+          <div className="cooperation-hero__side-item">
+            <strong>
+              01
+            </strong>
+
+            <span>
+              Content,
+              Social Media
+              & Events
+            </span>
+          </div>
+
+          <div className="cooperation-hero__side-item">
+            <strong>
+              02
+            </strong>
+
+            <span>
+              Momentry
+              Partnerschaften
+            </span>
+          </div>
+
+          <div className="cooperation-hero__side-item">
+            <strong>
+              03
+            </strong>
+
+            <span>
+              Online-Shop
+              & Produkte
+            </span>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+function CooperationIntro() {
+  return (
+    <section className="cooperation-intro">
+      <div className="cooperation-container">
+        <AnimatedSection>
+          <SectionLabel>
+            Zusammenarbeit
+          </SectionLabel>
+
+          <div className="cooperation-intro__grid">
+            <h2>
+              Nicht jede Kooperation
+              <span>
+                muss gleich aussehen.
+              </span>
+            </h2>
+
+            <div>
+              <p>
+                MamaTochterOnTour besteht
+                heute aus verschiedenen
+                Bereichen, die jeweils ganz
+                unterschiedliche Möglichkeiten
+                für Partnerschaften bieten.
+              </p>
+
+              <p>
+                Wichtig ist uns dabei immer,
+                dass eine Zusammenarbeit
+                authentisch zu uns, unseren
+                Projekten und den Menschen
+                passt, die uns begleiten.
+              </p>
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   DREI BEREICHE
+========================================================= */
+
+function CooperationAreas() {
+  return (
+    <section className="cooperation-areas">
+      <div className="cooperation-container">
+        <AnimatedSection className="cooperation-areas__heading">
+          <SectionLabel light>
+            Unsere Bereiche
+          </SectionLabel>
+
+          <h2>
+            Drei Welten.
+            <span>
+              Viele Möglichkeiten.
+            </span>
+          </h2>
+
+          <p>
+            Je nach Marke, Produkt oder
+            Idee kann eine Zusammenarbeit
+            ganz unterschiedlich aussehen.
+          </p>
+        </AnimatedSection>
+
+        <div className="cooperation-areas__grid">
+          {COOPERATION_AREAS.map(
+            (area, index) => {
+              const Icon =
+                area.icon;
+
+              return (
+                <AnimatedSection
+                  key={area.id}
+                  className="cooperation-area-card"
+                  delay={
+                    index * 0.08
+                  }
+                >
+                  <div className="cooperation-area-card__top">
+                    <span className="cooperation-area-card__number">
+                      {area.number}
+                    </span>
+
+                    <div className="cooperation-area-card__icon">
+                      <Icon
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </div>
+
+                  <span className="cooperation-area-card__eyebrow">
+                    {area.eyebrow}
+                  </span>
+
+                  <h3>
+                    {area.title}
+                  </h3>
+
+                  <p>
+                    {area.text}
+                  </p>
+
+                  <div className="cooperation-area-card__items">
+                    {area.items.map(
+                      (item) => (
+                        <span
+                          key={item}
+                        >
+                          <FiCheck
+                            aria-hidden="true"
+                          />
+
+                          {item}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </AnimatedSection>
+              );
+            }
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   MÖGLICHKEITEN
+========================================================= */
+
+function CooperationPossibilities() {
+  return (
+    <section className="cooperation-possibilities">
+      <div className="cooperation-container">
+        <AnimatedSection className="cooperation-possibilities__heading">
+          <SectionLabel>
+            Möglichkeiten
+          </SectionLabel>
+
+          <h2>
+            Vom einzelnen Moment
+            <span>
+              bis zur Partnerschaft.
+            </span>
+          </h2>
+        </AnimatedSection>
+
+        <div className="cooperation-possibilities__grid">
+          {POSSIBILITIES.map(
+            (item, index) => {
+              const Icon =
+                item.icon;
+
+              return (
+                <AnimatedSection
+                  key={item.title}
+                  className="cooperation-possibility-card"
+                  delay={
+                    index * 0.05
+                  }
+                >
+                  <div className="cooperation-possibility-card__icon">
+                    <Icon
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  <h3>
+                    {item.title}
+                  </h3>
+
+                  <p>
+                    {item.text}
+                  </p>
+                </AnimatedSection>
+              );
+            }
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+function Kooperationen() {
   return (
     <>
       <Navbar />
 
-      <main className="cooperations-page">
-        {/* =================================================
-            HERO
-        ================================================== */}
+      <main className="cooperation-page">
+        <CooperationHero />
 
-        <section className="cooperations-hero">
-          <div className="cooperations-container cooperations-hero-grid">
-            <motion.div
-              className="cooperations-hero-content"
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-            >
-              <motion.span
-                className="cooperations-eyebrow"
-                variants={fadeUp}
-              >
-                Kooperationen
-              </motion.span>
+        <CooperationIntro />
 
-              <motion.h1 variants={fadeUp}>
-                Gemeinsam Ideen
-                <span>
-                  zum Leben erwecken.
-                </span>
-              </motion.h1>
+        <CooperationAreas />
 
-              <motion.p
-                className="cooperations-hero-lead"
-                variants={fadeUp}
-              >
-                Von kreativem Social-Media-Content
-                über Reisen und Events bis zu
-                Partnerschaften innerhalb von
-                Momentry und unserem Online-Shop:
-                Wir entwickeln Kooperationen, die
-                zu beiden Seiten passen.
-              </motion.p>
+        <CooperationPossibilities />
 
-              <motion.div
-                className="cooperations-hero-actions"
-                variants={fadeUp}
-              >
-                <MailButton />
-
-                <a
-                  href={MEDIA_KIT_URL}
-                  download
-                  className="cooperations-button cooperations-button--secondary"
-                >
-                  <FiDownload
-                    aria-hidden="true"
-                  />
-
-                  <span>
-                    <small>
-                      Zahlen und Informationen
-                    </small>
-
-                    <strong>
-                      Media Kit herunterladen
-                    </strong>
-                  </span>
-                </a>
-              </motion.div>
-
-            </motion.div>
-
-            {/* Kreative Marken-Collage */}
-
-            {/* Kooperationswelt */}
-
-<motion.div
-  className="cooperations-hero-world"
-  initial="hidden"
-  animate="visible"
-  variants={fadeRight}
-  aria-label="Kooperationsbereiche von MamaTochterOnTour"
->
-  <motion.div
-    className="cooperations-world-orbit"
-    animate={
-      prefersReducedMotion
-        ? undefined
-        : {
-            rotate: 360,
-          }
-    }
-    transition={{
-      duration: 45,
-      repeat: Infinity,
-      ease: "linear",
-    }}
-    aria-hidden="true"
-  />
-
-  <div
-    className="cooperations-world-orbit cooperations-world-orbit--inner"
-    aria-hidden="true"
-  />
-
-  <div
-    className="cooperations-world-route cooperations-world-route--one"
-    aria-hidden="true"
-  />
-
-  <div
-    className="cooperations-world-route cooperations-world-route--two"
-    aria-hidden="true"
-  />
-
-  {/* Zentrale Welt */}
-
-  <motion.div
-    className="cooperations-world-center"
-    animate={
-      prefersReducedMotion
-        ? undefined
-        : {
-            y: [0, -8, 0],
-          }
-    }
-    transition={{
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <div className="cooperations-world-globe">
-      <span
-        className="cooperations-world-globe-line cooperations-world-globe-line--vertical"
-        aria-hidden="true"
-      />
-
-      <span
-        className="cooperations-world-globe-line cooperations-world-globe-line--horizontal"
-        aria-hidden="true"
-      />
-
-      <span
-        className="cooperations-world-globe-line cooperations-world-globe-line--horizontal-two"
-        aria-hidden="true"
-      />
-
-      <span
-        className="cooperations-world-globe-line cooperations-world-globe-line--diagonal"
-        aria-hidden="true"
-      />
-
-      <div className="cooperations-world-globe-content">
-        <span>MamaTochterOnTour</span>
-
-        <strong>
-          Gemeinsam
-          <br />
-          mehr erreichen.
-        </strong>
-      </div>
-    </div>
-  </motion.div>
-
-  {/* Social Media */}
-
-  <motion.div
-    className="cooperations-world-point cooperations-world-point--social"
-    animate={
-      prefersReducedMotion
-        ? undefined
-        : {
-            y: [0, -7, 0],
-          }
-    }
-    transition={{
-      duration: 5.2,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <span className="cooperations-world-point-icon">
-      <FiPlay aria-hidden="true" />
-    </span>
-
-    <div>
-      <small>Content & Kampagnen</small>
-      <strong>Social Media</strong>
-    </div>
-  </motion.div>
-
-  {/* Reisen und Events */}
-
-  <motion.div
-    className="cooperations-world-point cooperations-world-point--travel"
-    animate={
-      prefersReducedMotion
-        ? undefined
-        : {
-            x: [0, 6, 0],
-            y: [0, -4, 0],
-          }
-    }
-    transition={{
-      duration: 6.4,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <span className="cooperations-world-point-icon">
-      <FiMapPin aria-hidden="true" />
-    </span>
-
-    <div>
-      <small>Vor Ort erleben</small>
-      <strong>Events & Reisen</strong>
-    </div>
-  </motion.div>
-
-  {/* Momentry */}
-
-  <motion.div
-    className="cooperations-world-point cooperations-world-point--app"
-    animate={
-      prefersReducedMotion
-        ? undefined
-        : {
-            x: [0, -6, 0],
-            y: [0, 5, 0],
-          }
-    }
-    transition={{
-      duration: 5.8,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <span className="cooperations-world-point-icon">
-      <FiSmartphone aria-hidden="true" />
-    </span>
-
-    <div>
-      <small>Digitale Partnerschaften</small>
-      <strong>Momentry</strong>
-    </div>
-  </motion.div>
-
-  {/* Online-Shop */}
-
-  <motion.div
-    className="cooperations-world-point cooperations-world-point--shop"
-    animate={
-      prefersReducedMotion
-        ? undefined
-        : {
-            y: [0, 7, 0],
-          }
-    }
-    transition={{
-      duration: 6.8,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <span className="cooperations-world-point-icon">
-      <FiShoppingBag aria-hidden="true" />
-    </span>
-
-    <div>
-      <small>Produkte & Ideen</small>
-      <strong>Online-Shop</strong>
-    </div>
-  </motion.div>
-
-  {/* Kleine zusätzliche Elemente */}
-
-  <span
-    className="cooperations-world-marker cooperations-world-marker--one"
-    aria-hidden="true"
-  />
-
-  <span
-    className="cooperations-world-marker cooperations-world-marker--two"
-    aria-hidden="true"
-  />
-
-  <span
-    className="cooperations-world-marker cooperations-world-marker--three"
-    aria-hidden="true"
-  />
-</motion.div>
-          </div>
-        </section>
-
-        {/* =================================================
-            STATEMENT
-        ================================================== */}
-
-        <section className="cooperations-statement">
-          <div className="cooperations-container">
-            <motion.div
-              className="cooperations-statement-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{
-                once: true,
-                amount: 0.25,
-              }}
-            >
-              <motion.div
-                className="cooperations-statement-heading"
-                variants={fadeLeft}
-              >
-                <span>
-                  Was uns wichtig ist
-                </span>
-
-                <h2>
-                  Authentisch
-                  <strong>
-                    statt beliebig.
-                  </strong>
-                </h2>
-              </motion.div>
-
-              <motion.div
-                className="cooperations-statement-copy"
-                variants={fadeRight}
-              >
-                <p>
-                  Eine Zusammenarbeit muss nicht
-                  ausschließlich aus dem
-                  Reisebereich kommen. Entscheidend
-                  ist, dass die Marke, das Produkt
-                  und die Idee glaubwürdig zu uns
-                  und unserer Community passen.
-                </p>
-
-                <p>
-                  Deshalb entwickeln wir keine
-                  austauschbaren Werbeplatzierungen,
-                  sondern individuelle Konzepte,
-                  die sich natürlich in unsere
-                  Inhalte, Reisen und Projekte
-                  einfügen.
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* =================================================
-            KOOPERATIONSBEREICHE
-        ================================================== */}
-
-        <section className="cooperations-possibilities">
-          <div className="cooperations-container">
-            <motion.div
-              className="cooperations-section-heading"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{
-                once: true,
-                amount: 0.25,
-              }}
-              variants={staggerContainer}
-            >
-              <motion.span
-                className="cooperations-section-label"
-                variants={fadeUp}
-              >
-                Was gemeinsam möglich ist
-              </motion.span>
-
-              <motion.h2 variants={fadeUp}>
-                Partnerschaften,
-                <span>
-                  die wirklich passen.
-                </span>
-              </motion.h2>
-
-              <motion.p variants={fadeUp}>
-                Unsere Kanäle, unsere App und unser
-                Online-Shop bieten unterschiedliche
-                Möglichkeiten für individuelle und
-                langfristige Zusammenarbeit.
-              </motion.p>
-            </motion.div>
-
-            <motion.div
-              className="cooperations-areas"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{
-                once: true,
-                amount: 0.1,
-              }}
-              variants={staggerContainer}
-            >
-              {cooperationAreas.map(
-                (area) => {
-                  const Icon = area.icon;
-
-                  return (
-                    <motion.article
-                      key={area.number}
-                      className={`cooperations-area ${area.className}`}
-                      variants={fadeUp}
-                    >
-                      <div className="cooperations-area-head">
-                        <span className="cooperations-area-number">
-                          {area.number}
-                        </span>
-
-                        <span className="cooperations-area-icon">
-                          <Icon
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </div>
-
-                      <div className="cooperations-area-content">
-                        <span className="cooperations-area-eyebrow">
-                          {area.eyebrow}
-                        </span>
-
-                        <h3>
-                          {area.title}
-                        </h3>
-
-                        <p>
-                          {area.text}
-                        </p>
-
-                        <ul>
-                          {area.services.map(
-                            (service) => (
-                              <li key={service}>
-                                <FiArrowRight
-                                  aria-hidden="true"
-                                />
-
-                                <span>
-                                  {service}
-                                </span>
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-
-                      <div
-                        className="cooperations-area-decoration"
-                        aria-hidden="true"
-                      />
-                    </motion.article>
-                  );
-                }
-              )}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* =================================================
-            ABSCHLUSS-CTA
-        ================================================== */}
-
-        <section className="cooperations-contact">
-          <div className="cooperations-container">
-            <motion.div
-              className="cooperations-contact-card"
-              initial={{
-                opacity: 0,
-                y: prefersReducedMotion
-                  ? 0
-                  : 35,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.2,
-              }}
-              transition={{
-                duration:
-                  prefersReducedMotion
-                    ? 0
-                    : 0.85,
-                ease: [
-                  0.22,
-                  1,
-                  0.36,
-                  1,
-                ],
-              }}
-            >
-              <div className="cooperations-contact-copy">
-                <span>
-                  Bereit für etwas Gemeinsames?
-                </span>
-
-                <h2>
-                  Eine Idee im Kopf?
-                  <strong>
-                    Lasst uns darüber sprechen.
-                  </strong>
-                </h2>
-
-                <p>
-                  Ob einzelne Kampagne,
-                  Reiseprojekt, Produktidee oder
-                  langfristige Partnerschaft: Wir
-                  freuen uns darauf, eure Idee
-                  kennenzulernen.
-                </p>
-
-                <div className="cooperations-contact-tags">
-                  <span>
-                    Individuelle Konzepte
-                  </span>
-
-                  <span>
-                    Kreative Kampagnen
-                  </span>
-
-                  <span>
-                    Langfristige Partnerschaften
-                  </span>
-                </div>
-              </div>
-
-              <div className="cooperations-contact-actions">
-                <MailButton compact />
-
-                <a
-                  href={MEDIA_KIT_URL}
-                  download
-                  className="cooperations-button cooperations-button--contact-secondary"
-                >
-                  <FiDownload
-                    aria-hidden="true"
-                  />
-
-                  <strong>
-                    Media Kit herunterladen
-                  </strong>
-
-                  <FiArrowRight
-                    className="cooperations-button-arrow"
-                    aria-hidden="true"
-                  />
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </section>
       </main>
 
       <Footer />
     </>
   );
 }
+
+export default Kooperationen;

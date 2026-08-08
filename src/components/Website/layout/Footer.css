@@ -1078,3 +1078,343 @@
     transform: none;
   }
 }
+
+/* =========================================================
+   FOOTER – SCHWARZE VERSION
+   Einfach GANZ UNTEN in Footer.css einfügen
+========================================================= */
+
+.footer {
+  --footer-cream: #08090a;
+  --footer-cream-soft: #101214;
+  --footer-white: #ffffff;
+
+  --footer-green: #9bc7ae;
+  --footer-green-dark: #ffffff;
+  --footer-green-muted: rgba(255, 255, 255, 0.48);
+  --footer-green-soft: rgba(155, 199, 174, 0.1);
+
+  --footer-text: rgba(255, 255, 255, 0.62);
+
+  --footer-border:
+    rgba(255, 255, 255, 0.1);
+
+  --footer-border-strong:
+    rgba(155, 199, 174, 0.3);
+
+  background:
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(47, 104, 85, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 90%,
+      rgba(113, 80, 143, 0.14),
+      transparent 30%
+    ),
+    #08090a;
+
+  color: #ffffff;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================
+   DEKORATION
+========================================================= */
+
+.footer__decoration::before {
+  border-color:
+    rgba(155, 199, 174, 0.06);
+}
+
+.footer__decoration::after {
+  border-color:
+    rgba(182, 154, 203, 0.06);
+}
+
+.footer__glow--green {
+  background:
+    rgba(47, 104, 85, 0.16);
+}
+
+.footer__glow--soft {
+  background:
+    rgba(113, 80, 143, 0.14);
+}
+
+/* =========================================================
+   TEXTE
+========================================================= */
+
+.footer__newsletter h3,
+.footer__column-title {
+  color: #ffffff;
+}
+
+.footer__newsletter p,
+.footer__description,
+.footer__social-text,
+.footer__payments-text {
+  color:
+    rgba(255, 255, 255, 0.6);
+}
+
+.footer__column a,
+.footer__coming-soon-link {
+  color:
+    rgba(255, 255, 255, 0.58);
+}
+
+.footer__column a:hover,
+.footer__coming-soon-link:hover {
+  color:
+    #9bc7ae;
+}
+
+/* =========================================================
+   NEWSLETTER
+========================================================= */
+
+.footer__newsletter-form input {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+}
+
+.footer__newsletter-form input::placeholder {
+  color:
+    rgba(255, 255, 255, 0.38);
+}
+
+.footer__newsletter-form input:focus {
+  border-color:
+    rgba(155, 199, 174, 0.5);
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(155, 199, 174, 0.06);
+}
+
+.footer__newsletter-form button {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #153c31,
+      #3c284d
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+}
+
+.footer__newsletter-form button:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #1d5142,
+      #503664
+    );
+}
+
+.footer__newsletter-message--success {
+  color:
+    #9bc7ae;
+}
+
+.footer__newsletter-message--error {
+  color:
+    #e69292;
+}
+
+/* =========================================================
+   SOCIAL MEDIA
+========================================================= */
+
+.footer__social-section {
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+}
+
+.footer__socials a {
+  color:
+    rgba(255, 255, 255, 0.78);
+}
+
+.footer__socials a:hover {
+  color:
+    #9bc7ae;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.footer__logo {
+  color: #ffffff;
+}
+
+.footer__logo:hover {
+  color:
+    #9bc7ae;
+}
+
+/* Falls dein Logo selbst dunkel/schwarz ist,
+   kannst du optional diese Zeile verwenden:
+
+.footer__logo-image {
+  filter: brightness(0) invert(1);
+}
+
+*/
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.footer__column-title {
+  color:
+    rgba(255, 255, 255, 0.9);
+}
+
+.footer__external-icon {
+  color:
+    #9bc7ae;
+}
+
+/* =========================================================
+   ZAHLUNGSMETHODEN
+========================================================= */
+
+.footer__payments {
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+}
+
+.footer__payment-icon {
+  color:
+    rgba(255, 255, 255, 0.76);
+}
+
+/*
+   Apple Pay / PayPal können je nach Datei
+   schon passend aussehen.
+
+   Falls das Apple-Pay-SVG schwarz ist,
+   kannst du es auf Weiß drehen:
+*/
+
+.footer__payment-methods img[src$=".svg"] {
+  filter:
+    brightness(0)
+    invert(1);
+}
+
+/* PNGs wie PayPal NICHT invertieren */
+.footer__payment-methods img[src$=".png"] {
+  filter: none;
+}
+
+/* =========================================================
+   TRENNLINIE
+========================================================= */
+
+.footer__divider {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1) 16%,
+      rgba(255, 255, 255, 0.1) 84%,
+      transparent
+    );
+}
+
+/* =========================================================
+   UNTEN
+========================================================= */
+
+.footer__bottom p {
+  color:
+    rgba(255, 255, 255, 0.43);
+}
+
+.footer__bottom-links a {
+  color:
+    rgba(255, 255, 255, 0.45);
+}
+
+.footer__bottom-links a:hover {
+  color:
+    #9bc7ae;
+}
+
+/* =========================================================
+   NACH OBEN
+========================================================= */
+
+.footer__back-top {
+  color:
+    #9bc7ae;
+}
+
+.footer__back-top span {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.11);
+
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  box-shadow:
+    0 8px 22px
+    rgba(0, 0, 0, 0.2);
+}
+
+.footer__back-top:hover {
+  color:
+    #ffffff;
+}
+
+.footer__back-top:hover span {
+  border-color:
+    rgba(155, 199, 174, 0.3);
+
+  background:
+    rgba(155, 199, 174, 0.1);
+
+  box-shadow:
+    0 10px 28px
+    rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.footer__coming-soon-link:focus-visible {
+  color:
+    #9bc7ae;
+
+  outline:
+    2px solid
+    rgba(155, 199, 174, 0.4);
+}

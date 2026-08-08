@@ -16,7 +16,7 @@
   --detail-gold: #d39a2c;
 
   min-height: 100vh;
-  padding: 70px 0 0;
+  padding: 0;
 
   overflow-x: hidden;
 
@@ -51,7 +51,7 @@
 
 .guide-detail__image {
   position: sticky;
-  top: 110px;
+  top: 72px;
 
   min-width: 0;
 }
@@ -76,7 +76,7 @@
 
 .guide-detail__content {
   min-width: 0;
-  padding-top: 12px;
+  padding-top: 0;
 }
 
 .guide-detail__category {
@@ -405,8 +405,8 @@
 
 .guide-product-description {
   width: min(calc(100% - 48px), 1200px);
-  margin: 90px auto 0;
-  padding: 55px 0 0;
+  margin: 18px auto 0;
+  padding: 20px 0 0;
 
   border-top:
     1px solid
@@ -1252,6 +1252,19 @@
 ========================================================= */
 
 @media (max-width: 1050px) {
+  .guide-detail-page {
+    padding-top: 0;
+  }
+
+  .guide-detail__image {
+    top: 72px;
+  }
+
+  .guide-product-description {
+    margin-top: 16px;
+    padding-top: 18px;
+  }
+
   .guide-detail {
     grid-template-columns:
       minmax(300px, 410px)
@@ -1284,20 +1297,23 @@
 
 @media (max-width: 800px) {
   .guide-detail-page {
-    padding-top: 55px;
+    padding-top: 0;
   }
 
   .guide-detail {
     grid-template-columns: 1fr;
-
-    gap: 42px;
+    gap: 20px;
   }
 
   .guide-detail__image {
     position: static;
-
     width: min(100%, 560px);
     margin: 0 auto;
+  }
+
+  .guide-product-description {
+    margin-top: 18px;
+    padding-top: 18px;
   }
 
   .guide-detail__content {
@@ -1319,7 +1335,8 @@
   }
 
   .guide-product-description {
-    margin-top: 75px;
+    margin-top: 36px;
+    padding-top: 30px;
   }
 
   .guide-reviews-section {
@@ -1340,7 +1357,20 @@
 
 @media (max-width: 600px) {
   .guide-detail-page {
-    padding-top: 38px;
+    padding-top: 0;
+  }
+
+  .guide-detail {
+    gap: 16px;
+  }
+
+  .guide-product-description {
+    margin-top: 14px;
+    padding-top: 16px;
+  }
+
+  .guide-product-description__text {
+    margin-top: 4px;
   }
 
   .guide-detail,
@@ -1350,7 +1380,7 @@
   }
 
   .guide-detail {
-    gap: 32px;
+    gap: 20px;
   }
 
   .guide-detail__image img {
@@ -1459,8 +1489,8 @@
   /* Beschreibung */
 
   .guide-product-description {
-    margin-top: 60px;
-    padding-top: 40px;
+    margin-top: 30px;
+    padding-top: 27px;
   }
 
   .guide-product-description__text {
@@ -1658,6 +1688,97 @@
 
   .guide-review-edit__footer > div {
     grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   PRODUKTBEREICH NÄHER AN DIE SHOP-NAVBAR
+========================================================= */
+
+/* DESKTOP / LAPTOP */
+.guide-detail-page {
+  padding-top: 0 !important;
+}
+
+.guide-detail {
+  margin-top: -80px !important;
+}
+
+
+/* KLEINER LAPTOP / TABLET QUERFORMAT */
+@media (max-width: 1050px) {
+  .guide-detail {
+    margin-top: -40px !important;
+  }
+}
+
+
+/* TABLET */
+@media (max-width: 800px) {
+  .guide-detail {
+    margin-top: -40px !important;
+  }
+}
+
+
+/* HANDY */
+@media (max-width: 600px) {
+  .guide-detail {
+    margin-top: -90px !important;
+  }
+}
+
+
+/* SEHR KLEINE HANDYS */
+@media (max-width: 390px) {
+  .guide-detail {
+    margin-top: -40px !important;
+  }
+}
+
+/* =========================================================
+   PRODUKTBESCHREIBUNG NÄHER AN DEN HERO / PRODUKTBEREICH
+========================================================= */
+
+
+
+/* KLEINER LAPTOP / TABLET QUERFORMAT */
+@media (max-width: 1050px) {
+  .guide-product-description {
+    margin-top: -10px !important;
+    padding-top: 16px !important;
+  }
+}
+
+/* HANDY */
+.guide-product-description {
+  margin-top: -30px !important;
+  padding-top: 16px !important;
+}
+
+@media (max-width: 800px) {
+  .guide-product-description {
+    margin-top: -18px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .guide-product-description {
+    margin-top: -12px !important;
+  }
+}
+
+  .guide-product-description__text {
+    margin-top: 3px !important;
+  }
+
+
+
+/* SEHR KLEINE HANDYS */
+@media (max-width: 390px) {
+  .guide-product-description {
+    margin-top: -30px !important;
+    padding-top: 12px !important;
   }
 }
 

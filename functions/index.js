@@ -11,7 +11,13 @@ const {
   getFirestore,
   FieldValue,
 } = require("firebase-admin/firestore");
+
+const {
+  getStorage,
+} = require("firebase-admin/storage");
+
 const crypto = require("crypto");
+const PDFDocument = require("pdfkit");
 
 const Stripe = require("stripe");
 const shopProducts = require("./shopProducts");
@@ -24,11 +30,13 @@ const STRIPE_WEBHOOK_SECRET =
   defineSecret("STRIPE_WEBHOOK_SECRET");
 
 /*
- * WICHTIG:
- * Hier die tatsächliche numerische ID der Brevo-Liste
- * NEWSLETTER_TEMP eintragen.
+ * Newsletter-Listen
+ *
+ * 9 = wartet noch auf Double-Opt-In
+ * 6 = bestätigte Newsletter-Abonnenten
  */
 const NEWSLETTER_TEMP_LIST_ID = 9;
+const NEWSLETTER_CONFIRMED_LIST_ID = 6;
 
 const ORDER_EMAIL_SENDER = {
   name: "MamaTochterOnTour",
@@ -37,9 +45,770 @@ const ORDER_EMAIL_SENDER = {
 
 const ORDER_EMAIL_TEMPLATE_ID = 3;
 
+const INTERNAL_INVOICE_EMAIL =
+  "mamatochterontour@outlook.de";
+
 initializeApp();
 
 const db = getFirestore();
+
+const INVOICE_TAX_RATE = 0.07;
+
+const BUSINESS_DETAILS = {
+  name: "Jennifer Weinreich",
+  brand: "MamaTochterOnTour",
+  street: "Stettiner Straße 41",
+  postalCode: "35410",
+  city: "Hungen",
+  country: "Deutschland",
+
+  /*
+   * WICHTIG:
+   * Hier später deine echte Steuernummer
+   * ODER USt-IdNr. eintragen.
+   */
+  taxNumber: "DE441919331",
+};
+
+function calculateInvoiceTax(
+  grossInCents,
+  taxRate = INVOICE_TAX_RATE
+) {
+  const gross =
+    Number(grossInCents || 0);
+
+  /*
+   * Bei Bruttopreisen:
+   *
+   * Netto = Brutto / 1,07
+   */
+  const net = Math.round(
+    gross / (1 + taxRate)
+  );
+
+  const tax =
+    gross - net;
+
+  return {
+    grossInCents: gross,
+    netInCents: net,
+    taxInCents: tax,
+  };
+}
+
+function createInvoicePdf({
+  invoiceNumber,
+  invoiceDate,
+  orderNumber,
+  customerName,
+  customerEmail,
+  billingAddress,
+  products,
+  subtotalInCents,
+  discountInCents,
+  totalInCents,
+  currency,
+  discountLabel,
+  paymentMethod,
+}) {
+  return new Promise(
+    (resolve, reject) => {
+      try {
+        const doc =
+          new PDFDocument({
+            size: "A4",
+
+            margins: {
+              top: 55,
+              right: 55,
+              bottom: 55,
+              left: 55,
+            },
+
+            info: {
+              Title:
+                `Rechnung ${invoiceNumber}`,
+
+              Author:
+                "MamaTochterOnTour",
+
+              Subject:
+                `Rechnung zur Bestellung ${orderNumber}`,
+            },
+          });
+
+        const chunks = [];
+
+        doc.on(
+          "data",
+          (chunk) => {
+            chunks.push(chunk);
+          }
+        );
+
+        doc.on(
+          "end",
+          () => {
+            resolve(
+              Buffer.concat(chunks)
+            );
+          }
+        );
+
+        doc.on(
+          "error",
+          reject
+        );
+
+        const pageWidth =
+          doc.page.width -
+          doc.page.margins.left -
+          doc.page.margins.right;
+
+        /*
+         * =========================================
+         * HEADER
+         * =========================================
+         */
+
+        doc
+          .font("Helvetica-Bold")
+          .fontSize(22)
+          .fillColor("#153c31")
+          .text(
+            "MamaTochterOnTour"
+          );
+
+        doc
+          .moveDown(0.25)
+          .font("Helvetica")
+          .fontSize(9)
+          .fillColor("#65736c")
+          .text(
+            BUSINESS_DETAILS.name
+          )
+          .text(
+            BUSINESS_DETAILS.street
+          )
+          .text(
+            `${BUSINESS_DETAILS.postalCode} ${BUSINESS_DETAILS.city}`
+          )
+          .text(
+            BUSINESS_DETAILS.country
+          );
+
+        doc.moveDown(2);
+
+        /*
+         * =========================================
+         * KUNDENADRESSE
+         * =========================================
+         */
+
+        doc
+          .font("Helvetica")
+          .fontSize(10)
+          .fillColor("#1d2923");
+
+        if (customerName) {
+          doc.text(customerName);
+        }
+
+        if (
+          billingAddress?.line1
+        ) {
+          doc.text(
+            billingAddress.line1
+          );
+        }
+
+        if (
+          billingAddress?.line2
+        ) {
+          doc.text(
+            billingAddress.line2
+          );
+        }
+
+        const customerCityLine = [
+          billingAddress?.postalCode,
+          billingAddress?.city,
+        ]
+          .filter(Boolean)
+          .join(" ");
+
+        if (customerCityLine) {
+          doc.text(customerCityLine);
+        }
+
+        const countryName =
+          getCountryName(
+            billingAddress?.country
+          );
+
+        if (countryName) {
+          doc.text(countryName);
+        }
+
+        if (customerEmail) {
+          doc
+            .moveDown(0.3)
+            .fontSize(8)
+            .fillColor("#69736e")
+            .text(customerEmail);
+        }
+
+        /*
+         * =========================================
+         * RECHNUNG
+         * =========================================
+         */
+
+        doc.moveDown(2);
+
+        doc
+          .font("Helvetica-Bold")
+          .fontSize(28)
+          .fillColor("#153c31")
+          .text("Rechnung");
+
+        doc.moveDown(0.8);
+
+        const formattedInvoiceDate =
+          new Intl.DateTimeFormat(
+            "de-DE",
+            {
+              timeZone:
+                "Europe/Berlin",
+
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            }
+          ).format(
+            invoiceDate
+              ? new Date(invoiceDate)
+              : new Date()
+          );
+
+        doc
+          .font("Helvetica")
+          .fontSize(9)
+          .fillColor("#1d2923")
+          .text(
+            `Rechnungsnummer: ${invoiceNumber}`
+          )
+          .text(
+            `Rechnungsdatum: ${formattedInvoiceDate}`
+          )
+          .text(
+            `Bestellnummer: ${orderNumber}`
+          )
+          .text(
+            `Leistungsdatum: ${formattedInvoiceDate}`
+          )
+          .text(
+            `Zahlungsart: ${paymentMethod || "Online-Zahlung"}`
+          );
+
+        doc.moveDown(2);
+
+        /*
+         * =========================================
+         * PRODUKTTABELLE
+         * =========================================
+         */
+
+        const columnTitleX =
+          doc.page.margins.left;
+
+        const columnQuantityX =
+          columnTitleX + 280;
+
+        const columnTaxX =
+          columnTitleX + 335;
+
+        const columnPriceX =
+          columnTitleX + 395;
+
+        const tableTop = doc.y;
+
+        doc
+          .rect(
+            columnTitleX,
+            tableTop,
+            pageWidth,
+            25
+          )
+          .fill("#edf4ef");
+
+        doc
+          .fillColor("#153c31")
+          .font("Helvetica-Bold")
+          .fontSize(8);
+
+        doc.text(
+          "Artikel",
+          columnTitleX + 8,
+          tableTop + 8
+        );
+
+        doc.text(
+          "Menge",
+          columnQuantityX,
+          tableTop + 8
+        );
+
+        doc.text(
+          "USt.",
+          columnTaxX,
+          tableTop + 8
+        );
+
+        doc.text(
+          "Brutto",
+          columnPriceX,
+          tableTop + 8,
+          {
+            width: 85,
+            align: "right",
+          }
+        );
+
+        let currentY =
+          tableTop + 35;
+
+        products.forEach(
+          (product) => {
+            if (
+              currentY >
+              doc.page.height - 180
+            ) {
+              doc.addPage();
+
+              currentY =
+                doc.page.margins.top;
+            }
+
+            doc
+              .font("Helvetica-Bold")
+              .fontSize(9)
+              .fillColor("#1d2923")
+              .text(
+                product.title,
+                columnTitleX,
+                currentY,
+                {
+                  width: 260,
+                }
+              );
+
+            doc
+              .font("Helvetica")
+              .fontSize(8)
+              .fillColor("#69736e")
+              .text(
+                "Digitaler Reiseguide · PDF",
+                columnTitleX,
+                currentY + 14,
+                {
+                  width: 260,
+                }
+              );
+
+            doc
+              .fillColor("#1d2923")
+              .fontSize(9)
+              .text(
+                "1",
+                columnQuantityX,
+                currentY
+              );
+
+            doc.text(
+              "7 %",
+              columnTaxX,
+              currentY
+            );
+
+            doc.text(
+              formatMoney(
+                product.priceInCents,
+                currency
+              ),
+              columnPriceX,
+              currentY,
+              {
+                width: 85,
+                align: "right",
+              }
+            );
+
+            currentY += 42;
+
+            doc
+              .moveTo(
+                columnTitleX,
+                currentY - 8
+              )
+              .lineTo(
+                columnTitleX +
+                  pageWidth,
+                currentY - 8
+              )
+              .strokeColor(
+                "#e3e8e5"
+              )
+              .lineWidth(0.5)
+              .stroke();
+          }
+        );
+
+        /*
+         * =========================================
+         * SUMMEN
+         * =========================================
+         */
+
+        currentY += 10;
+
+        const summaryLabelX =
+          columnTitleX + 270;
+
+        const summaryValueX =
+          columnTitleX + 390;
+
+        function addSummaryRow(
+          label,
+          value,
+          bold = false
+        ) {
+          doc
+            .font(
+              bold
+                ? "Helvetica-Bold"
+                : "Helvetica"
+            )
+            .fontSize(
+              bold ? 10 : 9
+            )
+            .fillColor(
+              bold
+                ? "#153c31"
+                : "#1d2923"
+            );
+
+          doc.text(
+            label,
+            summaryLabelX,
+            currentY,
+            {
+              width: 115,
+            }
+          );
+
+          doc.text(
+            value,
+            summaryValueX,
+            currentY,
+            {
+              width: 90,
+              align: "right",
+            }
+          );
+
+          currentY +=
+            bold ? 23 : 19;
+        }
+
+        addSummaryRow(
+          "Zwischensumme:",
+          formatMoney(
+            subtotalInCents,
+            currency
+          )
+        );
+
+        if (
+          Number(
+            discountInCents
+          ) > 0
+        ) {
+          addSummaryRow(
+            `${
+              discountLabel ||
+              "Rabatt"
+            }:`,
+            `-${formatMoney(
+              discountInCents,
+              currency
+            )}`
+          );
+        }
+
+        const tax =
+          calculateInvoiceTax(
+            totalInCents
+          );
+
+        addSummaryRow(
+          "Nettobetrag:",
+          formatMoney(
+            tax.netInCents,
+            currency
+          )
+        );
+
+        addSummaryRow(
+  "7 % Umsatzsteuer:",
+  formatMoney(
+    tax.taxInCents,
+    currency
+  )
+);
+
+        addSummaryRow(
+          "Gesamtbetrag:",
+          formatMoney(
+            totalInCents,
+            currency
+          ),
+          true
+        );
+
+        doc.moveDown(3);
+
+        /*
+         * =========================================
+         * ZAHLUNGSSTATUS
+         * =========================================
+         */
+
+        doc
+          .font("Helvetica-Bold")
+          .fontSize(10)
+          .fillColor("#153c31")
+          .text(
+            "Bereits bezahlt"
+          );
+
+        doc
+          .moveDown(0.4)
+          .font("Helvetica")
+          .fontSize(8.5)
+          .fillColor("#69736e")
+          .text(
+            "Der Rechnungsbetrag wurde bereits im Rahmen deiner Bestellung online bezahlt."
+          );
+
+        /*
+         * =========================================
+         * FOOTER
+         * =========================================
+         */
+
+        const footerY =
+          doc.page.height - 85;
+
+        doc
+          .moveTo(
+            doc.page.margins.left,
+            footerY
+          )
+          .lineTo(
+            doc.page.width -
+              doc.page.margins.right,
+            footerY
+          )
+          .strokeColor(
+            "#dce5df"
+          )
+          .lineWidth(0.5)
+          .stroke();
+
+        doc
+          .font("Helvetica")
+          .fontSize(7.5)
+          .fillColor("#69736e")
+          .text(
+            `${BUSINESS_DETAILS.name} · ${BUSINESS_DETAILS.brand} · ${BUSINESS_DETAILS.street} · ${BUSINESS_DETAILS.postalCode} ${BUSINESS_DETAILS.city}`,
+            doc.page.margins.left,
+            footerY + 12,
+            {
+              width: pageWidth,
+              align: "center",
+            }
+          );
+
+        doc.text(
+          `Steuernummer: ${BUSINESS_DETAILS.taxNumber}`,
+          {
+            width: pageWidth,
+            align: "center",
+          }
+        );
+
+        doc.end();
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+async function saveInvoicePdfToStorage({
+  invoicePdfBuffer,
+  invoiceNumber,
+  invoiceDate,
+}) {
+  if (!invoicePdfBuffer) {
+    throw new Error(
+      "Für die Rechnung fehlt der PDF-Inhalt."
+    );
+  }
+
+  if (!invoiceNumber) {
+    throw new Error(
+      "Für die Rechnung fehlt die Rechnungsnummer."
+    );
+  }
+
+  const parsedInvoiceDate =
+    invoiceDate
+      ? new Date(invoiceDate)
+      : new Date();
+
+  const invoiceYear =
+    Number.isNaN(
+      parsedInvoiceDate.getTime()
+    )
+      ? new Date().getFullYear()
+      : parsedInvoiceDate.getFullYear();
+
+  const storagePath =
+    `invoices/${invoiceYear}/${invoiceNumber}.pdf`;
+
+  const bucket =
+    getStorage().bucket();
+
+  const file =
+    bucket.file(storagePath);
+
+  await file.save(
+    invoicePdfBuffer,
+    {
+      resumable: false,
+
+      metadata: {
+        contentType:
+          "application/pdf",
+
+        cacheControl:
+          "private, max-age=0, no-transform",
+
+        metadata: {
+          invoiceNumber,
+        },
+      },
+    }
+  );
+
+  return {
+    storagePath,
+    bucketName:
+      bucket.name,
+  };
+}
+
+function getStripeCountryCode(country) {
+  const normalizedCountry =
+    String(country || "")
+      .trim()
+      .toUpperCase();
+
+  if (!normalizedCountry) {
+    return "";
+  }
+
+  /*
+   * Falls bereits ein ISO-Ländercode
+   * gespeichert wurde.
+   */
+  if (
+    /^[A-Z]{2}$/.test(
+      normalizedCountry
+    )
+  ) {
+    return normalizedCountry;
+  }
+
+  const countryMap = {
+    DEUTSCHLAND: "DE",
+    GERMANY: "DE",
+
+    ÖSTERREICH: "AT",
+    OESTERREICH: "AT",
+    AUSTRIA: "AT",
+
+    SCHWEIZ: "CH",
+    SWITZERLAND: "CH",
+
+    FRANKREICH: "FR",
+    FRANCE: "FR",
+
+    ITALIEN: "IT",
+    ITALY: "IT",
+
+    SPANIEN: "ES",
+    SPAIN: "ES",
+
+    NIEDERLANDE: "NL",
+    NETHERLANDS: "NL",
+
+    BELGIEN: "BE",
+    BELGIUM: "BE",
+
+    LUXEMBURG: "LU",
+    LUXEMBOURG: "LU",
+
+    DÄNEMARK: "DK",
+    DAENEMARK: "DK",
+    DENMARK: "DK",
+
+    SCHWEDEN: "SE",
+    SWEDEN: "SE",
+
+    NORWEGEN: "NO",
+    NORWAY: "NO",
+
+    FINNLAND: "FI",
+    FINLAND: "FI",
+
+    PORTUGAL: "PT",
+
+    POLEN: "PL",
+    POLAND: "PL",
+
+    TSCHECHIEN: "CZ",
+    CZECHIA: "CZ",
+
+    VEREINIGTES_KÖNIGREICH: "GB",
+    VEREINIGTES_KOENIGREICH: "GB",
+    "UNITED KINGDOM": "GB",
+    UK: "GB",
+  };
+
+  return (
+    countryMap[
+      normalizedCountry
+        .replace(/\s+/g, "_")
+    ] ||
+    countryMap[
+      normalizedCountry
+    ] ||
+    ""
+  );
+}
 
 function createCouponRedemptionId(email, code) {
   return crypto
@@ -54,20 +823,30 @@ exports.subscribeToNewsletter = onCall(
     secrets: [BREVO_API_KEY],
   },
   async (request) => {
-    const rawEmail = request.data?.email;
+    const rawEmail =
+      request.data?.email;
 
-    if (typeof rawEmail !== "string") {
+    if (
+      typeof rawEmail !== "string"
+    ) {
       throw new HttpsError(
         "invalid-argument",
         "Bitte gib eine gültige E-Mail-Adresse ein."
       );
     }
 
-    const email = rawEmail.trim().toLowerCase();
+    const email =
+      rawEmail
+        .trim()
+        .toLowerCase();
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailPattern.test(email) || email.length > 254) {
+    if (
+      !emailPattern.test(email) ||
+      email.length > 254
+    ) {
       throw new HttpsError(
         "invalid-argument",
         "Bitte gib eine gültige E-Mail-Adresse ein."
@@ -75,56 +854,443 @@ exports.subscribeToNewsletter = onCall(
     }
 
     try {
-      const brevoResponse = await fetch(
-        "https://api.brevo.com/v3/contacts",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "content-type": "application/json",
-            "api-key": BREVO_API_KEY.value(),
-          },
-          body: JSON.stringify({
-            email,
-            listIds: [NEWSLETTER_TEMP_LIST_ID],
-            updateEnabled: true,
-          }),
+      /*
+       * =========================================
+       * 1. KONTAKT BEI BREVO PRÜFEN
+       * =========================================
+       */
+
+      const existingContactResponse =
+        await fetch(
+          `https://api.brevo.com/v3/contacts/${encodeURIComponent(
+            email
+          )}`,
+          {
+            method: "GET",
+
+            headers: {
+              accept:
+                "application/json",
+
+              "api-key":
+                BREVO_API_KEY.value(),
+            },
+          }
+        );
+
+      let existingContact = null;
+
+      if (
+        existingContactResponse.ok
+      ) {
+        existingContact =
+          await existingContactResponse.json();
+
+        const existingListIds =
+          Array.isArray(
+            existingContact.listIds
+          )
+            ? existingContact.listIds
+            : [];
+
+        /*
+         * =========================================
+         * 2. BEREITS BESTÄTIGTER NEWSLETTER
+         * =========================================
+         *
+         * Liste 6 ist die einzige Liste,
+         * die für "bereits angemeldet"
+         * entscheidend ist.
+         */
+
+        if (
+          existingListIds.includes(
+            NEWSLETTER_CONFIRMED_LIST_ID
+          )
+        ) {
+          return {
+            success: true,
+
+            alreadySubscribed: true,
+
+            message:
+              "Du bist bereits für unseren Newsletter angemeldet. 💚",
+          };
         }
-      );
+      } else if (
+        existingContactResponse.status !==
+        404
+      ) {
+        const contactErrorText =
+          await existingContactResponse.text();
+
+        logger.error(
+          "Brevo contact lookup failed",
+          {
+            status:
+              existingContactResponse.status,
+
+            response:
+              contactErrorText,
+
+            email,
+          }
+        );
+
+        throw new Error(
+          "Kontakt konnte bei Brevo nicht geprüft werden."
+        );
+      }
 
       /*
-       * Brevo antwortet bei einer erfolgreichen Erstellung
-       * beziehungsweise Aktualisierung unter anderem mit 201 oder 204.
+       * =========================================
+       * 3. NOCH NICHT BESTÄTIGT
+       * =========================================
+       *
+       * Person ist NICHT in Liste 6.
+       *
+       * Jetzt darf sie in die temporäre
+       * Liste 9 aufgenommen werden.
        */
-      if (brevoResponse.ok) {
+
+      const existingListIds =
+        Array.isArray(
+          existingContact?.listIds
+        )
+          ? existingContact.listIds
+          : [];
+
+      /*
+       * Falls Kontakt schon in Liste 9 steckt,
+       * bedeutet das:
+       * Anmeldung wurde bereits begonnen,
+       * aber noch nicht bestätigt.
+       *
+       * Wir müssen ihn nicht erneut anlegen.
+       */
+      if (
+        existingListIds.includes(
+          NEWSLETTER_TEMP_LIST_ID
+        )
+      ) {
         return {
           success: true,
+
+          alreadySubscribed: false,
+
+          pendingConfirmation: true,
+
           message:
-            "Fast geschafft! Bitte bestätige deine Anmeldung über die E-Mail, die wir dir gerade geschickt haben.",
+            "Deine Anmeldung wartet noch auf deine Bestätigung. Bitte prüfe dein E-Mail-Postfach sowie deinen Spam- oder Junk-Ordner.",
         };
       }
 
-      const brevoErrorText = await brevoResponse.text();
+      /*
+       * Kontakt erstellen oder vorhandenen
+       * Kontakt der temporären Liste 9 hinzufügen.
+       */
 
-      logger.error("Brevo newsletter subscription failed", {
-        status: brevoResponse.status,
-        response: brevoErrorText,
-      });
+      const brevoResponse =
+        await fetch(
+          "https://api.brevo.com/v3/contacts",
+          {
+            method: "POST",
+
+            headers: {
+              accept:
+                "application/json",
+
+              "content-type":
+                "application/json",
+
+              "api-key":
+                BREVO_API_KEY.value(),
+            },
+
+            body: JSON.stringify({
+              email,
+
+              listIds: [
+                NEWSLETTER_TEMP_LIST_ID,
+              ],
+
+              updateEnabled: true,
+            }),
+          }
+        );
+
+      if (
+        brevoResponse.ok
+      ) {
+        return {
+          success: true,
+
+          alreadySubscribed: false,
+
+          pendingConfirmation: true,
+
+          message:
+            "Fast geschafft! Bitte bestätige deine Anmeldung über die E-Mail, die wir dir gerade geschickt haben. Falls du sie nicht findest, schau bitte auch in deinem Spam- oder Junk-Ordner nach.",
+        };
+      }
+
+      const brevoErrorText =
+        await brevoResponse.text();
+
+      logger.error(
+        "Brevo newsletter subscription failed",
+        {
+          status:
+            brevoResponse.status,
+
+          response:
+            brevoErrorText,
+
+          email,
+        }
+      );
 
       throw new HttpsError(
         "internal",
         "Die Anmeldung konnte gerade nicht abgeschlossen werden. Bitte versuche es später erneut."
       );
     } catch (error) {
-      if (error instanceof HttpsError) {
+      if (
+        error instanceof HttpsError
+      ) {
         throw error;
       }
 
-      logger.error("Unexpected newsletter subscription error", error);
+      logger.error(
+        "Unexpected newsletter subscription error",
+        error
+      );
 
       throw new HttpsError(
         "internal",
         "Die Anmeldung konnte gerade nicht abgeschlossen werden. Bitte versuche es später erneut."
+      );
+    }
+  }
+);
+
+exports.unsubscribeFromNewsletter = onCall(
+  {
+    region: "europe-west1",
+    secrets: [BREVO_API_KEY],
+  },
+  async (request) => {
+    const rawEmail =
+      request.data?.email;
+
+    if (
+      typeof rawEmail !== "string"
+    ) {
+      throw new HttpsError(
+        "invalid-argument",
+        "Die E-Mail-Adresse fehlt."
+      );
+    }
+
+    const email =
+      rawEmail
+        .trim()
+        .toLowerCase();
+
+    const emailPattern =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+      !emailPattern.test(email) ||
+      email.length > 254
+    ) {
+      throw new HttpsError(
+        "invalid-argument",
+        "Die E-Mail-Adresse ist ungültig."
+      );
+    }
+
+    try {
+      /*
+       * Kontakt laden.
+       */
+      const contactResponse =
+        await fetch(
+          `https://api.brevo.com/v3/contacts/${encodeURIComponent(
+            email
+          )}`,
+          {
+            method: "GET",
+
+            headers: {
+              accept:
+                "application/json",
+
+              "api-key":
+                BREVO_API_KEY.value(),
+            },
+          }
+        );
+
+      /*
+       * Kontakt existiert gar nicht.
+       *
+       * Für den User behandeln wir das
+       * trotzdem als erfolgreich abgemeldet.
+       */
+      if (
+        contactResponse.status === 404
+      ) {
+        return {
+          success: true,
+
+          message:
+            "Du wurdest erfolgreich vom Newsletter abgemeldet.",
+        };
+      }
+
+      if (!contactResponse.ok) {
+        const responseText =
+          await contactResponse.text();
+
+        logger.error(
+          "Brevo contact lookup for unsubscribe failed",
+          {
+            email,
+
+            status:
+              contactResponse.status,
+
+            response:
+              responseText,
+          }
+        );
+
+        throw new Error(
+          "Kontakt konnte nicht geprüft werden."
+        );
+      }
+
+      const contact =
+        await contactResponse.json();
+
+      const listIds =
+        Array.isArray(
+          contact.listIds
+        )
+          ? contact.listIds
+          : [];
+
+      /*
+       * Weder Liste 6 noch Liste 9?
+       * Dann ist die Person bei uns
+       * sowieso nicht mehr angemeldet.
+       */
+      if (
+        !listIds.includes(
+          NEWSLETTER_CONFIRMED_LIST_ID
+        ) &&
+        !listIds.includes(
+          NEWSLETTER_TEMP_LIST_ID
+        )
+      ) {
+        return {
+          success: true,
+
+          message:
+            "Du wurdest erfolgreich vom Newsletter abgemeldet.",
+        };
+      }
+
+      /*
+       * =========================================
+       * AUS NEWSLETTER-LISTEN ENTFERNEN
+       * =========================================
+       *
+       * Liste 6:
+       * bestätigter Newsletter
+       *
+       * Liste 9:
+       * eventuell noch offene Anmeldung
+       */
+
+      const updateResponse =
+        await fetch(
+          `https://api.brevo.com/v3/contacts/${encodeURIComponent(
+            email
+          )}`,
+          {
+            method: "PUT",
+
+            headers: {
+              accept:
+                "application/json",
+
+              "content-type":
+                "application/json",
+
+              "api-key":
+                BREVO_API_KEY.value(),
+            },
+
+            body: JSON.stringify({
+              unlinkListIds: [
+                NEWSLETTER_CONFIRMED_LIST_ID,
+                NEWSLETTER_TEMP_LIST_ID,
+              ],
+            }),
+          }
+        );
+
+      if (!updateResponse.ok) {
+        const responseText =
+          await updateResponse.text();
+
+        logger.error(
+          "Brevo newsletter unsubscribe failed",
+          {
+            email,
+
+            status:
+              updateResponse.status,
+
+            response:
+              responseText,
+          }
+        );
+
+        throw new Error(
+          "Kontakt konnte nicht aus der Newsletter-Liste entfernt werden."
+        );
+      }
+
+      return {
+        success: true,
+
+        message:
+          "Du wurdest erfolgreich vom Newsletter abgemeldet.",
+      };
+    } catch (error) {
+      if (
+        error instanceof HttpsError
+      ) {
+        throw error;
+      }
+
+      logger.error(
+        "Unexpected newsletter unsubscribe error",
+        {
+          email,
+
+          error:
+            error?.message ||
+            String(error),
+        }
+      );
+
+      throw new HttpsError(
+        "internal",
+        "Die Abmeldung konnte gerade nicht durchgeführt werden. Bitte versuche es später erneut."
       );
     }
   }
@@ -571,7 +1737,334 @@ const couponCode = String(
   STRIPE_SECRET_KEY.value()
 );
 
-    let verifiedCouponPercent = 0;
+/*
+ * =========================================
+ * STRIPE CUSTOMER FÜR KUNDENKONTO
+ * =========================================
+ *
+ * Gast:
+ * → normaler Stripe Checkout
+ *
+ * Kundenkonto:
+ * → vorhandenen Stripe Customer verwenden
+ * → oder beim ersten Kauf einen erstellen
+ * → gespeicherte Adresse aus shopUsers laden
+ */
+
+let stripeCustomerId = "";
+let hasCompleteSavedAddress = false;
+
+if (
+  checkoutMode === "account"
+) {
+  const userId =
+    request.auth.uid;
+
+  /*
+   * Öffentliche/allgemeine Profildaten:
+   * Users/{uid}
+   */
+  const userReference =
+    db
+      .collection("Users")
+      .doc(userId);
+
+  /*
+   * Private Shop-Daten:
+   * shopUsers/{uid}
+   */
+  const shopUserReference =
+    db
+      .collection("shopUsers")
+      .doc(userId);
+
+  const [
+    userSnapshot,
+    shopUserSnapshot,
+  ] = await Promise.all([
+    userReference.get(),
+    shopUserReference.get(),
+  ]);
+
+  const userData =
+    userSnapshot.exists
+      ? userSnapshot.data()
+      : {};
+
+  const shopUserData =
+    shopUserSnapshot.exists
+      ? shopUserSnapshot.data()
+      : {};
+
+  const savedAddress =
+    shopUserData?.address || {};
+
+  const firstName =
+    String(
+      userData?.firstName || ""
+    ).trim();
+
+  const lastName =
+    String(
+      userData?.lastName || ""
+    ).trim();
+
+  const customerName = [
+    firstName,
+    lastName,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const street =
+    String(
+      savedAddress?.street || ""
+    ).trim();
+
+  const houseNumber =
+    String(
+      savedAddress
+        ?.houseNumber || ""
+    ).trim();
+
+  const postalCode =
+    String(
+      savedAddress
+        ?.postalCode || ""
+    ).trim();
+
+  const city =
+    String(
+      savedAddress?.city || ""
+    ).trim();
+
+  const countryCode =
+    getStripeCountryCode(
+      savedAddress?.country
+    );
+
+  /*
+   * Straße und Hausnummer werden
+   * für Stripe zusammengeführt.
+   */
+  const addressLine1 = [
+    street,
+    houseNumber,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  /*
+   * Nur tatsächlich vorhandene
+   * Adressfelder an Stripe senden.
+   */
+  const stripeAddress = {};
+
+  if (addressLine1) {
+    stripeAddress.line1 =
+      addressLine1;
+  }
+
+  if (postalCode) {
+    stripeAddress.postal_code =
+      postalCode;
+  }
+
+  if (city) {
+    stripeAddress.city =
+      city;
+  }
+
+  if (countryCode) {
+    stripeAddress.country =
+      countryCode;
+  }
+
+  hasCompleteSavedAddress =
+  Boolean(
+    addressLine1 &&
+    postalCode &&
+    city &&
+    countryCode
+  );
+
+  /*
+   * Bereits gespeicherte Stripe-ID
+   * aus shopUsers/{uid}.
+   */
+  const savedStripeCustomerId =
+    String(
+      shopUserData
+        ?.stripeCustomerId || ""
+    ).trim();
+
+  let stripeCustomer = null;
+
+  /*
+   * =========================================
+   * EXISTIERENDEN CUSTOMER LADEN
+   * =========================================
+   */
+
+  if (
+    savedStripeCustomerId
+  ) {
+    try {
+      const existingCustomer =
+        await stripe.customers.retrieve(
+          savedStripeCustomerId
+        );
+
+      if (
+        existingCustomer &&
+        !existingCustomer.deleted
+      ) {
+        stripeCustomer =
+          existingCustomer;
+      }
+    } catch (error) {
+      /*
+       * Falls der Customer z. B. im
+       * Stripe-Dashboard gelöscht wurde,
+       * erstellen wir weiter unten
+       * automatisch einen neuen.
+       */
+      logger.warn(
+        "Saved Stripe customer could not be loaded",
+        {
+          userId,
+
+          stripeCustomerId:
+            savedStripeCustomerId,
+
+          error:
+            error?.message ||
+            String(error),
+        }
+      );
+    }
+  }
+
+  /*
+   * =========================================
+   * CUSTOMER ERSTELLEN
+   * =========================================
+   */
+
+  if (!stripeCustomer) {
+    const customerData = {
+      email:
+        checkoutEmail,
+
+      metadata: {
+        firebaseUid:
+          userId,
+
+        source:
+          "mamatochterontour-shop",
+      },
+    };
+
+    if (customerName) {
+      customerData.name =
+        customerName;
+    }
+
+    if (hasCompleteSavedAddress) {
+  customerData.address =
+    stripeAddress;
+}
+
+    stripeCustomer =
+      await stripe.customers.create(
+        customerData
+      );
+
+    stripeCustomerId =
+      stripeCustomer.id;
+
+    /*
+     * Stripe Customer-ID dauerhaft
+     * beim Shop-Benutzer speichern.
+     */
+    await shopUserReference.set(
+      {
+        stripeCustomerId,
+
+        stripeCustomerCreatedAt:
+          FieldValue
+            .serverTimestamp(),
+
+        updatedAt:
+          FieldValue
+            .serverTimestamp(),
+      },
+      {
+        merge: true,
+      }
+    );
+  } else {
+    /*
+     * =========================================
+     * CUSTOMER AKTUALISIEREN
+     * =========================================
+     *
+     * Das Kundenkonto ist unsere
+     * Standardquelle für Name,
+     * E-Mail und Adresse.
+     */
+
+    stripeCustomerId =
+      stripeCustomer.id;
+
+    const customerUpdate = {
+      email:
+        checkoutEmail,
+
+      metadata: {
+        firebaseUid:
+          userId,
+
+        source:
+          "mamatochterontour-shop",
+      },
+    };
+
+    if (customerName) {
+      customerUpdate.name =
+        customerName;
+    }
+
+    if (hasCompleteSavedAddress) {
+  customerUpdate.address =
+    stripeAddress;
+}
+
+    await stripe.customers.update(
+      stripeCustomerId,
+      customerUpdate
+    );
+
+    /*
+     * Sicherheitshalber die ID erneut
+     * in Firestore hinterlegen.
+     */
+    await shopUserReference.set(
+      {
+        stripeCustomerId,
+
+        updatedAt:
+          FieldValue
+            .serverTimestamp(),
+      },
+      {
+        merge: true,
+      }
+    );
+  }
+}
+
+let verifiedCouponPercent = 0;
 
 if (
   couponCode === "WILLKOMMEN10"
@@ -712,89 +2205,151 @@ try {
     ];
   }
 
-  const session =
-    await stripe.checkout.sessions.create({
-      mode: "payment",
+  const checkoutSessionData = {
+  mode: "payment",
 
-      line_items: lineItems,
+  line_items:
+    lineItems,
 
-      discounts: stripeDiscounts,
+  discounts:
+    stripeDiscounts,
 
-      customer_creation: "always",
+  success_url:
+    "http://localhost:5173/shop/checkout-erfolgreich" +
+    "?session_id={CHECKOUT_SESSION_ID}",
 
-      customer_email: checkoutEmail,
+  cancel_url:
+    "http://localhost:5173/shop/warenkorb",
 
-      billing_address_collection:
-        "required",
+  metadata: {
+    productIds:
+      productIds.join(","),
 
-      name_collection: {
-        individual: {
-          enabled: true,
-          optional: false,
-        },
-      },
+    checkoutEmail,
 
-      success_url:
-        "http://localhost:5173/shop/checkout-erfolgreich" +
-        "?session_id={CHECKOUT_SESSION_ID}",
+    checkoutMode,
 
-      cancel_url:
-        "http://localhost:5173/shop/warenkorb",
+    couponCode:
+      appliedDiscount.type ===
+        "coupon"
+        ? couponCode
+        : "",
 
-      metadata: {
-        productIds:
-          productIds.join(","),
+    discountType:
+      appliedDiscount.type,
 
-        checkoutEmail,
+    discountLabel:
+      appliedDiscount.label ||
+      "",
 
-        checkoutMode,
+    discountPercent:
+      String(
+        appliedDiscount.percent ||
+          0
+      ),
 
-        couponCode:
-          appliedDiscount.type ===
-            "coupon"
-            ? couponCode
-            : "",
+    discountAmountInCents:
+      String(
+        appliedDiscount
+          .amountInCents || 0
+      ),
 
-        discountType:
-          appliedDiscount.type,
+    calculatedSubtotalInCents:
+      String(
+        calculatedSubtotalInCents
+      ),
 
-        discountLabel:
-          appliedDiscount.label ||
-          "",
+    stripeCouponId:
+      createdStripeCouponId,
 
-        discountPercent:
-          String(
-            appliedDiscount.percent ||
-              0
-          ),
+    userId:
+      checkoutMode === "account"
+        ? request.auth.uid
+        : "",
 
-        discountAmountInCents:
-          String(
-            appliedDiscount
-              .amountInCents || 0
-          ),
+    stripeCustomerId:
+  checkoutMode === "account"
+    ? stripeCustomerId
+    : "",
 
-        calculatedSubtotalInCents:
-          String(
-            calculatedSubtotalInCents
-          ),
+    digitalContentConsent:
+      "true",
 
-        stripeCouponId:
-          createdStripeCouponId,
+    digitalContentConsentAt:
+      digitalContentConsentAt ||
+      new Date().toISOString(),
+  },
+};
 
-        userId:
-          checkoutMode === "account"
-            ? request.auth.uid
-            : "",
+/*
+ * =========================================
+ * CUSTOMER JE NACH CHECKOUT-MODUS
+ * =========================================
+ */
 
-        digitalContentConsent:
-          "true",
+if (
+  checkoutMode === "account" &&
+  stripeCustomerId
+) {
+  /*
+   * Bestehenden Stripe Customer verwenden.
+   */
+  checkoutSessionData.customer =
+    stripeCustomerId;
 
-        digitalContentConsentAt:
-          digitalContentConsentAt ||
-          new Date().toISOString(),
-      },
-    });
+  /*
+   * Rechnungsadresse IMMER anzeigen.
+   *
+   * Wenn bereits Daten beim Stripe Customer
+   * vorhanden sind, kann Stripe sie übernehmen.
+   * Der Kunde kann sie im Checkout trotzdem
+   * prüfen bzw. ändern.
+   */
+  checkoutSessionData.billing_address_collection =
+    "required";
+
+  /*
+   * Änderungen aus dem Checkout wieder
+   * am Stripe Customer speichern.
+   */
+  checkoutSessionData.customer_update = {
+    address: "auto",
+    name: "auto",
+  };
+
+  checkoutSessionData.name_collection = {
+    individual: {
+      enabled: true,
+      optional: false,
+    },
+  };
+} else {
+  /*
+   * Gast:
+   * wie bisher komplette Rechnungsdaten
+   * im Stripe Checkout erfassen.
+   */
+  checkoutSessionData.customer_creation =
+    "always";
+
+  checkoutSessionData.customer_email =
+    checkoutEmail;
+
+  checkoutSessionData.billing_address_collection =
+    "required";
+
+  checkoutSessionData.name_collection = {
+    individual: {
+      enabled: true,
+      optional: false,
+    },
+  };
+}
+
+const session =
+  await stripe.checkout.sessions.create(
+    checkoutSessionData
+  );
 
   if (!session.url) {
     throw new Error(
@@ -965,6 +2520,8 @@ async function sendOrderConfirmationEmail({
   recipientEmail,
   recipientName,
   templateParams,
+  invoicePdfBuffer,
+  invoiceNumber,
 }) {
   const brevoResponse = await fetch(
     "https://api.brevo.com/v3/smtp/email",
@@ -980,33 +2537,55 @@ async function sendOrderConfirmationEmail({
       },
 
       body: JSON.stringify({
-        sender: ORDER_EMAIL_SENDER,
+  sender:
+    ORDER_EMAIL_SENDER,
 
-        to: [
+  to: [
+    {
+      email:
+        recipientEmail,
+
+      name:
+        recipientName ||
+        recipientEmail,
+    },
+  ],
+
+  replyTo: {
+    name:
+      "MamaTochterOnTour",
+
+    email:
+      "mamatochterontour@outlook.de",
+  },
+
+  templateId:
+    ORDER_EMAIL_TEMPLATE_ID,
+
+  params:
+    templateParams,
+
+  attachment:
+    invoicePdfBuffer
+      ? [
           {
-            email: recipientEmail,
             name:
-              recipientName ||
-              recipientEmail,
+              `Rechnung-${invoiceNumber}.pdf`,
+
+            content:
+              invoicePdfBuffer.toString(
+                "base64"
+              ),
           },
-        ],
+        ]
+      : [],
 
-        replyTo: {
-          name: "MamaTochterOnTour",
-          email:
-            "mamatochterontour@outlook.de",
-        },
-
-        templateId:
-          ORDER_EMAIL_TEMPLATE_ID,
-
-        params: templateParams,
-
-        tags: [
-          "onlineshop",
-          "bestellbestaetigung",
-        ],
-      }),
+  tags: [
+    "onlineshop",
+    "bestellbestaetigung",
+    "rechnung",
+  ],
+}),
     }
   );
 
@@ -1047,6 +2626,175 @@ async function sendOrderConfirmationEmail({
   }
 
   return responseData;
+}
+
+async function sendInternalInvoiceEmail({
+  invoicePdfBuffer,
+  invoiceNumber,
+  orderNumber,
+  customerName,
+  customerEmail,
+  totalInCents,
+  currency,
+}) {
+  if (
+    !invoicePdfBuffer ||
+    !invoiceNumber
+  ) {
+    throw new Error(
+      "Die interne Rechnungs-E-Mail kann ohne Rechnung nicht versendet werden."
+    );
+  }
+
+  const customerDisplayName =
+    customerName ||
+    customerEmail ||
+    "Unbekannter Kunde";
+
+  const brevoResponse =
+    await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+
+        headers: {
+          accept:
+            "application/json",
+
+          "content-type":
+            "application/json",
+
+          "api-key":
+            BREVO_API_KEY.value(),
+        },
+
+        body: JSON.stringify({
+          sender:
+            ORDER_EMAIL_SENDER,
+
+          to: [
+            {
+              email:
+                INTERNAL_INVOICE_EMAIL,
+
+              name:
+                "MamaTochterOnTour",
+            },
+          ],
+
+          replyTo: {
+            name:
+              "MamaTochterOnTour",
+
+            email:
+              "mamatochterontour@outlook.de",
+          },
+
+          subject:
+            `Neue Rechnung ${invoiceNumber}`,
+
+          htmlContent: `
+            <html>
+              <body
+                style="
+                  font-family: Arial, sans-serif;
+                  color: #1d2923;
+                  line-height: 1.6;
+                "
+              >
+                <h2>
+                  Neue Onlineshop-Rechnung
+                </h2>
+
+                <p>
+                  Eine neue Bestellung wurde erfolgreich bezahlt.
+                </p>
+
+                <p>
+                  <strong>Rechnungsnummer:</strong>
+                  ${invoiceNumber}
+                  <br>
+
+                  <strong>Bestellnummer:</strong>
+                  ${orderNumber}
+                  <br>
+
+                  <strong>Kunde:</strong>
+                  ${customerDisplayName}
+                  <br>
+
+                  <strong>E-Mail:</strong>
+                  ${customerEmail}
+                  <br>
+
+                  <strong>Gesamtbetrag:</strong>
+                  ${formatMoney(
+                    totalInCents,
+                    currency
+                  )}
+                </p>
+
+                <p>
+                  Die zugehörige Rechnung befindet sich als PDF im Anhang.
+                </p>
+              </body>
+            </html>
+          `,
+
+          attachment: [
+            {
+              name:
+                `Rechnung-${invoiceNumber}.pdf`,
+
+              content:
+                invoicePdfBuffer.toString(
+                  "base64"
+                ),
+            },
+          ],
+
+          tags: [
+            "onlineshop",
+            "rechnung",
+            "intern",
+          ],
+        }),
+      }
+    );
+
+  const responseText =
+    await brevoResponse.text();
+
+  if (!brevoResponse.ok) {
+    logger.error(
+      "Brevo internal invoice email failed",
+      {
+        status:
+          brevoResponse.status,
+
+        response:
+          responseText,
+
+        invoiceNumber,
+
+        orderNumber,
+      }
+    );
+
+    throw new Error(
+      "Interne Rechnungs-E-Mail konnte nicht versendet werden."
+    );
+  }
+
+  try {
+    return responseText
+      ? JSON.parse(
+          responseText
+        )
+      : null;
+  } catch {
+    return null;
+  }
 }
 
 exports.stripeWebhook = onRequest(
@@ -1333,6 +3081,8 @@ try {
    */
 
   let orderNumber = null;
+let invoiceNumber = null;
+let invoiceDate = null;
 
   const counterReference = db
     .collection("shopSystem")
@@ -1355,16 +3105,36 @@ try {
         orderSnapshot.exists;
 
       if (orderAlreadyExists) {
-        effectiveOrderNumber =
-          orderSnapshot.data()
-            ?.orderNumber;
+  const existingOrder =
+    orderSnapshot.data();
 
-        if (!effectiveOrderNumber) {
-          throw new Error(
-            "Die vorhandene Bestellung besitzt keine Bestellnummer."
-          );
-        }
-      } else {
+  effectiveOrderNumber =
+    existingOrder?.orderNumber;
+
+  invoiceNumber =
+    existingOrder?.invoiceNumber;
+
+  invoiceDate =
+    existingOrder?.invoiceDate;
+
+  if (!effectiveOrderNumber) {
+    throw new Error(
+      "Die vorhandene Bestellung besitzt keine Bestellnummer."
+    );
+  }
+
+  if (!invoiceNumber) {
+    throw new Error(
+      "Die vorhandene Bestellung besitzt keine Rechnungsnummer."
+    );
+  }
+
+  if (!invoiceDate) {
+    throw new Error(
+      "Die vorhandene Bestellung besitzt kein Rechnungsdatum."
+    );
+  }
+} else {
         /*
          * Nur bei einer neuen Bestellung muss
          * der fortlaufende Zähler gelesen und
@@ -1376,50 +3146,81 @@ try {
           );
 
         const currentYear =
-          new Date().getFullYear();
+  new Date().getFullYear();
 
-        const counterData =
-          counterSnapshot.exists
-            ? counterSnapshot.data()
-            : {};
+const counterData =
+  counterSnapshot.exists
+    ? counterSnapshot.data()
+    : {};
 
-        const savedYear =
-          Number(
-            counterData.orderYear
-          ) || 0;
+const savedOrderYear =
+  Number(
+    counterData.orderYear
+  ) || 0;
 
-        const savedNumber =
-          Number(
-            counterData.orderNumber
-          ) || 0;
+const savedOrderNumber =
+  Number(
+    counterData.orderNumber
+  ) || 0;
 
-        const nextNumber =
-          savedYear === currentYear
-            ? savedNumber + 1
-            : 1;
+const savedInvoiceYear =
+  Number(
+    counterData.invoiceYear
+  ) || 0;
 
-        effectiveOrderNumber =
-          `MTT-B-${currentYear}-${String(
-            nextNumber
-          ).padStart(6, "0")}`;
+const savedInvoiceNumber =
+  Number(
+    counterData.invoiceNumber
+  ) || 0;
+
+const nextOrderNumber =
+  savedOrderYear === currentYear
+    ? savedOrderNumber + 1
+    : 1;
+
+const nextInvoiceNumber =
+  savedInvoiceYear === currentYear
+    ? savedInvoiceNumber + 1
+    : 1;
+
+effectiveOrderNumber =
+  `MTT-B-${currentYear}-${String(
+    nextOrderNumber
+  ).padStart(6, "0")}`;
+
+invoiceNumber =
+  `MTT-R-${currentYear}-${String(
+    nextInvoiceNumber
+  ).padStart(6, "0")}`;
+
+  invoiceDate =
+  new Date(
+    session.created * 1000
+  ).toISOString();
 
         transaction.set(
-          counterReference,
-          {
-            orderYear:
-              currentYear,
+  counterReference,
+  {
+    orderYear:
+      currentYear,
 
-            orderNumber:
-              nextNumber,
+    orderNumber:
+      nextOrderNumber,
 
-            updatedAt:
-              FieldValue
-                .serverTimestamp(),
-          },
-          {
-            merge: true,
-          }
-        );
+    invoiceYear:
+      currentYear,
+
+    invoiceNumber:
+      nextInvoiceNumber,
+
+    updatedAt:
+      FieldValue
+        .serverTimestamp(),
+  },
+  {
+    merge: true,
+  }
+);
 
         transaction.set(
           orderReference,
@@ -1427,10 +3228,40 @@ try {
             orderNumber:
               effectiveOrderNumber,
 
-            stripeSessionId:
-              session.id,
+            invoiceNumber,
 
-            customerName,
+invoiceDate,
+
+invoiceTaxRate:
+  7,
+
+  invoiceStoragePath:
+  "",
+
+invoiceStorageBucket:
+  "",
+
+invoiceStored:
+  false,
+
+internalInvoiceEmailStatus:
+  "pending",
+
+internalInvoiceEmailSent:
+  false,
+
+            stripeSessionId:
+  session.id,
+
+stripeCustomerId:
+  String(
+    session.customer ||
+    session.metadata
+      ?.stripeCustomerId ||
+    ""
+  ),
+
+customerName,
 
             billingAddress: {
               line1:
@@ -1471,6 +3302,14 @@ try {
             stripePaymentIntentId:
               session.payment_intent ||
               "",
+
+            stripeCustomerId:
+  String(
+    session.customer ||
+    session.metadata
+      ?.stripeCustomerId ||
+    ""
+  ),
 
             checkoutMode,
 
@@ -1764,6 +3603,18 @@ couponCode,
       "Für die Bestellung konnte keine Bestellnummer erstellt werden."
     );
   }
+
+  if (!invoiceNumber) {
+  throw new Error(
+    "Für die Bestellung konnte keine Rechnungsnummer erstellt werden."
+  );
+}
+
+if (!invoiceDate) {
+  throw new Error(
+    "Für die Bestellung konnte kein Rechnungsdatum erstellt werden."
+  );
+}
       
 
       /*
@@ -1946,7 +3797,7 @@ const templateParams = {
     ),
 
   invoiceNotice:
-    "Deine Rechnung wird dir nach der Erstellung separat zur Verfügung gestellt.",
+  `Deine Rechnung ${invoiceNumber} findest du als PDF unten im Anhang dieser E-Mail.`,
 
   /*
    * Hier unbedingt deine echten
@@ -1970,6 +3821,86 @@ const templateParams = {
     ),
 };
 
+const invoicePdfBuffer =
+  await createInvoicePdf({
+    invoiceNumber,
+
+    invoiceDate,
+
+    orderNumber,
+
+    customerName,
+
+    customerEmail:
+      email,
+
+    billingAddress: {
+      line1:
+        billingAddress.line1 ||
+        "",
+
+      line2:
+        billingAddress.line2 ||
+        "",
+
+      postalCode:
+        billingAddress.postal_code ||
+        "",
+
+      city:
+        billingAddress.city ||
+        "",
+
+      state:
+        billingAddress.state ||
+        "",
+
+      country:
+        billingAddress.country ||
+        "",
+    },
+
+    products,
+
+    subtotalInCents,
+
+    discountInCents,
+
+    totalInCents,
+
+    currency,
+
+    discountLabel,
+
+    paymentMethod,
+  });
+
+  const invoiceStorage =
+  await saveInvoicePdfToStorage({
+    invoicePdfBuffer,
+
+    invoiceNumber,
+
+    invoiceDate,
+  });
+
+await orderReference.update({
+  invoiceStoragePath:
+    invoiceStorage.storagePath,
+
+  invoiceStorageBucket:
+    invoiceStorage.bucketName,
+
+  invoiceStored:
+    true,
+
+  invoiceStoredAt:
+    FieldValue.serverTimestamp(),
+
+  updatedAt:
+    FieldValue.serverTimestamp(),
+});
+
 const brevoResult =
   await sendOrderConfirmationEmail({
     recipientEmail:
@@ -1979,30 +3910,87 @@ const brevoResult =
       customerName,
 
     templateParams,
+
+    invoicePdfBuffer,
+
+    invoiceNumber,
   });
 
-          await orderReference.update({
-            confirmationEmailStatus:
-              "sent",
+await orderReference.update({
+  confirmationEmailStatus:
+    "sent",
 
-            confirmationEmailSent:
-              true,
+  confirmationEmailSent:
+    true,
 
-            confirmationEmailSentAt:
-              FieldValue
-                .serverTimestamp(),
+  confirmationEmailSentAt:
+    FieldValue.serverTimestamp(),
 
-            confirmationEmailTemplateId:
-              ORDER_EMAIL_TEMPLATE_ID,
+  confirmationEmailTemplateId:
+    ORDER_EMAIL_TEMPLATE_ID,
 
-            confirmationEmailMessageId:
-              brevoResult?.messageId ||
-              "",
+  confirmationEmailMessageId:
+    brevoResult?.messageId ||
+    "",
 
-            updatedAt:
-              FieldValue
-                .serverTimestamp(),
-          });
+  invoiceNumber,
+
+  invoiceStatus:
+    "issued",
+
+  invoiceSent:
+    true,
+
+  invoiceSentAt:
+    FieldValue.serverTimestamp(),
+
+  updatedAt:
+    FieldValue.serverTimestamp(),
+});
+
+await orderReference.update({
+  internalInvoiceEmailStatus:
+    "sending",
+
+  updatedAt:
+    FieldValue.serverTimestamp(),
+});
+
+const internalInvoiceEmailResult =
+  await sendInternalInvoiceEmail({
+    invoicePdfBuffer,
+
+    invoiceNumber,
+
+    orderNumber,
+
+    customerName,
+
+    customerEmail:
+      email,
+
+    totalInCents,
+
+    currency,
+  });
+
+await orderReference.update({
+  internalInvoiceEmailStatus:
+    "sent",
+
+  internalInvoiceEmailSent:
+    true,
+
+  internalInvoiceEmailSentAt:
+    FieldValue.serverTimestamp(),
+
+  internalInvoiceEmailMessageId:
+    internalInvoiceEmailResult
+      ?.messageId || "",
+
+  updatedAt:
+    FieldValue.serverTimestamp(),
+});
         } catch (emailError) {
           await orderReference.update({
             confirmationEmailStatus:
@@ -2162,6 +4150,161 @@ userId:
       throw new HttpsError(
         "internal",
         "Die Bestellung konnte gerade nicht geprüft werden."
+      );
+    }
+  }
+);
+
+exports.getInvoiceDownloadUrl = onCall(
+  {
+    region: "europe-west1",
+  },
+  async (request) => {
+    if (!request.auth?.uid) {
+      throw new HttpsError(
+        "unauthenticated",
+        "Bitte melde dich mit deinem Kundenkonto an."
+      );
+    }
+
+    const orderId = String(
+      request.data?.orderId || ""
+    ).trim();
+
+    if (!orderId) {
+      throw new HttpsError(
+        "invalid-argument",
+        "Die Bestellung fehlt."
+      );
+    }
+
+    const userId =
+      request.auth.uid;
+
+    /*
+     * Die Purchase-ID ist bei dir die
+     * Stripe-Session-ID und gleichzeitig
+     * die ID in shopOrders.
+     */
+    const orderReference =
+      db
+        .collection("shopOrders")
+        .doc(orderId);
+
+    const orderSnapshot =
+      await orderReference.get();
+
+    if (!orderSnapshot.exists) {
+      throw new HttpsError(
+        "not-found",
+        "Die Bestellung wurde nicht gefunden."
+      );
+    }
+
+    const orderData =
+      orderSnapshot.data();
+
+    /*
+     * Ganz wichtig:
+     * Nur der Besitzer dieser Bestellung
+     * darf die Rechnung abrufen.
+     */
+    if (
+      orderData.checkoutMode !==
+        "account" ||
+      orderData.userId !==
+        userId
+    ) {
+      throw new HttpsError(
+        "permission-denied",
+        "Du hast keinen Zugriff auf diese Rechnung."
+      );
+    }
+
+    const invoiceStoragePath =
+      String(
+        orderData.invoiceStoragePath ||
+          ""
+      ).trim();
+
+    if (
+      !orderData.invoiceStored ||
+      !invoiceStoragePath
+    ) {
+      throw new HttpsError(
+        "not-found",
+        "Für diese Bestellung ist noch keine Rechnung verfügbar."
+      );
+    }
+
+    try {
+      const bucket =
+        orderData.invoiceStorageBucket
+          ? getStorage().bucket(
+              orderData.invoiceStorageBucket
+            )
+          : getStorage().bucket();
+
+      const file =
+        bucket.file(
+          invoiceStoragePath
+        );
+
+      const [exists] =
+        await file.exists();
+
+      if (!exists) {
+        throw new HttpsError(
+          "not-found",
+          "Die Rechnungsdatei wurde nicht gefunden."
+        );
+      }
+
+      /*
+       * Link ist nur 15 Minuten gültig.
+       */
+      const [downloadUrl] =
+        await file.getSignedUrl({
+          version: "v4",
+          action: "read",
+          expires:
+            Date.now() +
+            15 * 60 * 1000,
+          responseDisposition:
+            `attachment; filename="Rechnung-${orderData.invoiceNumber || "MamaTochterOnTour"}.pdf"`,
+        });
+
+      return {
+        success: true,
+
+        downloadUrl,
+
+        invoiceNumber:
+          orderData.invoiceNumber ||
+          "",
+      };
+    } catch (error) {
+      if (
+        error instanceof
+        HttpsError
+      ) {
+        throw error;
+      }
+
+      logger.error(
+        "Invoice download failed",
+        {
+          orderId,
+          userId,
+          error:
+            error?.message ||
+            String(error),
+        }
+      );
+
+      throw new HttpsError(
+        "internal",
+        "Die Rechnung konnte gerade nicht geladen werden."
       );
     }
   }

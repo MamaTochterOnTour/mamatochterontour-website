@@ -20,6 +20,9 @@ export function ShopAuthProvider({ children }) {
   // Profildaten aus Firestore: Users/{uid}
   const [shopUser, setShopUser] = useState(null);
 
+  // Private Shop-Daten aus Firestore: shopUsers/{uid}
+  const [shopCustomer, setShopCustomer] = useState(null);
+
   // Zeigt, ob ein Firestore-Dokument vorhanden ist
   const [profileExists, setProfileExists] = useState(false);
 
@@ -31,6 +34,7 @@ export function ShopAuthProvider({ children }) {
 
   useEffect(() => {
     let unsubscribeFromProfile = null;
+let unsubscribeFromShopCustomer = null;
 
     const unsubscribeFromAuth = onAuthStateChanged(
       auth,
@@ -40,6 +44,11 @@ export function ShopAuthProvider({ children }) {
           unsubscribeFromProfile();
           unsubscribeFromProfile = null;
         }
+
+        if (unsubscribeFromShopCustomer) {
+  unsubscribeFromShopCustomer();
+  unsubscribeFromShopCustomer = null;
+}
 
         setCurrentUser(firebaseUser);
         setAuthLoading(false);
@@ -52,6 +61,14 @@ export function ShopAuthProvider({ children }) {
           setProfileLoading(false);
           return;
         }
+
+        if (!firebaseUser) {
+  setShopUser(null);
+  setShopCustomer(null);
+  setProfileExists(false);
+  setProfileLoading(false);
+  return;
+}
 
         setProfileLoading(true);
 
@@ -100,6 +117,34 @@ export function ShopAuthProvider({ children }) {
             setProfileError(error);
           }
         );
+
+        const shopCustomerReference = doc(
+  db,
+  "shopUsers",
+  firebaseUser.uid
+);
+
+unsubscribeFromShopCustomer = onSnapshot(
+  shopCustomerReference,
+  (snapshot) => {
+    if (snapshot.exists()) {
+      setShopCustomer({
+        uid: snapshot.id,
+        ...snapshot.data(),
+      });
+    } else {
+      setShopCustomer(null);
+    }
+  },
+  (error) => {
+    console.error(
+      "Fehler beim Laden der Shop-Kundendaten:",
+      error
+    );
+
+    setShopCustomer(null);
+  }
+);
       },
       (error) => {
         console.error(
@@ -117,12 +162,16 @@ export function ShopAuthProvider({ children }) {
     );
 
     return () => {
-      unsubscribeFromAuth();
+  unsubscribeFromAuth();
 
-      if (unsubscribeFromProfile) {
-        unsubscribeFromProfile();
-      }
-    };
+  if (unsubscribeFromProfile) {
+    unsubscribeFromProfile();
+  }
+
+  if (unsubscribeFromShopCustomer) {
+    unsubscribeFromShopCustomer();
+  }
+};
   }, []);
 
   /*
@@ -132,9 +181,10 @@ export function ShopAuthProvider({ children }) {
   const loading = authLoading || profileLoading;
 
   const value = useMemo(
-    () => ({
-      currentUser,
-      shopUser,
+  () => ({
+    currentUser,
+    shopUser,
+    shopCustomer,
 
       isLoggedIn: Boolean(currentUser),
       profileExists,
@@ -148,6 +198,7 @@ export function ShopAuthProvider({ children }) {
     [
       currentUser,
       shopUser,
+      shopCustomer,
       profileExists,
       loading,
       authLoading,

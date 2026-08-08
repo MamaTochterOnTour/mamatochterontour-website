@@ -1,0 +1,492 @@
+.newsletter-unsubscribe-page {
+  --unsubscribe-green-dark:
+    #183c31;
+
+  --unsubscribe-green:
+    #355b49;
+
+  --unsubscribe-green-light:
+    #9bc7ae;
+
+  --unsubscribe-cream:
+    #f7f3ec;
+
+  --unsubscribe-soft:
+    #edf4ef;
+
+  --unsubscribe-white:
+    #ffffff;
+
+  --unsubscribe-text:
+    #1c2722;
+
+  --unsubscribe-text-soft:
+    #69736e;
+
+  --unsubscribe-red:
+    #b44343;
+
+  min-height:
+    calc(100vh - 80px);
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding:
+    80px 24px;
+
+  box-sizing:
+    border-box;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(155, 199, 174, 0.22),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(226, 211, 186, 0.24),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f7f3ec 0%,
+      #edf4ef 100%
+    );
+}
+
+.newsletter-unsubscribe-decoration {
+  position: absolute;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.newsletter-unsubscribe-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+}
+
+.newsletter-unsubscribe-glow--one {
+  top: -120px;
+  left: -110px;
+
+  width: 350px;
+  height: 350px;
+
+  background:
+    rgba(90, 145, 116, 0.18);
+}
+
+.newsletter-unsubscribe-glow--two {
+  right: -120px;
+  bottom: -140px;
+
+  width: 380px;
+  height: 380px;
+
+  background:
+    rgba(140, 103, 163, 0.12);
+}
+
+.newsletter-unsubscribe-card {
+  position: relative;
+  z-index: 1;
+
+  width:
+    min(100%, 560px);
+
+  padding:
+    52px 48px;
+
+  box-sizing:
+    border-box;
+
+  border:
+    1px solid
+    rgba(53, 91, 73, 0.12);
+
+  border-radius:
+    26px;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 25px 70px
+    rgba(24, 60, 49, 0.1);
+
+  text-align: center;
+}
+
+.newsletter-unsubscribe-icon {
+  width: 62px;
+  height: 62px;
+
+  margin:
+    0 auto 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color:
+    var(--unsubscribe-green);
+
+  background:
+    var(--unsubscribe-soft);
+}
+
+.newsletter-unsubscribe-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.newsletter-unsubscribe-icon--success {
+  color:
+    var(--unsubscribe-white);
+
+  background:
+    var(--unsubscribe-green);
+}
+
+.newsletter-unsubscribe-eyebrow {
+  margin:
+    0 0 11px;
+
+  color:
+    var(--unsubscribe-green);
+
+  font-size: 0.74rem;
+  font-weight: 750;
+
+  letter-spacing:
+    0.14em;
+
+  text-transform:
+    uppercase;
+}
+
+.newsletter-unsubscribe-card h1 {
+  margin: 0;
+
+  color:
+    var(--unsubscribe-green-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      2.7rem,
+      6vw,
+      4rem
+    );
+
+  line-height: 1;
+
+  letter-spacing:
+    -0.035em;
+}
+
+.newsletter-unsubscribe-intro {
+  max-width: 440px;
+
+  margin:
+    22px auto 0;
+
+  color:
+    var(--unsubscribe-text-soft);
+
+  font-size: 1rem;
+
+  line-height: 1.75;
+}
+
+.newsletter-unsubscribe-email {
+  margin:
+    30px 0 0;
+
+  padding:
+    18px 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  border:
+    1px solid
+    rgba(53, 91, 73, 0.12);
+
+  border-radius:
+    14px;
+
+  background:
+    var(--unsubscribe-cream);
+}
+
+.newsletter-unsubscribe-email span {
+  color:
+    var(--unsubscribe-text-soft);
+
+  font-size: 0.77rem;
+}
+
+.newsletter-unsubscribe-email strong {
+  color:
+    var(--unsubscribe-green-dark);
+
+  font-size: 0.94rem;
+
+  overflow-wrap:
+    anywhere;
+}
+
+.newsletter-unsubscribe-note {
+  margin:
+    23px auto 0;
+
+  color:
+    var(--unsubscribe-text-soft);
+
+  font-size: 0.82rem;
+
+  line-height: 1.65;
+}
+
+.newsletter-unsubscribe-button {
+  width: 100%;
+
+  min-height: 52px;
+
+  margin-top: 28px;
+
+  padding:
+    0 24px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  border: 0;
+
+  border-radius:
+    14px;
+
+  color:
+    var(--unsubscribe-white);
+
+  background:
+    var(--unsubscribe-green);
+
+  font: inherit;
+
+  font-size: 0.9rem;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.newsletter-unsubscribe-button:hover {
+  background:
+    var(--unsubscribe-green-dark);
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 12px 28px
+    rgba(53, 91, 73, 0.18);
+}
+
+.newsletter-unsubscribe-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.6;
+
+  transform: none;
+}
+
+.newsletter-unsubscribe-spinner {
+  animation:
+    newsletter-unsubscribe-spin
+    0.8s linear infinite;
+}
+
+@keyframes newsletter-unsubscribe-spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+.newsletter-unsubscribe-cancel,
+.newsletter-unsubscribe-home {
+  margin-top: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  color:
+    var(--unsubscribe-green);
+
+  font-size: 0.83rem;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.newsletter-unsubscribe-cancel:hover,
+.newsletter-unsubscribe-home:hover {
+  color:
+    var(--unsubscribe-green-dark);
+}
+
+.newsletter-unsubscribe-message {
+  margin-top: 22px;
+
+  padding:
+    15px 18px;
+
+  border-radius: 12px;
+
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.newsletter-unsubscribe-message--success {
+  color:
+    var(--unsubscribe-green-dark);
+
+  background:
+    rgba(155, 199, 174, 0.17);
+}
+
+.newsletter-unsubscribe-message--error {
+  color:
+    var(--unsubscribe-red);
+
+  background:
+    rgba(180, 67, 67, 0.08);
+}
+
+.newsletter-unsubscribe-small {
+  margin:
+    22px auto 0;
+
+  color:
+    var(--unsubscribe-text-soft);
+
+  font-size: 0.82rem;
+
+  line-height: 1.65;
+}
+
+
+/* ===============================
+   TABLET
+================================ */
+
+@media (max-width: 800px) {
+  .newsletter-unsubscribe-page {
+    padding:
+      65px 22px;
+  }
+
+  .newsletter-unsubscribe-card {
+    padding:
+      46px 40px;
+  }
+}
+
+
+/* ===============================
+   HANDY
+================================ */
+
+@media (max-width: 600px) {
+  .newsletter-unsubscribe-page {
+    min-height:
+      calc(100vh - 60px);
+
+    padding:
+      45px 16px;
+  }
+
+  .newsletter-unsubscribe-card {
+    padding:
+      38px 22px;
+
+    border-radius:
+      22px;
+  }
+
+  .newsletter-unsubscribe-icon {
+    width: 55px;
+    height: 55px;
+
+    margin-bottom:
+      18px;
+  }
+
+  .newsletter-unsubscribe-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .newsletter-unsubscribe-card h1 {
+    font-size:
+      clamp(
+        2.45rem,
+        12vw,
+        3.2rem
+      );
+  }
+
+  .newsletter-unsubscribe-intro {
+    margin-top: 18px;
+
+    font-size: 0.9rem;
+
+    line-height: 1.65;
+  }
+
+  .newsletter-unsubscribe-email {
+    margin-top: 24px;
+
+    padding:
+      16px;
+  }
+
+  .newsletter-unsubscribe-button {
+    min-height: 50px;
+
+    margin-top: 24px;
+  }
+}

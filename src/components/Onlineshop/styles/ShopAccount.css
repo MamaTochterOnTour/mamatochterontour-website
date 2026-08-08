@@ -447,7 +447,8 @@
 .shop-account-guide__image-link {
   display: block;
 
-  height: 220px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 
   overflow: hidden;
 
@@ -882,6 +883,7 @@
 
   padding: 0 15px;
 
+  border: 0;
   border-radius: 999px;
 
   background:
@@ -890,9 +892,46 @@
   color:
     var(--account-white);
 
+  font-family: inherit;
   font-size: 0.69rem;
   font-weight: 800;
   text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.shop-account-order__invoice-button:hover:not(:disabled) {
+  background:
+    var(--account-green);
+
+  transform:
+    translateY(-1px);
+}
+
+.shop-account-order__invoice-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.shop-account-invoice-error {
+  margin-top: 10px;
+  padding: 11px 13px;
+
+  border-radius: 12px;
+
+  background:
+    var(--account-danger-soft);
+
+  color:
+    var(--account-danger);
+
+  font-size: 0.68rem;
+  line-height: 1.5;
 }
 
 .shop-account-order__invoice-pending {

@@ -45,7 +45,12 @@ import {
 import {
   auth,
   db,
+  functions,
 } from "../../../firebase";
+
+import {
+  httpsCallable,
+} from "firebase/functions";
 
 import {
   useShopAuth,
@@ -149,11 +154,12 @@ function getFirstExistingValue(
 
 function ShopAccount() {
   const {
-    loading,
-    isLoggedIn,
-    currentUser,
-    shopUser,
-  } = useShopAuth();
+  loading,
+  isLoggedIn,
+  currentUser,
+  shopUser,
+  shopCustomer,
+} = useShopAuth();
 
   const [
     purchases,
@@ -174,6 +180,21 @@ function ShopAccount() {
     expandedOrderId,
     setExpandedOrderId,
   ] = useState(null);
+
+  const [
+  invoiceLoadingId,
+  setInvoiceLoadingId,
+] = useState(null);
+
+const [
+  invoiceErrorId,
+  setInvoiceErrorId,
+] = useState(null);
+
+const [
+  invoiceErrorMessage,
+  setInvoiceErrorMessage,
+] = useState("");
 
   const [
     profileForm,
@@ -261,58 +282,59 @@ function ShopAccount() {
         ),
 
       street:
-        getFirstExistingValue(
-          shopUser,
-          [
-            "street",
-            "streetName",
-            "strasse",
-          ]
-        ),
+  getFirstExistingValue(
+    shopCustomer?.address,
+    [
+      "street",
+      "streetName",
+      "strasse",
+    ]
+  ),
 
       houseNumber:
-        getFirstExistingValue(
-          shopUser,
-          [
-            "houseNumber",
-            "streetNumber",
-            "hausnummer",
-          ]
-        ),
+  getFirstExistingValue(
+    shopCustomer?.address,
+    [
+      "houseNumber",
+      "streetNumber",
+      "hausnummer",
+    ]
+  ),
 
-      postalCode:
-        getFirstExistingValue(
-          shopUser,
-          [
-            "postalCode",
-            "zipCode",
-            "plz",
-          ]
-        ),
+postalCode:
+  getFirstExistingValue(
+    shopCustomer?.address,
+    [
+      "postalCode",
+      "zipCode",
+      "plz",
+    ]
+  ),
 
-      city:
-        getFirstExistingValue(
-          shopUser,
-          [
-            "city",
-            "ort",
-          ]
-        ),
+city:
+  getFirstExistingValue(
+    shopCustomer?.address,
+    [
+      "city",
+      "ort",
+    ]
+  ),
 
-      country:
-        getFirstExistingValue(
-          shopUser,
-          [
-            "country",
-            "land",
-          ],
-          "Deutschland"
-        ),
+country:
+  getFirstExistingValue(
+    shopCustomer?.address,
+    [
+      "country",
+      "land",
+    ],
+    "Deutschland"
+  ),
     });
   }, [
-    currentUser,
-    shopUser,
-  ]);
+  currentUser,
+  shopUser,
+  shopCustomer,
+]);
 
   /*
    * Bestellungen in Echtzeit aus:
@@ -443,25 +465,6 @@ function ShopAccount() {
   const displayName =
     firstName || "Reisefan";
 
-  const points =
-    Number(
-      shopUser?.points ||
-      shopUser?.loyaltyPoints ||
-      0
-    );
-
-  const pointsTarget = 100;
-
-  const pointsProgress =
-    Math.min(
-      100,
-      Math.max(
-        0,
-        (points / pointsTarget) *
-          100
-      )
-    );
-
   function handleProfileChange(
     event
   ) {
@@ -515,50 +518,50 @@ function ShopAccount() {
       setProfileMessage("");
 
       const profileData = {
-        firstName:
-          firstNameValue,
+  firstName:
+    firstNameValue,
 
-        lastName:
-          lastNameValue,
+  lastName:
+    lastNameValue,
 
-        phone:
-          normalizeText(
-            profileForm.phone
-          ),
+  email:
+    currentUser.email || "",
 
-        address: {
-          street:
-            normalizeText(
-              profileForm.street
-            ),
+  updatedAt:
+    serverTimestamp(),
+};
 
-          houseNumber:
-            normalizeText(
-              profileForm.houseNumber
-            ),
+const shopCustomerData = {
+  address: {
+    street:
+      normalizeText(
+        profileForm.street
+      ),
 
-          postalCode:
-            normalizeText(
-              profileForm.postalCode
-            ),
+    houseNumber:
+      normalizeText(
+        profileForm.houseNumber
+      ),
 
-          city:
-            normalizeText(
-              profileForm.city
-            ),
+    postalCode:
+      normalizeText(
+        profileForm.postalCode
+      ),
 
-          country:
-            normalizeText(
-              profileForm.country
-            ),
-        },
+    city:
+      normalizeText(
+        profileForm.city
+      ),
 
-        email:
-          currentUser.email || "",
+    country:
+      normalizeText(
+        profileForm.country
+      ),
+  },
 
-        updatedAt:
-          serverTimestamp(),
-      };
+  updatedAt:
+    serverTimestamp(),
+};
 
       /*
        * Bestehende Profildaten bleiben erhalten.
@@ -574,6 +577,18 @@ function ShopAccount() {
           merge: true,
         }
       );
+
+      await setDoc(
+  doc(
+    db,
+    "shopUsers",
+    currentUser.uid
+  ),
+  shopCustomerData,
+  {
+    merge: true,
+  }
+);
 
       const completeDisplayName = [
         firstNameValue,
@@ -654,6 +669,65 @@ function ShopAccount() {
       );
     }
   }
+
+  async function handleOpenInvoice(
+  orderId
+) {
+  if (!orderId) {
+    return;
+  }
+
+  try {
+    setInvoiceLoadingId(
+      orderId
+    );
+
+    setInvoiceErrorId(null);
+    setInvoiceErrorMessage("");
+
+    const getInvoiceDownloadUrl =
+      httpsCallable(
+        functions,
+        "getInvoiceDownloadUrl"
+      );
+
+    const result =
+      await getInvoiceDownloadUrl({
+        orderId,
+      });
+
+    const downloadUrl =
+      result.data?.downloadUrl;
+
+    if (!downloadUrl) {
+      throw new Error(
+        "Es wurde kein Rechnungslink zurückgegeben."
+      );
+    }
+
+    /*
+     * Rechnung öffnen / herunterladen.
+     */
+    window.location.href =
+      downloadUrl;
+  } catch (error) {
+    console.error(
+      "Rechnung konnte nicht geöffnet werden:",
+      error
+    );
+
+    setInvoiceErrorId(
+      orderId
+    );
+
+    setInvoiceErrorMessage(
+      error?.message ||
+        "Die Rechnung konnte gerade nicht geöffnet werden."
+    );
+  } finally {
+    setInvoiceLoadingId(null);
+  }
+}
 
   async function handleLogout() {
     try {
@@ -769,18 +843,18 @@ function ShopAccount() {
               </article>
 
               <article className="shop-account-overview-card">
-                <span className="shop-account-overview-card__icon">
-                  <FiGift aria-hidden="true" />
-                </span>
+  <span className="shop-account-overview-card__icon">
+    <FiGift aria-hidden="true" />
+  </span>
 
-                <div>
-                  <strong>
-                    {points}
-                  </strong>
+  <div>
+    <strong>
+      Bald
+    </strong>
 
-                  <span>Punkte</span>
-                </div>
-              </article>
+    <span>Punkteprogramm</span>
+  </div>
+</article>
             </div>
           </div>
         </section>
@@ -962,11 +1036,13 @@ function ShopAccount() {
                           )
                           .filter(Boolean);
 
-                      const invoiceUrl =
-                        normalizeText(
-                          purchase.invoiceUrl ||
-                          purchase.invoicePdfUrl
-                        );
+                      const invoiceIsLoading =
+  invoiceLoadingId ===
+  purchase.id;
+
+const invoiceHasError =
+  invoiceErrorId ===
+  purchase.id;
 
                       return (
                         <article
@@ -1122,41 +1198,58 @@ function ShopAccount() {
                               )}
 
                               <div className="shop-account-order__invoice">
-                                <div>
-                                  <FiFileText aria-hidden="true" />
+  <div>
+    <FiFileText
+      aria-hidden="true"
+    />
 
-                                  <span>
-                                    <strong>
-                                      Rechnung
-                                    </strong>
+    <span>
+      <strong>
+        Rechnung
+      </strong>
 
-                                    <small>
-                                      {invoiceUrl
-                                        ? "Deine Rechnung steht zum Download bereit."
-                                        : "Die Rechnungsfunktion wird noch ergänzt."}
-                                    </small>
-                                  </span>
-                                </div>
+      <small>
+        Deine Rechnung zu dieser
+        Bestellung steht als PDF
+        zum Download bereit.
+      </small>
+    </span>
+  </div>
 
-                                {invoiceUrl ? (
-                                  <a
-                                    href={
-                                      invoiceUrl
-                                    }
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="shop-account-order__invoice-button"
-                                  >
-                                    <FiDownload aria-hidden="true" />
+  <button
+    type="button"
+    className="shop-account-order__invoice-button"
+    onClick={() =>
+      handleOpenInvoice(
+        purchase.id
+      )
+    }
+    disabled={
+      invoiceIsLoading
+    }
+  >
+    {invoiceIsLoading ? (
+      <FiLoader
+        className="shop-account-button-spinner"
+        aria-hidden="true"
+      />
+    ) : (
+      <FiDownload
+        aria-hidden="true"
+      />
+    )}
 
-                                    Rechnung öffnen
-                                  </a>
-                                ) : (
-                                  <span className="shop-account-order__invoice-pending">
-                                    Noch nicht verfügbar
-                                  </span>
-                                )}
-                              </div>
+    {invoiceIsLoading
+      ? "Wird geladen …"
+      : "Rechnung herunterladen"}
+  </button>
+</div>
+
+{invoiceHasError && (
+  <div className="shop-account-invoice-error">
+    {invoiceErrorMessage}
+  </div>
+)}
                             </div>
                           )}
                         </article>
@@ -1183,73 +1276,65 @@ function ShopAccount() {
             </section>
 
             <section
-              className="shop-account-section"
-              id="punkteprogramm"
-            >
-              <div className="shop-account-section__header">
-                <div>
-                  <p className="shop-account-section__eyebrow">
-                    Deine Vorteile
-                  </p>
+  className="shop-account-section"
+  id="punkteprogramm"
+>
+  <div className="shop-account-section__header">
+    <div>
+      <p className="shop-account-section__eyebrow">
+        Deine Vorteile
+      </p>
 
-                  <h2>
-                    Punkteprogramm
-                  </h2>
+      <h2>
+        Punkteprogramm
+      </h2>
 
-                  <p>
-                    Dieser Bereich ist bereits für dein
-                    zukünftiges Punkteprogramm vorbereitet.
-                  </p>
-                </div>
+      <p>
+        Wir arbeiten gerade an unserem
+        Punkteprogramm für den Onlineshop.
+      </p>
+    </div>
 
-                <span className="shop-account-section__header-icon">
-                  <FiGift aria-hidden="true" />
-                </span>
-              </div>
+    <span className="shop-account-section__header-icon">
+      <FiGift aria-hidden="true" />
+    </span>
+  </div>
 
-              <div className="shop-account-points">
-                <div className="shop-account-points__top">
-                  <div>
-                    <span>
-                      Dein Punktestand
-                    </span>
+  <div className="shop-account-points">
+    <div className="shop-account-points__top">
+      <div>
+        <span>
+          Demnächst verfügbar
+        </span>
 
-                    <strong>
-                      {points} Punkte
-                    </strong>
-                  </div>
+        <strong>
+          Deine Einkäufe zählen schon mit
+        </strong>
+      </div>
 
-                  <span className="shop-account-points__badge">
-                    Start
-                  </span>
-                </div>
+      <span className="shop-account-points__badge">
+        In Vorbereitung
+      </span>
+    </div>
 
-                <div className="shop-account-points__progress">
-                  <span
-                    style={{
-                      width:
-                        `${pointsProgress}%`,
-                    }}
-                  />
-                </div>
+    <p>
+      Unser Punkteprogramm befindet sich
+      aktuell noch im Aufbau. Wenn du bereits
+      mit deinem Kundenkonto Reiseguides kaufst,
+      gehen deine Bestellungen aber nicht
+      verloren.
+    </p>
 
-                <p>
-                  {points > 0
-                    ? `Noch ${Math.max(
-                        0,
-                        pointsTarget -
-                          points
-                      )} Punkte bis zu deinem nächsten Vorteil.`
-                    : "Deine ersten Punkte werden hier angezeigt, sobald das Punkteprogramm startet."}
-                </p>
-
-                <div className="shop-account-points__notice">
-                  Das Punkteprogramm befindet sich noch
-                  in Vorbereitung. Dein Kundenkonto ist
-                  bereits dafür eingerichtet.
-                </div>
-              </div>
-            </section>
+    <div className="shop-account-points__notice">
+      Sobald das Punkteprogramm startet,
+      berücksichtigen wir deine bisherigen
+      Bestellungen mit diesem Kundenkonto.
+      Du kannst also schon jetzt einkaufen
+      und später von deinen gesammelten
+      Vorteilen profitieren.
+    </div>
+  </div>
+</section>
 
             <section
               className="shop-account-section"
@@ -1365,27 +1450,6 @@ function ShopAccount() {
                       </small>
                     </label>
 
-                    <label className="shop-account-field shop-account-field--full">
-                      <span>
-                        Telefonnummer
-                      </span>
-
-                      <div>
-                        <FiUser aria-hidden="true" />
-
-                        <input
-                          type="tel"
-                          name="phone"
-                          autoComplete="tel"
-                          value={
-                            profileForm.phone
-                          }
-                          onChange={
-                            handleProfileChange
-                          }
-                        />
-                      </div>
-                    </label>
                   </div>
                 </div>
 

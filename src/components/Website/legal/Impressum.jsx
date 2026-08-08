@@ -1,14 +1,14 @@
 import {
-  FiArrowUpRight,
-  FiBriefcase,
+  FiArrowRight,
+  FiCamera,
+  FiCode,
+  FiExternalLink,
   FiFileText,
-  FiGlobe,
   FiMail,
   FiMapPin,
   FiPhone,
   FiShield,
   FiSmartphone,
-  FiShoppingBag,
   FiUser,
 } from "react-icons/fi";
 
@@ -17,145 +17,101 @@ import Footer from "../layout/Footer";
 
 import "./Impressum.css";
 
-/*
- * =========================================================
- * NOCH PRÜFEN UND ERSETZEN
- * =========================================================
- *
- * 1. Telefonnummer ergänzen.
- *
- * 2. Falls bereits vorhanden:
- *    Wirtschafts-Identifikationsnummer ergänzen.
- *
- * 3. Falls ein Registereintrag besteht:
- *    Registergericht und Registernummer ergänzen.
- *
- * 4. Den Abschnitt zur Verbraucherschlichtung nur so
- *    verwenden, wenn ihr tatsächlich nicht an einem
- *    Streitbeilegungsverfahren teilnehmt.
- */
-
-const LEGAL_DATA = {
-  businessName: "MamaTochterOnTour",
+const COMPANY = {
+  brandName: "MamaTochterOnTour",
   ownerName: "Jennifer Weinreich",
-
   street: "Stettiner Straße 41",
   postalCode: "35410",
   city: "Hungen",
   country: "Deutschland",
-
+  phoneDisplay: "+49 178 6947734",
+  phoneLink: "+491786947734",
   email: "mamatochterontour@outlook.de",
-
-  /*
-   * Beispiel:
-   * phoneDisplay: "+49 123 456789",
-   * phoneLink: "+49123456789",
-   */
-  phoneDisplay: "Telefonnummer ergänzen",
-  phoneLink: "",
-
   vatId: "DE441919331",
-
-  /*
-   * Nur eintragen, wenn bereits vom
-   * Bundeszentralamt für Steuern zugeteilt.
-   *
-   * Beispiel:
-   * businessId: "DE123456789-00001",
-   */
-  businessId: "",
-
-  /*
-   * Nur eintragen, falls tatsächlich ein
-   * Registereintrag besteht.
-   */
-  registerCourt: "",
-  registerNumber: "",
-
-  lastUpdated: "August 2026",
 };
 
-function LegalItem({
-  icon: Icon,
-  label,
-  children,
-  className = "",
-}) {
-  return (
-    <div
-      className={`imprint-legal-item ${className}`.trim()}
-    >
-      <span
-        className="imprint-legal-item__icon"
-        aria-hidden="true"
-      >
-        <Icon />
-      </span>
+const navigationItems = [
+  {
+    href: "#anbieter",
+    label: "Anbieter",
+    number: "01",
+  },
+  {
+    href: "#kontakt",
+    label: "Kontakt",
+    number: "02",
+  },
+  {
+    href: "#steuer",
+    label: "Steuerangaben",
+    number: "03",
+  },
+  {
+    href: "#redaktion",
+    label: "Redaktion",
+    number: "04",
+  },
+  {
+    href: "#streitbeilegung",
+    label: "Streitbeilegung",
+    number: "05",
+  },
+  {
+    href: "#entwicklung",
+    label: "Entwicklung",
+    number: "06",
+  },
+  {
+    href: "#urheberrecht",
+    label: "Urheberrecht",
+    number: "07",
+  },
+];
 
-      <div className="imprint-legal-item__content">
-        <span className="imprint-legal-item__label">
-          {label}
-        </span>
-
-        <div className="imprint-legal-item__value">
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ImprintSection({
+function LegalSection({
+  id,
   number,
   eyebrow,
   title,
+  icon: Icon,
   children,
-  featured = false,
+  variant = "",
 }) {
   return (
     <section
+      id={id}
       className={`imprint-section ${
-        featured
-          ? "imprint-section--featured"
+        variant
+          ? `imprint-section--${variant}`
           : ""
-      }`.trim()}
+      }`}
     >
-      <div className="imprint-section__top">
+      <div className="imprint-section__head">
         <span className="imprint-section__number">
           {number}
         </span>
 
-        <span className="imprint-section__eyebrow">
-          {eyebrow}
+        <span className="imprint-section__icon">
+          <Icon aria-hidden="true" />
         </span>
       </div>
 
-      <h2>{title}</h2>
+      <div className="imprint-section__body">
+        <p className="imprint-section__eyebrow">
+          {eyebrow}
+        </p>
 
-      <div className="imprint-section__content">
-        {children}
+        <h2>{title}</h2>
+
+        <div className="imprint-section__content">
+          {children}
+        </div>
       </div>
     </section>
   );
 }
 
-export default function Impressum() {
-  const completeAddress =
-    `${LEGAL_DATA.street}, ` +
-    `${LEGAL_DATA.postalCode} ` +
-    `${LEGAL_DATA.city}, ` +
-    `${LEGAL_DATA.country}`;
-
-  const mapsUrl =
-    `https://www.google.com/maps/search/?api=1&query=` +
-    encodeURIComponent(completeAddress);
-
-  const hasRegisterEntry =
-    Boolean(
-      LEGAL_DATA.registerCourt &&
-      LEGAL_DATA.registerNumber
-    );
-
+function Impressum() {
   return (
     <>
       <Navbar />
@@ -167,439 +123,542 @@ export default function Impressum() {
 
         <section className="imprint-hero">
           <div
-            className="imprint-hero__grid-decoration"
+            className="imprint-hero__glow imprint-hero__glow--green"
             aria-hidden="true"
           />
 
           <div
-            className="imprint-hero__orb imprint-hero__orb--one"
+            className="imprint-hero__glow imprint-hero__glow--purple"
             aria-hidden="true"
           />
 
           <div
-            className="imprint-hero__orb imprint-hero__orb--two"
+            className="imprint-hero__grid"
             aria-hidden="true"
           />
 
           <div className="imprint-container imprint-hero__layout">
             <div className="imprint-hero__content">
               <span className="imprint-hero__eyebrow">
-                Rechtliche Anbieterkennzeichnung
+                Rechtliche Informationen
               </span>
 
               <h1>
-                Impressum
+                Impressum.
                 <span>
-                  Klar. Direkt. Transparent.
+                  Klar, persönlich und
+                  transparent.
                 </span>
               </h1>
 
               <p className="imprint-hero__lead">
-                Hier findest du alle rechtlichen
-                Angaben zu MamaTochterOnTour, unserer
-                Website, unserem Online-Shop und
-                unseren digitalen Angeboten.
+                Hier findest du die gesetzlich
+                vorgeschriebenen Anbieterangaben
+                für die Website, den Online-Shop,
+                die Web-App und die mobile App von
+                MamaTochterOnTour.
               </p>
 
-              <div className="imprint-hero__services">
+              <div className="imprint-hero__meta">
                 <span>
-                  <FiGlobe aria-hidden="true" />
-                  Website
+                  <FiFileText
+                    aria-hidden="true"
+                  />
+
+                  Angaben gemäß § 5 DDG
                 </span>
 
                 <span>
-                  <FiShoppingBag aria-hidden="true" />
-                  Online-Shop
-                </span>
-
-                <span>
-                  <FiSmartphone aria-hidden="true" />
-                  Momentry App
+                  Stand: August 2026
                 </span>
               </div>
             </div>
 
-            <aside className="imprint-identity-card">
-              <div className="imprint-identity-card__top">
-                <span className="imprint-identity-card__status">
-                  Anbieterin
-                </span>
+            <aside className="imprint-hero__identity">
+              <div className="imprint-hero__identity-top">
+                <span>Betreiberin</span>
 
-                <FiShield aria-hidden="true" />
+                <FiUser aria-hidden="true" />
               </div>
 
-              <div className="imprint-identity-card__monogram">
-                MTT
+              <strong>
+                Jennifer
+                <br />
+                Weinreich
+              </strong>
+
+              <p>
+                Einzelunternehmerin
+                <br />
+                handelnd unter
+              </p>
+
+              <div className="imprint-hero__brand">
+                Mama
+                <span>Tochter</span>
+                OnTour
               </div>
 
-              <div className="imprint-identity-card__copy">
-                <span>
-                  Digitale Angebote von
-                </span>
-
-                <strong>
-                  {LEGAL_DATA.businessName}
-                </strong>
-
-                <p>
-                  Inhaberin und Diensteanbieterin:
-                  <br />
-                  {LEGAL_DATA.ownerName}
-                </p>
+              <div className="imprint-hero__identity-line">
+                <span>Website</span>
+                <span>Shop</span>
+                <span>App</span>
+                <span>Web-App</span>
               </div>
-
-              <a
-                href={`mailto:${LEGAL_DATA.email}`}
-                className="imprint-identity-card__link"
-              >
-                Kontakt aufnehmen
-
-                <FiArrowUpRight aria-hidden="true" />
-              </a>
             </aside>
           </div>
         </section>
 
         {/* =================================================
-            HAUPTINHALT
+            INHALT
         ================================================== */}
 
         <section className="imprint-content">
-          <div className="imprint-container">
-            <div className="imprint-intro">
-              <div>
-                <span className="imprint-section-label">
-                  Angaben gemäß § 5 DDG
-                </span>
+          <div className="imprint-container imprint-content__layout">
+            <aside className="imprint-navigation">
+              <div className="imprint-navigation__inner">
+                <p>
+                  Auf dieser Seite
+                </p>
 
-                <h2>
-                  Wer hinter
+                <nav aria-label="Inhalt des Impressums">
+                  {navigationItems.map(
+                    (item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                      >
+                        <span>
+                          {item.number}
+                        </span>
+
+                        <strong>
+                          {item.label}
+                        </strong>
+
+                        <FiArrowRight
+                          aria-hidden="true"
+                        />
+                      </a>
+                    )
+                  )}
+                </nav>
+
+                <div className="imprint-navigation__contact">
                   <span>
-                    MamaTochterOnTour steckt.
+                    Direkter Kontakt
                   </span>
-                </h2>
-              </div>
 
-              <p>
-                Die folgenden Informationen gelten
-                für die Website, den Online-Shop,
-                browserbasierte Angebote sowie die
-                mobilen Anwendungen von
-                MamaTochterOnTour, soweit dort auf
-                dieses Impressum verwiesen wird.
-              </p>
-            </div>
-
-            <div className="imprint-legal-overview">
-              <LegalItem
-                icon={FiUser}
-                label="Diensteanbieterin"
-              >
-                <strong>
-                  {LEGAL_DATA.ownerName}
-                </strong>
-
-                <span>
-                  handelnd unter{" "}
-                  {LEGAL_DATA.businessName}
-                </span>
-
-                <span>
-                  Einzelunternehmen
-                </span>
-              </LegalItem>
-
-              <LegalItem
-                icon={FiMapPin}
-                label="Ladungsfähige Anschrift"
-              >
-                <address>
-                  {LEGAL_DATA.ownerName}
-                  <br />
-                  {LEGAL_DATA.street}
-                  <br />
-                  {LEGAL_DATA.postalCode}{" "}
-                  {LEGAL_DATA.city}
-                  <br />
-                  {LEGAL_DATA.country}
-                </address>
-
-                <a
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Adresse öffnen
-                  <FiArrowUpRight
-                    aria-hidden="true"
-                  />
-                </a>
-              </LegalItem>
-
-              <LegalItem
-                icon={FiMail}
-                label="E-Mail"
-              >
-                <a
-                  href={`mailto:${LEGAL_DATA.email}`}
-                >
-                  {LEGAL_DATA.email}
-                </a>
-              </LegalItem>
-
-              <LegalItem
-                icon={FiPhone}
-                label="Telefon"
-                className={
-                  LEGAL_DATA.phoneLink
-                    ? ""
-                    : "imprint-legal-item--todo"
-                }
-              >
-                {LEGAL_DATA.phoneLink ? (
                   <a
-                    href={`tel:${LEGAL_DATA.phoneLink}`}
+                    href={`mailto:${COMPANY.email}`}
                   >
-                    {LEGAL_DATA.phoneDisplay}
-                  </a>
-                ) : (
-                  <>
-                    <strong>
-                      {LEGAL_DATA.phoneDisplay}
-                    </strong>
+                    <FiMail
+                      aria-hidden="true"
+                    />
 
-                    <small>
-                      Vor Veröffentlichung eine
-                      geschäftliche Telefonnummer
-                      eintragen.
-                    </small>
-                  </>
-                )}
-              </LegalItem>
-            </div>
+                    {COMPANY.email}
+                  </a>
+                </div>
+              </div>
+            </aside>
 
             <div className="imprint-sections">
-              <ImprintSection
+              {/* Anbieter */}
+
+              <LegalSection
+                id="anbieter"
                 number="01"
+                eyebrow="Diensteanbieterin"
+                title="Angaben gemäß § 5 DDG"
+                icon={FiUser}
+                variant="primary"
+              >
+                <div className="imprint-provider">
+                  <div>
+                    <span className="imprint-detail-label">
+                      Geschäftsbezeichnung
+                    </span>
+
+                    <strong>
+                      {COMPANY.brandName}
+                    </strong>
+                  </div>
+
+                  <div>
+                    <span className="imprint-detail-label">
+                      Inhaberin
+                    </span>
+
+                    <strong>
+                      {COMPANY.ownerName}
+                    </strong>
+
+                    <p>
+                      Einzelunternehmerin,
+                      handelnd unter{" "}
+                      {COMPANY.brandName}
+                    </p>
+                  </div>
+
+                  <div>
+                    <span className="imprint-detail-label">
+                      Geschäftsanschrift
+                    </span>
+
+                    <address>
+                      {COMPANY.street}
+                      <br />
+                      {COMPANY.postalCode}{" "}
+                      {COMPANY.city}
+                      <br />
+                      {COMPANY.country}
+                    </address>
+                  </div>
+                </div>
+              </LegalSection>
+
+              {/* Kontakt */}
+
+              <LegalSection
+                id="kontakt"
+                number="02"
+                eyebrow="Erreichbarkeit"
+                title="Kontakt"
+                icon={FiMessageIcon}
+              >
+                <div className="imprint-contact-grid">
+                  <a
+                    href={`mailto:${COMPANY.email}`}
+                    className="imprint-contact-card"
+                  >
+                    <span className="imprint-contact-card__icon">
+                      <FiMail
+                        aria-hidden="true"
+                      />
+                    </span>
+
+                    <span>
+                      <small>
+                        E-Mail
+                      </small>
+
+                      <strong>
+                        {COMPANY.email}
+                      </strong>
+                    </span>
+
+                    <FiExternalLink
+                      className="imprint-contact-card__arrow"
+                      aria-hidden="true"
+                    />
+                  </a>
+
+                  <a
+                    href={`tel:${COMPANY.phoneLink}`}
+                    className="imprint-contact-card"
+                  >
+                    <span className="imprint-contact-card__icon">
+                      <FiPhone
+                        aria-hidden="true"
+                      />
+                    </span>
+
+                    <span>
+                      <small>
+                        Telefon
+                      </small>
+
+                      <strong>
+                        {COMPANY.phoneDisplay}
+                      </strong>
+                    </span>
+
+                    <FiExternalLink
+                      className="imprint-contact-card__arrow"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </div>
+
+                <div className="imprint-address-line">
+                  <FiMapPin aria-hidden="true" />
+
+                  <span>
+                    {COMPANY.street},{" "}
+                    {COMPANY.postalCode}{" "}
+                    {COMPANY.city},{" "}
+                    {COMPANY.country}
+                  </span>
+                </div>
+              </LegalSection>
+
+              {/* Steuer */}
+
+              <LegalSection
+                id="steuer"
+                number="03"
                 eyebrow="Steuerliche Angaben"
                 title="Umsatzsteuer"
-                featured
+                icon={FiFileText}
               >
                 <p>
                   Umsatzsteuer-Identifikationsnummer
                   gemäß § 27a Umsatzsteuergesetz:
                 </p>
 
-                <strong className="imprint-code">
-                  {LEGAL_DATA.vatId}
-                </strong>
+                <div className="imprint-vat">
+                  <span>USt-IdNr.</span>
 
-                {LEGAL_DATA.businessId ? (
-                  <>
-                    <p className="imprint-section__spaced">
-                      Wirtschafts-Identifikationsnummer
-                      gemäß § 139c Abgabenordnung:
-                    </p>
+                  <strong>
+                    {COMPANY.vatId}
+                  </strong>
+                </div>
+              </LegalSection>
 
-                    <strong className="imprint-code">
-                      {LEGAL_DATA.businessId}
-                    </strong>
-                  </>
-                ) : (
-                  <div className="imprint-todo-note">
-                    <FiFileText aria-hidden="true" />
+              {/* Redaktion */}
 
-                    <p>
-                      Sobald eine
-                      Wirtschafts-Identifikationsnummer
-                      zugeteilt wurde, muss sie hier
-                      zusätzlich aufgenommen werden.
-                    </p>
-                  </div>
-                )}
-              </ImprintSection>
-
-              <ImprintSection
-                number="02"
-                eyebrow="Registerangaben"
-                title="Registereintrag"
-              >
-                {hasRegisterEntry ? (
-                  <dl className="imprint-definition-list">
-                    <div>
-                      <dt>Registergericht</dt>
-                      <dd>
-                        {LEGAL_DATA.registerCourt}
-                      </dd>
-                    </div>
-
-                    <div>
-                      <dt>Registernummer</dt>
-                      <dd>
-                        {LEGAL_DATA.registerNumber}
-                      </dd>
-                    </div>
-                  </dl>
-                ) : (
-                  <>
-                    <p>
-                      Es besteht derzeit kein im
-                      Impressum angegebener
-                      Registereintrag.
-                    </p>
-
-                    <div className="imprint-todo-note">
-                      <FiBriefcase aria-hidden="true" />
-
-                      <p>
-                        Bitte vor Veröffentlichung
-                        prüfen, ob eine Eintragung im
-                        Handelsregister,
-                        Partnerschaftsregister oder
-                        einem vergleichbaren Register
-                        besteht.
-                      </p>
-                    </div>
-                  </>
-                )}
-              </ImprintSection>
-
-              <ImprintSection
-                number="03"
-                eyebrow="Redaktionelle Verantwortung"
-                title="Verantwortlich für Inhalte"
+              <LegalSection
+                id="redaktion"
+                number="04"
+                eyebrow="Inhaltliche Verantwortung"
+                title="Redaktionell verantwortlich"
+                icon={FiFileText}
               >
                 <p>
                   Verantwortlich für
-                  journalistisch-redaktionell
-                  gestaltete Inhalte gemäß § 18
+                  journalistisch-redaktionelle
+                  Inhalte im Sinne des § 18
                   Absatz 2 Medienstaatsvertrag:
                 </p>
 
-                <address className="imprint-address-block">
-                  <strong>
-                    {LEGAL_DATA.ownerName}
-                  </strong>
-                  <br />
-                  {LEGAL_DATA.street}
-                  <br />
-                  {LEGAL_DATA.postalCode}{" "}
-                  {LEGAL_DATA.city}
-                  <br />
-                  {LEGAL_DATA.country}
-                </address>
-              </ImprintSection>
+                <div className="imprint-person-card">
+                  <span className="imprint-person-card__avatar">
+                    JW
+                  </span>
 
-              <ImprintSection
-                number="04"
+                  <div>
+                    <strong>
+                      {COMPANY.ownerName}
+                    </strong>
+
+                    <address>
+                      {COMPANY.street}
+                      <br />
+                      {COMPANY.postalCode}{" "}
+                      {COMPANY.city}
+                      <br />
+                      {COMPANY.country}
+                    </address>
+                  </div>
+                </div>
+              </LegalSection>
+
+              {/* Streitbeilegung */}
+
+              <LegalSection
+                id="streitbeilegung"
+                number="05"
                 eyebrow="Verbraucherinformation"
                 title="Streitbeilegung"
+                icon={FiShield}
+                variant="purple"
               >
                 <p>
-                  Wir sind weder verpflichtet noch
-                  bereit, an Streitbeilegungsverfahren
-                  vor einer
-                  Verbraucherschlichtungsstelle
+                  Wir sind weder verpflichtet
+                  noch bereit, an
+                  Streitbeilegungsverfahren vor
+                  einer Verbraucherschlichtungsstelle
                   teilzunehmen.
                 </p>
 
-                <div className="imprint-important-note">
-                  <FiShield aria-hidden="true" />
+                <div className="imprint-legal-highlight">
+                  <FiShield
+                    aria-hidden="true"
+                  />
 
                   <p>
-                    Dieser Satz darf nur verwendet
-                    werden, wenn MamaTochterOnTour
-                    tatsächlich nicht freiwillig an
-                    solchen Verfahren teilnimmt und
-                    keine gesetzliche Verpflichtung
-                    hierzu besteht.
+                    Sollte es einmal ein Problem
+                    mit einer Bestellung oder
+                    einem unserer digitalen
+                    Angebote geben, kannst du
+                    dich selbstverständlich
+                    direkt an uns wenden.
                   </p>
                 </div>
-              </ImprintSection>
 
-              <ImprintSection
-                number="05"
-                eyebrow="Hinweise zu Inhalten"
-                title="Urheberrecht"
-              >
-                <p>
-                  Die auf dieser Website, im
-                  Online-Shop und in unseren
-                  digitalen Angeboten veröffentlichten
-                  Inhalte, Texte, Fotografien,
-                  Grafiken, Reiseguides, Designs und
-                  sonstigen Werke unterliegen dem
-                  deutschen Urheberrecht.
-                </p>
+                <a
+                  href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(
+                    "Frage zu einer Bestellung"
+                  )}`}
+                  className="imprint-inline-link"
+                >
+                  Direkt Kontakt aufnehmen
 
-                <p>
-                  Jede Vervielfältigung,
-                  Bearbeitung, Verbreitung oder
-                  sonstige Verwertung außerhalb der
-                  gesetzlichen Grenzen bedarf der
-                  vorherigen Zustimmung der
-                  jeweiligen Rechteinhaberin oder des
-                  jeweiligen Rechteinhabers.
-                </p>
+                  <FiArrowRight
+                    aria-hidden="true"
+                  />
+                </a>
+              </LegalSection>
 
-                <p>
-                  Soweit Inhalte nicht von
-                  MamaTochterOnTour erstellt wurden,
-                  werden die Rechte Dritter beachtet
-                  und entsprechende Quellen oder
-                  Rechtehinweise kenntlich gemacht.
-                </p>
-              </ImprintSection>
+              {/* Eigene Entwicklung */}
 
-              <ImprintSection
+              <LegalSection
+                id="entwicklung"
                 number="06"
-                eyebrow="Externe Angebote"
-                title="Verlinkte Inhalte"
+                eyebrow="Made by us"
+                title="Eigene Konzeption und Entwicklung"
+                icon={FiCode}
+                variant="dark"
               >
                 <p>
-                  Unser Angebot kann Links zu
-                  externen Websites und Diensten
-                  Dritter enthalten. Auf deren
-                  Inhalte und deren weitere
-                  Verarbeitung haben wir keinen
-                  unmittelbaren Einfluss.
+                  Konzeption, Gestaltung,
+                  individuelle Entwicklung und
+                  redaktionelle Betreuung dieser
+                  Website, des Online-Shops, der
+                  Web-App sowie der mobilen App
+                  „Momentry by
+                  MamaTochterOnTour“ erfolgen
+                  eigenständig durch
+                  MamaTochterOnTour.
                 </p>
 
                 <p>
-                  Für die Inhalte externer Angebote
-                  ist der jeweilige Anbieter
-                  verantwortlich. Werden uns
-                  konkrete Rechtsverletzungen
-                  bekannt, entfernen wir betroffene
-                  Verlinkungen im Rahmen der
-                  gesetzlichen Vorgaben.
+                  Unsere digitalen Angebote
+                  wurden nicht durch eine externe
+                  Webdesign-, Software- oder
+                  Entwicklungsagentur für uns
+                  erstellt.
                 </p>
-              </ImprintSection>
-            </div>
 
-            <section className="imprint-contact-banner">
-              <div className="imprint-contact-banner__copy">
+                <div className="imprint-development-grid">
+                  <div>
+                    <FiCode
+                      aria-hidden="true"
+                    />
+
+                    <span>
+                      Website und Online-Shop
+                    </span>
+                  </div>
+
+                  <div>
+                    <FiSmartphone
+                      aria-hidden="true"
+                    />
+
+                    <span>
+                      Mobile App und Web-App
+                    </span>
+                  </div>
+
+                  <div>
+                    <FiCamera
+                      aria-hidden="true"
+                    />
+
+                    <span>
+                      Inhalte und Fotografien
+                    </span>
+                  </div>
+                </div>
+
+                <p className="imprint-note imprint-note--dark">
+  Für einzelne technische Funktionen,
+  Zahlungsprozesse, den Versand von
+  Nachrichten und den Betrieb unserer
+  digitalen Angebote nutzen wir
+  technische Dienste externer Anbieter.
+  Diese stellen einzelne Infrastrukturen
+  und Dienstleistungen bereit, haben
+  unsere Website, unseren Online-Shop,
+  unsere Web-App und unsere mobile App
+  jedoch nicht für uns konzipiert oder
+  entwickelt. Weitere Informationen zu
+  den eingesetzten Diensten findest du
+  in unserer Datenschutzerklärung.
+</p>
+              </LegalSection>
+
+              {/* Urheberrecht */}
+
+              <LegalSection
+                id="urheberrecht"
+                number="07"
+                eyebrow="Texte, Bilder und Guides"
+                title="Urheberrecht und Bildnachweise"
+                icon={FiCamera}
+              >
+                <p>
+  Die auf dieser Website, im Online-Shop,
+  in der Web-App und in der mobilen App
+  veröffentlichten eigenen Texte,
+  Reiseguides, Fotografien und sonstigen
+  redaktionellen Inhalte wurden – soweit
+  nicht ausdrücklich anders gekennzeichnet –
+  von MamaTochterOnTour selbst erstellt.
+</p>
+
+<p>
+  Die verwendeten Reise-, Erlebnis- und
+  Produktfotografien stammen – soweit nicht
+  anders angegeben – aus unserem eigenen
+  Bildarchiv und wurden von uns selbst
+  aufgenommen.
+</p>
+
+<p>
+  Davon ausgenommen sind insbesondere
+  technisch eingebundene Symbole,
+  Markenkennzeichen, Benutzerinhalte und
+  sonstige Inhalte Dritter. Für diese gelten
+  die Rechte und Lizenzbedingungen der
+  jeweiligen Rechteinhaberinnen und
+  Rechteinhaber.
+</p>
+
+<p>
+  Die durch uns erstellten Inhalte und Werke
+  unterliegen dem deutschen Urheberrecht.
+  Eine Vervielfältigung, Bearbeitung,
+  Verbreitung oder sonstige Verwertung
+  außerhalb der gesetzlich zulässigen Grenzen
+  bedarf unserer vorherigen Zustimmung.
+</p>
+              </LegalSection>
+            </div>
+          </div>
+        </section>
+
+        {/* =================================================
+            ABSCHLUSS
+        ================================================== */}
+
+        <section className="imprint-footer-section">
+          <div className="imprint-container">
+            <div className="imprint-footer-card">
+              <div>
                 <span>
-                  Rechtliche Anfrage
+                  Noch etwas unklar?
                 </span>
 
                 <h2>
-                  Noch etwas unklar?
+                  Sprich direkt
+                  <strong>
+                    mit uns.
+                  </strong>
                 </h2>
 
                 <p>
-                  Für rechtliche Hinweise, Fragen zu
-                  unseren Angeboten oder Meldungen
-                  zu möglichen Rechtsverletzungen
-                  kannst du uns direkt kontaktieren.
+                  Bei Fragen zu unseren
+                  rechtlichen Angaben, unseren
+                  digitalen Angeboten oder einer
+                  Bestellung erreichst du uns
+                  direkt per E-Mail.
                 </p>
               </div>
 
               <a
-                href={`mailto:${LEGAL_DATA.email}?subject=${encodeURIComponent(
-                  "Rechtliche Anfrage an MamaTochterOnTour"
-                )}`}
-                className="imprint-contact-banner__button"
+                href={`mailto:${COMPANY.email}`}
               >
                 <FiMail aria-hidden="true" />
 
@@ -609,17 +668,15 @@ export default function Impressum() {
                   </small>
 
                   <strong>
-                    {LEGAL_DATA.email}
+                    {COMPANY.email}
                   </strong>
                 </span>
 
-                <FiArrowUpRight aria-hidden="true" />
+                <FiArrowRight
+                  aria-hidden="true"
+                />
               </a>
-            </section>
-
-            <p className="imprint-updated">
-              Stand: {LEGAL_DATA.lastUpdated}
-            </p>
+            </div>
           </div>
         </section>
       </main>
@@ -628,3 +685,13 @@ export default function Impressum() {
     </>
   );
 }
+
+/*
+ * Kleiner Alias, damit wir im JSX einen
+ * verständlichen Namen verwenden können.
+ */
+function FiMessageIcon(props) {
+  return <FiMail {...props} />;
+}
+
+export default Impressum;
