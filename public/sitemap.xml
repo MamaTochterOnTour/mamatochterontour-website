@@ -2,35 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://www.mamatochterontour.de</loc>
+    <loc>https://mamatochterontour.de/</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/app</loc>
+    <loc>https://mamatochterontour.de/momentry</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/shop</loc>
+    <loc>https://mamatochterontour.de/kooperationen</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/kooperationen</loc>
+    <loc>https://mamatochterontour.de/kontakt</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/faq</loc>
+    <loc>https://mamatochterontour.de/shop</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/kontakt</loc>
+    <loc>https://mamatochterontour.de/shop/reiseguides</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/impressum</loc>
+    <loc>https://mamatochterontour.de/impressum</loc>
   </url>
 
   <url>
-    <loc>https://www.mamatochterontour.de/datenschutz</loc>
+    <loc>https://mamatochterontour.de/datenschutz</loc>
+  </url>
+
+  <url>
+    <loc>https://mamatochterontour.de/agb</loc>
+  </url>
+
+  <url>
+    <loc>https://mamatochterontour.de/widerruf</loc>
   </url>
 
 </urlset>

@@ -1418,3 +1418,70 @@
     2px solid
     rgba(155, 199, 174, 0.4);
 }
+
+.footer__cookie-link {
+  width: fit-content;
+
+  margin: 0;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.58);
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: inherit;
+  line-height: 1.45;
+
+  text-align: left;
+  text-decoration: none;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.footer__cookie-link:hover {
+  color: #9bc7ae;
+  transform: translateX(3px);
+}
+
+.footer__cookie-link:focus-visible {
+  color: #9bc7ae;
+
+  outline: 2px solid rgba(155, 199, 174, 0.4);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+@media (max-width: 800px) {
+  .footer__cookie-link {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer__cookie-link {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+}
+
+@media (hover: none) {
+  .footer__cookie-link:hover {
+    transform: none;
+  }
+}

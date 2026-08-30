@@ -1,4 +1,15 @@
-import { Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+
+import { useEffect } from "react";
+
+import {
+  enableGoogleAnalytics,
+  trackPageView,
+} from "../utils/analytics";
 
 import Home from "../components/Website/home/Home";
 import Momentry from "../components/Website/Momentry/Momentry";
@@ -34,7 +45,76 @@ import CheckoutSuccess from "../components/Onlineshop/pages/CheckoutSuccess";
 import ShopProtectedRoute from
   "../components/Onlineshop/auth/ShopProtectedRoute";
 
+const CONSENT_KEY = "mtt_cookie_consent";
+
 function AppRouter() {
+  const location = useLocation();
+
+  /*
+   * Seitenaufrufe bei jedem React-Routenwechsel
+   * an Google Analytics senden.
+   */
+  useEffect(() => {
+    const savedConsent =
+      localStorage.getItem(CONSENT_KEY);
+
+    if (!savedConsent) {
+      return;
+    }
+
+    try {
+      const consent =
+        JSON.parse(savedConsent);
+
+      if (!consent.analytics) {
+        return;
+      }
+
+      enableGoogleAnalytics();
+
+      trackPageView(
+        `${location.pathname}${location.search}`
+      );
+    } catch {
+      // Ungültigen Consent ignorieren.
+    }
+  }, [
+    location.pathname,
+    location.search,
+  ]);
+
+  /*
+   * Falls der Nutzer auf der aktuellen Seite
+   * erstmals Analytics erlaubt, soll diese Seite
+   * direkt erfasst werden, ohne dass er erst
+   * auf eine andere Seite wechseln muss.
+   */
+  useEffect(() => {
+    const handleConsentChanged = (event) => {
+      if (!event.detail?.analytics) {
+        return;
+      }
+
+      enableGoogleAnalytics();
+
+      trackPageView(
+        `${window.location.pathname}${window.location.search}`
+      );
+    };
+
+    window.addEventListener(
+      "mtt-consent-changed",
+      handleConsentChanged
+    );
+
+    return () => {
+      window.removeEventListener(
+        "mtt-consent-changed",
+        handleConsentChanged
+      );
+    };
+  }, []);
+
   return (
     <Routes>
       {/* Website */}
@@ -70,14 +150,14 @@ function AppRouter() {
       />
 
       <Route
-  path="/widerruf"
-  element={<Widerruf />}
-/>
+        path="/widerruf"
+        element={<Widerruf />}
+      />
 
-<Route
-  path="/agb"
-  element={<AGB />}
-/>
+      <Route
+        path="/agb"
+        element={<AGB />}
+      />
 
       {/* Online-Shop */}
       <Route

@@ -35,6 +35,12 @@ function Footer() {
   setFooterComingSoonType,
 ] = useState(null);
 
+const handleOpenCookieSettings = () => {
+  window.dispatchEvent(
+    new CustomEvent("mtt-open-cookie-settings")
+  );
+};
+
   const handleNewsletterSubmit = async (event) => {
     event.preventDefault();
 
@@ -281,12 +287,20 @@ setNewsletterEmail("");
   </Link>
 
   <Link to="/datenschutz">
-    Datenschutz
-  </Link>
+  Datenschutz
+</Link>
 
-  <Link to="/agb">
-    AGB
-  </Link>
+<button
+  type="button"
+  className="footer__cookie-link"
+  onClick={handleOpenCookieSettings}
+>
+  Cookie-Einstellungen
+</button>
+
+<Link to="/agb">
+  AGB
+</Link>
 
   <Link to="/widerruf">
     Widerrufsbelehrung
