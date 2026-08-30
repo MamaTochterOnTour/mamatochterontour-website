@@ -287,7 +287,7 @@ function StoreBadges({
           href={APP_STORE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Momentry im Apple App Store herunterladen"
+          aria-label="Momentry by MamaTochterOnTour im Apple App Store herunterladen"
         >
           <img
             src={appStoreBadge}
@@ -299,7 +299,7 @@ function StoreBadges({
           href={GOOGLE_PLAY_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Momentry bei Google Play herunterladen"
+          aria-label="Momentry by MamaTochterOnTour bei Google Play herunterladen"
         >
           <img
             src={googlePlayBadge}
