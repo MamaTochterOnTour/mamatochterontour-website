@@ -21,7 +21,7 @@ import Footer from "../layout/Footer";
 import momentryAppScreen from
   "../../../assets/images/home/momentry-app-screen.png";
 
-import "./Momentry.css";
+import "./momentry.css";
 
 /* =========================================================
    STORE BADGES
