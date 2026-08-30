@@ -13,6 +13,12 @@ import Datenschutz from
 import Impressum from
   "../components/Website/legal/Impressum";
 
+import Widerruf from
+  "../components/Website/legal/Widerruf";
+
+import AGB from
+  "../components/Website/legal/AGB";
+
 import OnlineShop from "../components/Onlineshop/pages/OnlineShop";
 import ShopLogin from "../components/Onlineshop/pages/ShopLogin";
 import ShopRegister from "../components/Onlineshop/pages/ShopRegister";
@@ -62,6 +68,16 @@ function AppRouter() {
         path="/impressum"
         element={<Impressum />}
       />
+
+      <Route
+  path="/widerruf"
+  element={<Widerruf />}
+/>
+
+<Route
+  path="/agb"
+  element={<AGB />}
+/>
 
       {/* Online-Shop */}
       <Route

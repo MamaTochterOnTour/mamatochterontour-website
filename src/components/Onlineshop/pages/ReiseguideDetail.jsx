@@ -24,7 +24,6 @@ import {
 
 import {
   onAuthStateChanged,
-  signInAnonymously,
 } from "firebase/auth";
 
 import {
@@ -259,8 +258,7 @@ const [currentTime, setCurrentTime] =
   loadUserProfiles();
 }, [reviews, userProfiles]);
 
-const isGuestUser =
-  !currentUser || currentUser.isAnonymous;
+const isGuestUser = !currentUser;
 
   const averageRating = useMemo(() => {
     if (reviews.length === 0) {
@@ -300,8 +298,10 @@ const isGuestUser =
     return;
   }
 
+  const registeredUser = Boolean(currentUser);
+
   if (
-    (!currentUser || currentUser.isAnonymous) &&
+    !registeredUser &&
     !reviewName.trim()
   ) {
     setReviewMessage(
@@ -313,28 +313,12 @@ const isGuestUser =
   try {
     setReviewLoading(true);
 
-    let reviewUser = currentUser;
-
-    /*
-     * Nicht angemeldete Person anonym bei Firebase
-     * anmelden. Dadurch erhält auch ein Gast eine UID.
-     */
-    if (!reviewUser) {
-      const anonymousCredential =
-        await signInAnonymously(auth);
-
-      reviewUser = anonymousCredential.user;
-    }
-
     const reviewsReference = collection(
       db,
       "products",
       String(product.id),
       "reviews"
     );
-
-    const registeredUser =
-      !reviewUser.isAnonymous;
 
     await addDoc(reviewsReference, {
       productId: String(product.id),
@@ -345,23 +329,33 @@ const isGuestUser =
       text: reviewText.trim(),
 
       /*
-       * Auch Gäste besitzen nun intern eine UID.
+       * Kundenkonto:
+       * echte Firebase UID
+       *
+       * Gast:
+       * keine Firebase UID
        */
-      userId: reviewUser.uid,
+      userId:
+        registeredUser
+          ? currentUser.uid
+          : null,
 
-      userType: registeredUser
-        ? "registered"
-        : "guest",
+      userType:
+        registeredUser
+          ? "registered"
+          : "guest",
 
-      authorName: registeredUser
-        ? reviewUser.displayName ||
-          reviewUser.email ||
-          "Nutzer"
-        : reviewName.trim() || "Gast",
+      authorName:
+        registeredUser
+          ? currentUser.displayName ||
+            currentUser.email ||
+            "Nutzer"
+          : reviewName.trim(),
 
-      authorEmail: registeredUser
-        ? reviewUser.email ?? null
-        : null,
+      authorEmail:
+        registeredUser
+          ? currentUser.email ?? null
+          : null,
 
       createdAt: serverTimestamp(),
       updatedAt: null,
@@ -371,13 +365,9 @@ const isGuestUser =
     setHoveredRating(0);
     setReviewText("");
 
-    /*
-     * Den Gastnamen nicht unbedingt löschen:
-     * So kann derselbe Gast leichter erneut bewerten.
-     */
     if (registeredUser) {
       setReviewName(
-        reviewUser.displayName || ""
+        currentUser.displayName || ""
       );
     }
 
@@ -1011,16 +1001,16 @@ const formatExactDate = (timestamp) => {
               </div>
             )}
 
-            {currentUser && !currentUser.isAnonymous && (
-              <div className="guide-review-form__user">
-                Du bewertest als{" "}
-                <strong>
-                  {currentUser.displayName ||
-                    currentUser.email ||
-                    "angemeldeter Nutzer"}
-                </strong>
-              </div>
-            )}
+            {currentUser && (
+  <div className="guide-review-form__user">
+    Du bewertest als{" "}
+    <strong>
+      {currentUser.displayName ||
+        currentUser.email ||
+        "angemeldeter Nutzer"}
+    </strong>
+  </div>
+)}
 
             <div className="guide-review-form__group">
               <label htmlFor="review-text">

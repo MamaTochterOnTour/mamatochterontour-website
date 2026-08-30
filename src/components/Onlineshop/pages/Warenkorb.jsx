@@ -78,6 +78,16 @@ const [
   setConsentError,
 ] = useState("");
 
+const [
+  legalTermsAccepted,
+  setLegalTermsAccepted,
+] = useState(false);
+
+const [
+  legalTermsError,
+  setLegalTermsError,
+] = useState("");
+
   const [couponCode, setCouponCode] =
   useState("");
 
@@ -252,8 +262,18 @@ setCouponMessage(
   }
 
   setCheckoutError("");
+setConsentError("");
+setLegalTermsError("");
 
-  setConsentError("");
+if (!legalTermsAccepted) {
+  setCheckoutStatus("error");
+
+  setLegalTermsError(
+    "Bitte akzeptiere die AGB und bestätige, dass du die Widerrufsbelehrung zur Kenntnis genommen hast."
+  );
+
+  return;
+}
 
 if (!digitalContentConsent) {
   setCheckoutStatus("error");
@@ -317,10 +337,15 @@ if (!digitalContentConsent) {
             .toUpperCase()
         : "",
 
-    digitalContentConsent,
+    legalTermsAccepted,
 
-    digitalContentConsentAt:
-      new Date().toISOString(),
+legalTermsAcceptedAt:
+  new Date().toISOString(),
+
+digitalContentConsent,
+
+digitalContentConsentAt:
+  new Date().toISOString(),
   });
 
     const checkoutUrl =
@@ -894,6 +919,60 @@ if (!digitalContentConsent) {
   </div>
 </div>
 
+<div className="cart-legal-consent">
+  <label className="cart-legal-consent__label">
+    <input
+      type="checkbox"
+      checked={legalTermsAccepted}
+      onChange={(event) => {
+        const checked =
+          event.target.checked;
+
+        setLegalTermsAccepted(
+          checked
+        );
+
+        if (checked) {
+          setLegalTermsError("");
+        }
+      }}
+    />
+
+    <span className="cart-legal-consent__checkmark">
+      <FiCheck aria-hidden="true" />
+    </span>
+
+    <span className="cart-legal-consent__text">
+      Ich akzeptiere die{" "}
+      <Link
+        to="/agb"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        AGB
+      </Link>{" "}
+      und habe die{" "}
+      <Link
+        to="/widerruf"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Widerrufsbelehrung
+      </Link>{" "}
+      zur Kenntnis genommen.
+    </span>
+  </label>
+
+  {legalTermsError && (
+    <p
+      className="cart-legal-consent__error"
+      role="alert"
+    >
+      {legalTermsError}
+    </p>
+  )}
+</div>
+
 
 <div className="cart-digital-consent">
   <label className="cart-digital-consent__label">
@@ -919,11 +998,7 @@ if (!digitalContentConsent) {
     </span>
 
     <span className="cart-digital-consent__text">
-  Ich stimme ausdrücklich zu, dass meine
-  digitalen Reiseguides direkt nach dem Kauf
-  bereitgestellt werden. Mir ist bekannt,
-  dass ich dadurch mein Widerrufsrecht
-  verliere, sobald die Bereitstellung beginnt.
+  Ich stimme ausdrücklich zu, dass die von mir gekauften digitalen Reiseguides direkt nach dem Kauf bereitgestellt werden. Mir ist bekannt, dass ich dadurch mein Widerrufsrecht verliere, sobald die Bereitstellung beginnt.
 </span>
   </label>
 

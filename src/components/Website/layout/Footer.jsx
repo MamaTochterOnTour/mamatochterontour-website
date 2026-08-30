@@ -272,22 +272,34 @@ setNewsletterEmail("");
 
             {/* Rechtliches */}
             <div className="footer__column">
-              <span className="footer__column-title">
-                Rechtliches
-              </span>
+  <span className="footer__column-title">
+    Rechtliches
+  </span>
 
-              <Link to="/impressum">Impressum</Link>
-              <Link to="/datenschutz">Datenschutz</Link>
+  <Link to="/impressum">
+    Impressum
+  </Link>
 
-                <Link to="/" className="footer__logo">
-  <img
-    src={logo}
-    alt="MamaTochterOnTour"
-    className="footer__logo-image"
-  />
-</Link>
+  <Link to="/datenschutz">
+    Datenschutz
+  </Link>
 
-            </div>
+  <Link to="/agb">
+    AGB
+  </Link>
+
+  <Link to="/widerruf">
+    Widerrufsbelehrung
+  </Link>
+
+  <Link to="/" className="footer__logo">
+    <img
+      src={logo}
+      alt="MamaTochterOnTour"
+      className="footer__logo-image"
+    />
+  </Link>
+</div>
           </nav>
         </div>
 

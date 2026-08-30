@@ -1,24 +1,31 @@
 import {
-  FiArrowRight,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
+
+import {
+  FiActivity,
   FiBell,
+  FiBookOpen,
   FiCheckCircle,
-  FiChevronRight,
   FiCloud,
   FiCreditCard,
   FiDatabase,
-  FiExternalLink,
+  FiEye,
   FiFileText,
   FiGlobe,
+  FiHeart,
+  FiImage,
   FiLock,
   FiMail,
   FiMessageCircle,
+  FiRefreshCw,
   FiServer,
   FiShield,
   FiShoppingBag,
-  FiSmartphone,
   FiTrash2,
   FiUser,
-  FiUserCheck,
+  FiUsers,
 } from "react-icons/fi";
 
 import Navbar from "../layout/Navbar";
@@ -26,1871 +33,1612 @@ import Footer from "../layout/Footer";
 
 import "./Datenschutz.css";
 
-/*
- * WICHTIG:
- *
- * 1. HOSTING_PROVIDER und HOSTING_ADDRESS ersetzen.
- * 2. Nicht verwendete optionale Abschnitte entfernen.
- * 3. Bei neuen Diensten die Datenschutzerklärung aktualisieren.
- */
 
-const COMPANY = {
-  brandName: "MamaTochterOnTour",
-  ownerName: "Jennifer Weinreich",
-  street: "Stettiner Straße 41",
-  postalCode: "35410",
-  city: "Hungen",
-  country: "Deutschland",
-  phoneDisplay: "+49 178 6947734",
-  phoneLink: "+491786947734",
-  email: "mamatochterontour@outlook.de",
-};
+/* =========================================================
+   ANIMATION
+========================================================= */
 
-const PROVIDERS = {
-  /*
-   * BITTE VOR VERÖFFENTLICHUNG ERSETZEN.
-   *
-   * Beispiele:
-   * Firebase Hosting / Google Cloud,
-   * Vercel, Netlify, IONOS usw.
-   */
-  hostingName: "Vercel Inc.",
-hostingAddress:
-  "440 N Barranca Avenue #4133, Covina, CA 91723, Vereinigte Staaten",
-  google:
-    "Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland",
-
-  stripe:
-    "Stripe Payments Europe, Limited, 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Irland",
-
-  brevo:
-    "Brevo, Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin, Deutschland",
-
-  apple:
-    "Apple Distribution International Ltd., Hollyhill Industrial Estate, Hollyhill, Cork, Irland",
-};
-
-const navigationItems = [
-  {
-    href: "#verantwortliche",
-    label: "Verantwortliche",
-    number: "01",
-  },
-  {
-    href: "#grundlagen",
-    label: "Grundlagen",
-    number: "02",
-  },
-  {
-    href: "#bereitstellung",
-    label: "Bereitstellung",
-    number: "03",
-  },
-  {
-    href: "#firebase",
-    label: "Firebase",
-    number: "04",
-  },
-  {
-    href: "#konto",
-    label: "Kundenkonto",
-    number: "05",
-  },
-  {
-    href: "#shop",
-    label: "Online-Shop",
-    number: "06",
-  },
-  {
-    href: "#stripe",
-    label: "Stripe",
-    number: "07",
-  },
-  {
-    href: "#brevo",
-    label: "Brevo & Newsletter",
-    number: "08",
-  },
-  {
-    href: "#community",
-    label: "Community",
-    number: "09",
-  },
-  {
-    href: "#kontakt",
-    label: "Kontakt",
-    number: "10",
-  },
-  {
-    href: "#speicherung",
-    label: "Speicherdauer",
-    number: "11",
-  },
-  {
-    href: "#rechte",
-    label: "Deine Rechte",
-    number: "12",
-  },
-];
-
-const legalBases = [
-  {
-    title: "Art. 6 Abs. 1 lit. a DSGVO",
-    text:
-      "Verarbeitung auf Grundlage deiner freiwillig erteilten Einwilligung.",
-  },
-  {
-    title: "Art. 6 Abs. 1 lit. b DSGVO",
-    text:
-      "Verarbeitung zur Durchführung vorvertraglicher Maßnahmen oder zur Erfüllung eines Vertrags.",
-  },
-  {
-    title: "Art. 6 Abs. 1 lit. c DSGVO",
-    text:
-      "Verarbeitung zur Erfüllung gesetzlicher Verpflichtungen.",
-  },
-  {
-    title: "Art. 6 Abs. 1 lit. f DSGVO",
-    text:
-      "Verarbeitung zur Wahrung unserer berechtigten Interessen oder der berechtigten Interessen Dritter.",
-  },
-];
-
-const rights = [
-  {
-    title: "Auskunft",
-    text:
-      "Du kannst Auskunft darüber verlangen, ob und welche personenbezogenen Daten wir über dich verarbeiten.",
-  },
-  {
-    title: "Berichtigung",
-    text:
-      "Du kannst die Berichtigung unrichtiger und die Ergänzung unvollständiger Daten verlangen.",
-  },
-  {
-    title: "Löschung",
-    text:
-      "Du kannst unter den gesetzlichen Voraussetzungen die Löschung deiner personenbezogenen Daten verlangen.",
-  },
-  {
-    title: "Einschränkung",
-    text:
-      "Du kannst unter den gesetzlichen Voraussetzungen die Einschränkung der Verarbeitung verlangen.",
-  },
-  {
-    title: "Datenübertragbarkeit",
-    text:
-      "Du kannst bestimmte Daten in einem strukturierten, gängigen und maschinenlesbaren Format erhalten.",
-  },
-  {
-    title: "Widerspruch",
-    text:
-      "Du kannst einer Verarbeitung aufgrund berechtigter Interessen aus Gründen deiner besonderen Situation widersprechen.",
-  },
-  {
-    title: "Widerruf",
-    text:
-      "Eine erteilte Einwilligung kannst du jederzeit mit Wirkung für die Zukunft widerrufen.",
-  },
-  {
-    title: "Beschwerde",
-    text:
-      "Du kannst dich bei einer zuständigen Datenschutzaufsichtsbehörde beschweren.",
-  },
-];
-
-function PrivacySection({
-  id,
-  number,
-  eyebrow,
-  title,
-  icon: Icon,
+function AnimatedSection({
   children,
-  variant = "",
+  className = "",
+  delay = 0,
 }) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <div className={className}>
+        {children}
+      </div>
+    );
+  }
+
   return (
-    <section
-      id={id}
-      className={`privacy-section ${
-        variant
-          ? `privacy-section--${variant}`
-          : ""
-      }`}
+    <motion.div
+      className={className}
+      initial={{
+        opacity: 0,
+        y: 34,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.08,
+      }}
+      transition={{
+        duration: 0.72,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
-      <div className="privacy-section__head">
-        <span className="privacy-section__number">
-          {number}
-        </span>
-
-        <span className="privacy-section__icon">
-          <Icon aria-hidden="true" />
-        </span>
-      </div>
-
-      <div className="privacy-section__body">
-        <p className="privacy-section__eyebrow">
-          {eyebrow}
-        </p>
-
-        <h2>{title}</h2>
-
-        <div className="privacy-section__content">
-          {children}
-        </div>
-      </div>
-    </section>
+      {children}
+    </motion.div>
   );
 }
 
-function ProviderCard({
-  icon: Icon,
-  name,
-  address,
-  purpose,
-}) {
-  return (
-    <div className="privacy-provider-card">
-      <span className="privacy-provider-card__icon">
-        <Icon aria-hidden="true" />
-      </span>
 
-      <div>
-        <small>Dienstanbieter</small>
+/* =========================================================
+   DATENSCHUTZ
+========================================================= */
 
-        <strong>{name}</strong>
-
-        {address && <p>{address}</p>}
-
-        {purpose && (
-          <span className="privacy-provider-card__purpose">
-            {purpose}
-          </span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function Datenschutz() {
+export default function Datenschutz() {
   return (
     <>
       <Navbar />
 
-      <main className="privacy-page">
-        {/* =================================================
+      <main className="datenschutz-page">
+
+        {/* =====================================================
             HERO
-        ================================================== */}
+        ===================================================== */}
 
-        <section className="privacy-hero">
-          <div
-            className="privacy-hero__glow privacy-hero__glow--green"
-            aria-hidden="true"
-          />
+        <section className="datenschutz-hero">
 
-          <div
-            className="privacy-hero__glow privacy-hero__glow--purple"
-            aria-hidden="true"
-          />
+          <div className="datenschutz-hero-glow datenschutz-hero-glow-green" />
+          <div className="datenschutz-hero-glow datenschutz-hero-glow-purple" />
 
-          <div
-            className="privacy-hero__grid"
-            aria-hidden="true"
-          />
+          <div className="datenschutz-container datenschutz-hero-inner">
 
-          <div className="privacy-container privacy-hero__layout">
-            <div className="privacy-hero__content">
-              <span className="privacy-hero__eyebrow">
-                Datenschutz
-              </span>
+            <AnimatedSection className="datenschutz-hero-content">
 
-              <h1>
+              <div className="datenschutz-eyebrow datenschutz-eyebrow-light">
+                <span className="datenschutz-eyebrow-line" />
+                <span>Datenschutz</span>
+              </div>
+
+              <h1 className="datenschutz-hero-title">
                 Deine Daten.
-                <span>
-                  Transparent erklärt.
-                </span>
+                <span>Transparent erklärt.</span>
               </h1>
 
-              <p className="privacy-hero__lead">
-                In dieser Datenschutzerklärung
-                informieren wir dich darüber,
-                welche personenbezogenen Daten wir
-                auf unserer Website, im
-                Online-Shop, in der Web-App und in
-                der mobilen App verarbeiten.
+              <p className="datenschutz-hero-text">
+                Diese Datenschutzerklärung informiert dich darüber,
+                wie wir personenbezogene Daten auf unserer Website,
+                in unserem Onlineshop sowie bei der Nutzung von
+                Momentry by MamaTochterOnTour als Web-App und
+                mobile App verarbeiten.
               </p>
 
-              <div className="privacy-hero__meta">
-                <span>
-                  <FiShield aria-hidden="true" />
+              <div className="datenschutz-hero-pills">
 
-                  DSGVO-Informationen
-                </span>
+                <div className="datenschutz-hero-pill">
+                  <FiShield />
+                  <span>DSGVO</span>
+                </div>
 
-                <span>
-                  Stand: August 2026
-                </span>
-              </div>
-            </div>
+                <div className="datenschutz-hero-pill">
+                  <FiLock />
+                  <span>Datenschutz</span>
+                </div>
 
-            <aside className="privacy-hero__visual">
-              <div className="privacy-orbit privacy-orbit--one" />
-              <div className="privacy-orbit privacy-orbit--two" />
+                <div className="datenschutz-hero-pill">
+                  <FiGlobe />
+                  <span>Website & App</span>
+                </div>
 
-              <div className="privacy-shield">
-                <FiShield aria-hidden="true" />
-
-                <span>
-                  Privacy
-                </span>
-
-                <strong>
-                  Deine Daten bleiben
-                  deine Daten.
-                </strong>
               </div>
 
-            </aside>
+            </AnimatedSection>
+
           </div>
+
         </section>
 
-        {/* =================================================
-            INHALT
-        ================================================== */}
 
-        <section className="privacy-content">
-          <div className="privacy-container privacy-content__layout">
-            <aside className="privacy-navigation">
-              <div className="privacy-navigation__inner">
-                <p>Auf dieser Seite</p>
+        {/* =====================================================
+            INTRO
+        ===================================================== */}
 
-                <nav aria-label="Inhalt der Datenschutzerklärung">
-                  {navigationItems.map(
-                    (item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                      >
-                        <span>
-                          {item.number}
-                        </span>
+        <section className="datenschutz-intro">
 
-                        <strong>
-                          {item.label}
-                        </strong>
+          <div className="datenschutz-container">
 
-                        <FiChevronRight
-                          aria-hidden="true"
-                        />
-                      </a>
-                    )
-                  )}
-                </nav>
+            <AnimatedSection className="datenschutz-intro-grid">
 
-                <div className="privacy-navigation__contact">
-                  <span>
-                    Datenschutzanfrage
-                  </span>
+              <div className="datenschutz-intro-left">
 
-                  <a
-                    href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(
-                      "Datenschutzanfrage"
-                    )}`}
-                  >
-                    <FiMail aria-hidden="true" />
-
-                    {COMPANY.email}
-                  </a>
+                <div className="datenschutz-eyebrow datenschutz-eyebrow-dark">
+                  <span className="datenschutz-eyebrow-line" />
+                  <span>Datenschutzerklärung</span>
                 </div>
+
+                <h2>
+                  Was passiert
+                  <span>mit deinen Daten?</span>
+                </h2>
+
               </div>
-            </aside>
 
-            <div className="privacy-sections">
-              {/* Verantwortliche */}
+              <div className="datenschutz-intro-right">
 
-              <PrivacySection
-                id="verantwortliche"
-                number="01"
-                eyebrow="Wer entscheidet über die Verarbeitung?"
-                title="Verantwortliche Stelle"
-                icon={FiUser}
-                variant="primary"
-              >
                 <p>
-                  Verantwortliche im Sinne der
-                  Datenschutz-Grundverordnung und
-                  sonstiger datenschutzrechtlicher
-                  Vorschriften ist:
+                  Der Schutz deiner personenbezogenen Daten ist uns
+                  wichtig. Wir verarbeiten personenbezogene Daten nur,
+                  soweit dies für unsere Angebote erforderlich ist,
+                  du eingewilligt hast oder eine andere gesetzliche
+                  Grundlage die Verarbeitung erlaubt.
                 </p>
 
-                <div className="privacy-controller">
-                  <div>
-                    <span>
-                      Geschäftsbezeichnung
-                    </span>
+                <p>
+                  Welche Daten konkret verarbeitet werden, hängt davon
+                  ab, welche Funktionen von MamaTochterOnTour und
+                  Momentry du nutzt.
+                </p>
 
-                    <strong>
-                      {COMPANY.brandName}
-                    </strong>
-                  </div>
+              </div>
 
-                  <div>
-                    <span>Inhaberin</span>
+            </AnimatedSection>
 
-                    <strong>
-                      {COMPANY.ownerName}
-                    </strong>
-                  </div>
+          </div>
 
-                  <address>
-                    {COMPANY.street}
-                    <br />
-                    {COMPANY.postalCode}{" "}
-                    {COMPANY.city}
-                    <br />
-                    {COMPANY.country}
-                  </address>
+        </section>
 
-                  <div className="privacy-controller__links">
-                    <a
-                      href={`mailto:${COMPANY.email}`}
-                    >
-                      <FiMail aria-hidden="true" />
 
-                      {COMPANY.email}
-                    </a>
+        {/* =====================================================
+            CONTENT
+        ===================================================== */}
 
-                    <a
-                      href={`tel:${COMPANY.phoneLink}`}
-                    >
-                      <FiSmartphone
-                        aria-hidden="true"
-                      />
+        <section className="datenschutz-content-section">
 
-                      {COMPANY.phoneDisplay}
-                    </a>
-                  </div>
+          <div className="datenschutz-container">
+
+            <div className="datenschutz-card-grid">
+
+
+              {/* 01 */}
+
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide">
+
+                <div className="datenschutz-card-number">01</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiUser />
                 </div>
 
-                <p className="privacy-note">
-                  Ein betrieblicher
-                  Datenschutzbeauftragter ist
-                  derzeit nicht bestellt, da nach
-                  unserer gegenwärtigen
-                  Unternehmensstruktur keine
-                  gesetzliche Pflicht zur
-                  Benennung besteht.
-                </p>
-              </PrivacySection>
+                <h3>Verantwortliche</h3>
 
-              {/* Grundlagen */}
-
-              <PrivacySection
-                id="grundlagen"
-                number="02"
-                eyebrow="Rechtsgrundlagen"
-                title="Wie und warum wir Daten verarbeiten"
-                icon={FiFileText}
-              >
                 <p>
-                  Personenbezogene Daten sind alle
-                  Informationen, die sich auf eine
-                  identifizierte oder
-                  identifizierbare natürliche
-                  Person beziehen. Wir verarbeiten
-                  solche Daten nur, wenn eine
-                  gesetzliche Grundlage besteht.
+                  Verantwortliche im Sinne der Datenschutz-Grundverordnung
+                  (DSGVO) und sonstiger datenschutzrechtlicher Vorschriften ist:
                 </p>
 
-                <div className="privacy-basis-grid">
-                  {legalBases.map(
-                    (basis) => (
-                      <div key={basis.title}>
-                        <FiCheckCircle
-                          aria-hidden="true"
-                        />
+                <div className="datenschutz-address">
 
-                        <strong>
-                          {basis.title}
-                        </strong>
+                  <strong>MamaTochterOnTour</strong>
+                  <span>Jennifer Weinreich</span>
+                  <span>Stettiner Straße 41</span>
+                  <span>35410 Hungen</span>
+                  <span>Deutschland</span>
 
-                        <p>{basis.text}</p>
-                      </div>
-                    )
-                  )}
+                  <a href="mailto:mamatochterontour@outlook.de">
+                    mamatochterontour@outlook.de
+                  </a>
+
                 </div>
 
                 <p>
-                  Sofern wir uns auf berechtigte
-                  Interessen stützen, bestehen
-                  diese insbesondere in der
-                  sicheren, wirtschaftlichen und
-                  nutzerfreundlichen Bereitstellung
-                  unserer digitalen Angebote, der
-                  Verhinderung von Missbrauch und
-                  der Kommunikation mit unserer
-                  Community.
+                  Ein Datenschutzbeauftragter ist derzeit nicht bestellt.
                 </p>
-              </PrivacySection>
 
-              {/* Hosting */}
+              </AnimatedSection>
 
-              <PrivacySection
-                id="bereitstellung"
-                number="03"
-                eyebrow="Website und Server"
-                title="Bereitstellung und Hosting"
-                icon={FiServer}
-                variant="warning"
-              >
+
+              {/* 02 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">02</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiGlobe />
+                </div>
+
+                <h3>Geltungsbereich</h3>
 
                 <p>
-                  Beim Aufruf unserer Website oder
-                  Web-App verarbeitet der
-                  eingesetzte Hosting-Anbieter
-                  technisch erforderliche
-                  Verbindungsdaten. Dazu können
-                  insbesondere folgende Daten
-                  gehören:
+                  Diese Datenschutzerklärung gilt für die Website von
+                  MamaTochterOnTour, den Onlineshop sowie für
+                  Momentry by MamaTochterOnTour.
                 </p>
 
-                <ul className="privacy-list">
-                  <li>IP-Adresse</li>
-                  <li>Datum und Uhrzeit des Abrufs</li>
+                <p>
+                  Momentry wird als Web-App sowie als mobile Anwendung
+                  für unterstützte Plattformen, insbesondere iOS und
+                  Android, angeboten.
+                </p>
+
+                <p>
+                  Sie gilt außerdem für damit verbundene Benutzerkonten,
+                  Community-Funktionen, Premium-Abonnements,
+                  Reiseplanungsfunktionen und digitale Angebote.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 03 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">03</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiFileText />
+                </div>
+
+                <h3>Rechtsgrundlagen</h3>
+
+                <p>
+                  Wir verarbeiten personenbezogene Daten insbesondere
+                  auf Grundlage von Art. 6 Abs. 1 DSGVO.
+                </p>
+
+                <ul>
                   <li>
-                    aufgerufene Seite oder Datei
+                    Art. 6 Abs. 1 lit. a DSGVO bei einer von dir
+                    erteilten Einwilligung,
                   </li>
+
                   <li>
-                    Referrer-URL und Browsertyp
+                    Art. 6 Abs. 1 lit. b DSGVO, soweit die Verarbeitung
+                    zur Durchführung eines Vertrags oder vorvertraglicher
+                    Maßnahmen erforderlich ist,
                   </li>
+
                   <li>
-                    Betriebssystem und Gerätetyp
+                    Art. 6 Abs. 1 lit. c DSGVO, soweit wir gesetzliche
+                    Verpflichtungen erfüllen müssen,
                   </li>
+
                   <li>
-                    HTTP-Statuscode und übertragene
-                    Datenmenge
+                    Art. 6 Abs. 1 lit. f DSGVO, soweit die Verarbeitung
+                    zur Wahrung unserer berechtigten Interessen oder
+                    der berechtigten Interessen Dritter erforderlich
+                    und zulässig ist.
                   </li>
                 </ul>
 
-                <p>
-                  Die Verarbeitung erfolgt zur
-                  technischen Bereitstellung, zur
-                  Sicherstellung der Stabilität
-                  und Sicherheit sowie zur
-                  Erkennung und Abwehr von
-                  Angriffen auf Grundlage von Art.
-                  6 Abs. 1 lit. f DSGVO.
-                </p>
+              </AnimatedSection>
 
-                <ProviderCard
-                  icon={FiCloud}
-                  name={PROVIDERS.hostingName}
-                  address={PROVIDERS.hostingAddress}
-                  purpose="Hosting und technische Bereitstellung"
-                />
-              </PrivacySection>
 
-              {/* Firebase */}
+              {/* 04 */}
 
-              <PrivacySection
-                id="firebase"
-                number="04"
-                eyebrow="Technische Infrastruktur"
-                title="Firebase und Google Cloud"
-                icon={FiDatabase}
-                variant="dark"
-              >
-                <p>
-                  Für wesentliche technische
-                  Funktionen unserer Website,
-                  unseres Online-Shops, unserer
-                  Web-App und unserer mobilen App
-                  verwenden wir Dienste von
-                  Google Firebase.
-                </p>
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide datenschutz-card-accent">
 
-                <ProviderCard
-                  icon={FiDatabase}
-                  name="Google Firebase"
-                  address={PROVIDERS.google}
-                  purpose="Authentifizierung, Datenbank, Cloud Functions und technische Infrastruktur"
-                />
+                <div className="datenschutz-card-number">04</div>
 
-                <h3>
-                  Firebase Authentication
-                </h3>
+                <div className="datenschutz-card-icon">
+                  <FiServer />
+                </div>
+
+                <h3>Hosting und technische Bereitstellung</h3>
 
                 <p>
-                  Firebase Authentication wird für
-                  die Registrierung, Anmeldung und
-                  Verwaltung von Benutzerkonten
-                  eingesetzt. Abhängig von der
-                  Anmeldemethode können
-                  insbesondere folgende Daten
-                  verarbeitet werden:
-                </p>
-
-                <ul className="privacy-list">
-                  <li>
-                    E-Mail-Adresse und
-                    Benutzerkennung
-                  </li>
-                  <li>
-                    verschlüsselte
-                    Authentifizierungsinformationen
-                  </li>
-                  <li>
-                    Anzeigename und gegebenenfalls
-                    Profilbild
-                  </li>
-                  <li>
-                    verwendeter Login-Anbieter
-                  </li>
-                  <li>
-                    Zeitpunkt der Registrierung
-                    und letzter Anmeldung
-                  </li>
-                  <li>
-                    technische Sicherheits- und
-                    Protokolldaten
-                  </li>
-                </ul>
-
-                <p>
-                  Rechtsgrundlage ist Art. 6 Abs. 1
-                  lit. b DSGVO, soweit die
-                  Anmeldung zur Nutzung unseres
-                  Kundenkontos oder unserer
-                  Angebote erforderlich ist.
-                  Ergänzend erfolgt die
-                  Verarbeitung zur Sicherung
-                  unserer Systeme auf Grundlage
-                  von Art. 6 Abs. 1 lit. f DSGVO.
-                </p>
-
-                <h3>
-                  Cloud Firestore
-                </h3>
-
-                <p>
-                  In Cloud Firestore speichern wir
-                  je nach Nutzung beispielsweise
-                  Profildaten, App-Inhalte,
-                  Reiseinformationen,
-                  Community-Beiträge,
-                  Bewertungen, Bestellungen,
-                  erworbene Reiseguides,
-                  Favoriten sowie technische
-                  Statusinformationen.
-                </p>
-
-                <h3>
-                  Cloud Functions
-                </h3>
-
-                <p>
-                  Cloud Functions werden unter
-                  anderem für serverseitige
-                  Prozesse eingesetzt, etwa für
-                  den Checkout, die Prüfung von
-                  Gutscheinen, die Verarbeitung
-                  von Stripe-Ereignissen, den
-                  Versand von Bestellbestätigungen
-                  und die Newsletter-Anmeldung.
-                </p>
-
-                <h3>
-                  Datenübermittlung in Drittländer
-                </h3>
-
-                <p>
-                  Bei Firebase kann eine
-                  Verarbeitung auch außerhalb der
-                  Europäischen Union und des
-                  Europäischen Wirtschaftsraums,
-                  insbesondere in den USA,
-                  stattfinden. Nach Angaben von
-                  Google wird Firebase
-                  Authentication ausschließlich
-                  über Rechenzentren in den USA
-                  betrieben.
+                  Unsere Website und Web-Angebote werden technisch
+                  unter anderem über Vercel bereitgestellt. Im Rahmen
+                  des Aufrufs können technisch erforderliche Daten
+                  verarbeitet werden.
                 </p>
 
                 <p>
-                  Google stützt internationale
-                  Datenübermittlungen je nach
-                  Fall auf einen
-                  Angemessenheitsbeschluss,
-                  insbesondere das
-                  EU-US Data Privacy Framework,
-                  oder auf
-                  Standardvertragsklauseln und
-                  ergänzende
-                  Schutzmechanismen.
-                </p>
-              </PrivacySection>
-
-              {/* Kundenkonto */}
-
-              <PrivacySection
-                id="konto"
-                number="05"
-                eyebrow="Registrierung und Anmeldung"
-                title="Kundenkonto und Benutzerprofil"
-                icon={FiUserCheck}
-              >
-                <p>
-                  Nutzerinnen und Nutzer können
-                  ein Kundenkonto erstellen, das
-                  sowohl für unsere App als auch
-                  für unseren Online-Shop
-                  verwendet werden kann.
+                  Hierzu können insbesondere IP-Adresse,
+                  Datum und Uhrzeit des Zugriffs, aufgerufene Inhalte,
+                  Browserinformationen, Betriebssystem,
+                  Geräteinformationen und technische Protokolldaten
+                  gehören.
                 </p>
 
                 <p>
-                  Dabei können insbesondere
-                  folgende Daten verarbeitet
-                  werden:
+                  Die Verarbeitung dient der sicheren, stabilen und
+                  technisch funktionsfähigen Bereitstellung unserer
+                  Angebote.
                 </p>
 
-                <ul className="privacy-list">
-                  <li>
-                    Vor- und Nachname oder
-                    Anzeigename
-                  </li>
-                  <li>E-Mail-Adresse</li>
-                  <li>Benutzerkennung</li>
-                  <li>Profilbild</li>
-                  <li>
-                    hinterlegte Profil- und
-                    Kontoeinstellungen
-                  </li>
-                  <li>
-                    gekaufte Reiseguides und
-                    Bestellhistorie
-                  </li>
-                  <li>
-                    in der App erstellte oder
-                    gespeicherte Inhalte
-                  </li>
-                </ul>
+                <p>
+                  Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+                  Unser berechtigtes Interesse besteht in der sicheren
+                  und zuverlässigen Bereitstellung unserer digitalen
+                  Angebote.
+                </p>
+
+                <div className="datenschutz-dark-note">
+                  <FiCheckCircle />
+
+                  <p>
+                    GitHub verwenden wir für die Verwaltung unseres
+                    Quellcodes und als Bestandteil unseres
+                    Entwicklungs- und Deployment-Prozesses. Eine
+                    Übermittlung von Besucherdaten an GitHub allein
+                    aufgrund des Aufrufs unserer Website ist damit
+                    nicht beabsichtigt.
+                  </p>
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 05 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">05</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiDatabase />
+                </div>
+
+                <h3>Lokale Speicherung</h3>
 
                 <p>
-                  Die Verarbeitung erfolgt zur
-                  Bereitstellung des Kontos und
-                  der damit verbundenen Funktionen
-                  auf Grundlage von Art. 6 Abs. 1
+                  Unsere Website, unser Onlineshop, die Web-App und
+                  die mobile App können Informationen lokal auf deinem
+                  Gerät oder in deinem Browser speichern.
+                </p>
+
+                <p>
+                  Dazu können insbesondere Spracheinstellungen,
+                  Warenkorbinhalte, Favoriten, Login- beziehungsweise
+                  Sitzungsinformationen und technisch notwendige
+                  Einstellungen gehören.
+                </p>
+
+                <p>
+                  Bei nicht angemeldeten Nutzerinnen und Nutzern können
+                  insbesondere Warenkorb und Favoriten lokal gespeichert
+                  werden. Nach einer Anmeldung können entsprechende
+                  Informationen zusätzlich dem Benutzerkonto zugeordnet
+                  und in unserer Datenbank gespeichert werden.
+                </p>
+
+                <p>
+                  Soweit eine Speicherung oder ein Zugriff auf
+                  Informationen im Endgerät technisch unbedingt
+                  erforderlich ist, erfolgt dies nach den hierfür
+                  geltenden gesetzlichen Bestimmungen. Für nicht
+                  notwendige Technologien holen wir, soweit erforderlich,
+                  zuvor deine Einwilligung ein.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 06 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">06</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiActivity />
+                </div>
+
+                <h3>Google Analytics</h3>
+
+                <p>
+                  Auf unserer Website und in der Web-App verwenden wir
+                  Google Analytics, einen Analysedienst von Google.
+                </p>
+
+                <p>
+                  Google Analytics ermöglicht uns, die Nutzung unserer
+                  digitalen Angebote statistisch auszuwerten und unser
+                  Angebot weiterzuentwickeln.
+                </p>
+
+                <p>
+                  Dabei können insbesondere Informationen über
+                  Seitenaufrufe, Interaktionen, ungefähre technische
+                  Herkunft, Geräte- und Browserinformationen sowie
+                  technische Kennungen verarbeitet werden.
+                </p>
+
+                <p>
+                  Soweit für den Einsatz von Google Analytics eine
+                  Einwilligung erforderlich ist, erfolgt die
+                  Verarbeitung auf Grundlage von Art. 6 Abs. 1
+                  lit. a DSGVO. Die Einwilligung kann jederzeit mit
+                  Wirkung für die Zukunft widerrufen werden.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 07 */}
+
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide">
+
+                <div className="datenschutz-card-number">07</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiCloud />
+                </div>
+
+                <h3>Firebase und Google Cloud</h3>
+
+                <p>
+                  Für Momentry und verschiedene Funktionen unserer
+                  digitalen Angebote verwenden wir Dienste der
+                  Firebase-Plattform von Google.
+                </p>
+
+                <p>
+                  Wir verwenden insbesondere Firebase Authentication,
+                  Cloud Firestore, Cloud Storage for Firebase,
+                  Cloud Functions for Firebase, Firebase Cloud
+                  Messaging und Firebase Analytics.
+                </p>
+
+                <p>
+                  Je nach verwendetem Dienst können dabei
+                  Benutzerkennungen, IP-Adressen, Geräteinformationen,
+                  technische Kennungen, Authentifizierungsdaten,
+                  von dir eingegebene Inhalte und Nutzungsinformationen
+                  verarbeitet werden.
+                </p>
+
+                <p>
+                  Cloud Firestore dient insbesondere der Speicherung
+                  strukturierter Daten. Cloud Storage verwenden wir
+                  insbesondere für von Nutzerinnen und Nutzern
+                  hochgeladene Dateien wie Bilder und Videos.
+                  Cloud Functions werden für serverseitige Abläufe
+                  verwendet.
+                </p>
+
+                <p>
+                  Firebase-Dienste können je nach Dienst und
+                  Konfiguration Daten innerhalb und außerhalb des
+                  Europäischen Wirtschaftsraums verarbeiten.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 08 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">08</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiLock />
+                </div>
+
+                <h3>Benutzerkonto & Anmeldung</h3>
+
+                <p>
+                  Für die Nutzung bestimmter Funktionen kannst
+                  beziehungsweise musst du ein Benutzerkonto erstellen.
+                  Das Benutzerkonto wird gemeinsam für die damit
+                  verbundenen Momentry- und Shop-Funktionen verwendet.
+                </p>
+
+                <p>
+                  Dabei verarbeiten wir insbesondere Vorname,
+                  Nachname, Benutzername, E-Mail-Adresse,
+                  Spracheinstellung, Zeitpunkt der Kontoerstellung
+                  sowie Informationen zum Premiumstatus.
+                </p>
+
+                <p>
+                  Bei der Anmeldung mit E-Mail-Adresse und Passwort
+                  erfolgt die Authentifizierung über Firebase
+                  Authentication. Authentifizierungsdaten werden
+                  durch Firebase verarbeitet.
+                </p>
+
+                <p>
+                  Firebase Authentication kann außerdem IP-Adressen,
+                  User-Agent-Informationen und weitere für die
+                  Authentifizierung und Missbrauchsprävention
+                  erforderliche technische Informationen verarbeiten.
+                </p>
+
+                <p>
+                  Rechtsgrundlage ist insbesondere Art. 6 Abs. 1
                   lit. b DSGVO.
                 </p>
 
-                <h3>
-                  Anmeldung mit Google
-                </h3>
+              </AnimatedSection>
 
-                <p>
-                  Bei einer Anmeldung über Google
-                  erhalten wir abhängig von deinen
-                  Einstellungen bei Google
-                  insbesondere deine
-                  E-Mail-Adresse, deinen Namen,
-                  dein Profilbild und eine
-                  eindeutige Benutzerkennung.
-                </p>
 
-                <ProviderCard
-                  icon={FiGlobe}
-                  name="Google-Anmeldung"
-                  address={PROVIDERS.google}
-                  purpose="Optionale Anmeldung über ein Google-Konto"
-                />
+              {/* 09 */}
 
-                <h3>
-                  Anmeldung mit Apple
-                </h3>
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
 
-                <p>
-                  Bei einer Anmeldung über Apple
-                  erhalten wir abhängig von deiner
-                  Auswahl insbesondere eine
-                  Apple-Benutzerkennung, deinen
-                  Namen und deine tatsächliche
-                  oder von Apple bereitgestellte
-                  Relay-E-Mail-Adresse.
-                </p>
+                <div className="datenschutz-card-number">09</div>
 
-                <ProviderCard
-                  icon={FiSmartphone}
-                  name="Sign in with Apple"
-                  address={PROVIDERS.apple}
-                  purpose="Optionale Anmeldung über eine Apple-ID"
-                />
-
-                <p className="privacy-note">
-                  Die Nutzung der Google- oder
-                  Apple-Anmeldung ist freiwillig.
-                  Alternativ kann ein Konto mit
-                  E-Mail-Adresse und Passwort
-                  erstellt werden.
-                </p>
-              </PrivacySection>
-
-              {/* Shop */}
-
-              <PrivacySection
-                id="shop"
-                number="06"
-                eyebrow="Bestellungen"
-                title="Online-Shop und digitale Reiseguides"
-                icon={FiShoppingBag}
-                variant="shop"
-              >
-                <p>
-                  Bei einer Bestellung verarbeiten
-                  wir die Daten, die für die
-                  Anbahnung, Durchführung und
-                  Abwicklung des Kaufvertrags
-                  erforderlich sind.
-                </p>
-
-                <div className="privacy-data-columns">
-                  <div>
-                    <strong>
-                      Bestelldaten
-                    </strong>
-
-                    <ul>
-                      <li>
-                        gekaufte Produkte
-                      </li>
-                      <li>
-                        Bestellnummer
-                      </li>
-                      <li>
-                        Bestellzeitpunkt
-                      </li>
-                      <li>
-                        Preis, Rabatt und
-                        Gesamtbetrag
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <strong>
-                      Kundendaten
-                    </strong>
-
-                    <ul>
-                      <li>Name</li>
-                      <li>E-Mail-Adresse</li>
-                      <li>Rechnungsanschrift</li>
-                      <li>
-                        Kundenkonto-Zuordnung
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <strong>
-                      Nachweisdaten
-                    </strong>
-
-                    <ul>
-                      <li>Zahlungsstatus</li>
-                      <li>
-                        Zustimmung zur sofortigen
-                        Bereitstellung
-                      </li>
-                      <li>
-                        Zeitpunkt der Zustimmung
-                      </li>
-                      <li>
-                        verwendeter Rabatt
-                      </li>
-                    </ul>
-                  </div>
+                <div className="datenschutz-card-icon">
+                  <FiUser />
                 </div>
 
+                <h3>Google- und Apple-Anmeldung</h3>
+
                 <p>
-                  Rechtsgrundlage ist Art. 6 Abs. 1
-                  lit. b DSGVO. Soweit Daten für
-                  steuer- oder handelsrechtliche
-                  Nachweise aufbewahrt werden
-                  müssen, erfolgt die Verarbeitung
-                  zusätzlich auf Grundlage von
-                  Art. 6 Abs. 1 lit. c DSGVO.
+                  Neben der Anmeldung mit E-Mail-Adresse können wir
+                  die Anmeldung über Google und Apple anbieten.
                 </p>
 
                 <p>
-                  Bei einer Bestellung mit
-                  Kundenkonto werden die erworbenen
-                  Reiseguides dauerhaft dem
-                  Benutzerkonto zugeordnet. Bei
-                  einer Gastbestellung verwenden
-                  wir die angegebene
-                  E-Mail-Adresse zur Abwicklung
-                  der Bestellung und zur
-                  Bereitstellung der gekauften
-                  Inhalte.
-                </p>
-              </PrivacySection>
-
-              {/* Stripe */}
-
-              <PrivacySection
-                id="stripe"
-                number="07"
-                eyebrow="Zahlungsabwicklung"
-                title="Stripe Checkout"
-                icon={FiCreditCard}
-                variant="purple"
-              >
-                <p>
-                  Zur sicheren Abwicklung von
-                  Zahlungen verwenden wir Stripe
-                  Checkout. Die eigentliche
-                  Eingabe und Verarbeitung der
-                  Zahlungsdaten erfolgt auf den
-                  Systemen von Stripe.
-                </p>
-
-                <ProviderCard
-                  icon={FiCreditCard}
-                  name="Stripe"
-                  address={PROVIDERS.stripe}
-                  purpose="Zahlungsabwicklung und Betrugsprävention"
-                />
-
-                <p>
-                  Abhängig von der gewählten
-                  Zahlungsart verarbeitet Stripe
-                  insbesondere:
-                </p>
-
-                <ul className="privacy-list">
-                  <li>
-                    Name und Rechnungsanschrift
-                  </li>
-                  <li>E-Mail-Adresse</li>
-                  <li>
-                    Zahlungs- und
-                    Transaktionsinformationen
-                  </li>
-                  <li>
-                    Betrag, Währung und
-                    Bestellreferenz
-                  </li>
-                  <li>
-                    Geräte-, Browser- und
-                    Verbindungsdaten
-                  </li>
-                  <li>
-                    Informationen zur
-                    Betrugsprävention
-                  </li>
-                </ul>
-
-                <p>
-                  Wir erhalten von Stripe
-                  grundsätzlich keine vollständigen
-                  Kreditkarten- oder
-                  Bankkartendaten. Wir erhalten
-                  jedoch Informationen über den
-                  Zahlungsstatus und die
-                  zugehörige Transaktion.
+                  Beim Google-Login werden die für die Anmeldung
+                  erforderlichen Kontoinformationen, insbesondere
+                  Name und E-Mail-Adresse, von Google an uns
+                  übermittelt.
                 </p>
 
                 <p>
-                  Rechtsgrundlage ist Art. 6 Abs. 1
-                  lit. b DSGVO. Sicherheits- und
-                  Betrugspräventionsmaßnahmen
-                  können außerdem auf Art. 6 Abs. 1
-                  lit. f DSGVO beruhen.
+                  Beim Login mit Apple werden die von Apple im Rahmen
+                  der Anmeldung bereitgestellten Daten verarbeitet.
+                  Abhängig von den Einstellungen des Apple-Kontos
+                  kann hierbei auch eine von Apple bereitgestellte
+                  Relay-E-Mail-Adresse verwendet werden.
                 </p>
 
                 <p>
-                  Stripe kann Daten im Rahmen
-                  seiner eigenen gesetzlichen
-                  Verpflichtungen, etwa zur
-                  Betrugs- und Geldwäscheprävention,
-                  teilweise in eigener
-                  datenschutzrechtlicher
-                  Verantwortlichkeit verarbeiten.
-                  Dabei kann es auch zu
-                  Datenübermittlungen außerhalb
-                  des EWR kommen.
-                </p>
-              </PrivacySection>
-
-              {/* Brevo */}
-
-              <PrivacySection
-                id="brevo"
-                number="08"
-                eyebrow="E-Mail-Kommunikation"
-                title="Brevo, Newsletter und Bestellmails"
-                icon={FiMail}
-              >
-                <ProviderCard
-                  icon={FiMail}
-                  name="Brevo"
-                  address={PROVIDERS.brevo}
-                  purpose="Newsletter und transaktionale E-Mails"
-                />
-
-                <h3>
-                  Newsletter
-                </h3>
-
-                <p>
-                  Du kannst dich freiwillig für
-                  unseren Newsletter anmelden. Für
-                  die Anmeldung verarbeiten wir
-                  deine E-Mail-Adresse und
-                  gegebenenfalls technische
-                  Nachweisdaten zur Anmeldung und
-                  Bestätigung.
+                  Die jeweilige Anmeldung erfolgt nur, wenn du die
+                  entsprechende Login-Methode selbst auswählst.
                 </p>
 
-                <p>
-                  Die Anmeldung erfolgt
-                  grundsätzlich über ein
-                  Bestätigungsverfahren. Erst nach
-                  Bestätigung der Anmeldung wird
-                  die E-Mail-Adresse in die Liste
-                  der bestätigten
-                  Newsletter-Abonnentinnen und
-                  -Abonnenten aufgenommen.
-                </p>
+              </AnimatedSection>
 
-                <p>
-                  Rechtsgrundlage für den
-                  Newsletterversand ist deine
-                  Einwilligung gemäß Art. 6 Abs. 1
-                  lit. a DSGVO. Die Verarbeitung
-                  von Nachweisdaten kann außerdem
-                  auf Art. 6 Abs. 1 lit. f DSGVO
-                  beruhen, da wir ein berechtigtes
-                  Interesse am Nachweis einer
-                  ordnungsgemäßen Einwilligung
-                  haben.
-                </p>
 
-                <div className="privacy-highlight">
-                  <FiBell aria-hidden="true" />
+              {/* 10 */}
 
-                  <div>
-                    <strong>
-                      Newsletter abbestellen
-                    </strong>
+              <AnimatedSection className="datenschutz-card">
 
-                    <p>
-                      Du kannst deine Einwilligung
-                      jederzeit über den
-                      Abmeldelink in einer
-                      Newsletter-E-Mail oder durch
-                      eine Nachricht an uns
-                      widerrufen.
-                    </p>
-                  </div>
+                <div className="datenschutz-card-number">10</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiUser />
                 </div>
 
-                <h3>
-                  Transaktionale E-Mails
-                </h3>
+                <h3>Profil und Profildaten</h3>
 
                 <p>
-                  Brevo wird außerdem für
-                  notwendige E-Mails eingesetzt,
-                  etwa für
-                  Bestellbestätigungen,
-                  Downloadinformationen oder
-                  andere Nachrichten zur
-                  Vertragsabwicklung.
+                  Innerhalb von Momentry kannst du dein Profil
+                  ausgestalten. Dabei können insbesondere dein
+                  Benutzername, Vor- und Nachname, Profilbild und
+                  eine von dir freiwillig eingegebene Biografie
+                  verarbeitet werden.
                 </p>
 
                 <p>
-                  Diese Nachrichten werden nicht
-                  auf Grundlage einer
-                  Newsletter-Einwilligung, sondern
-                  zur Durchführung des Vertrags
-                  gemäß Art. 6 Abs. 1 lit. b DSGVO
-                  versendet.
-                </p>
-              </PrivacySection>
-
-              {/* Community */}
-
-              <PrivacySection
-                id="community"
-                number="09"
-                eyebrow="App, Bewertungen und Beiträge"
-                title="Community-Funktionen"
-                icon={FiMessageCircle}
-                variant="community"
-              >
-                <p>
-                  Unsere App und teilweise unser
-                  Online-Shop enthalten
-                  Community-Funktionen. Dazu
-                  gehören je nach aktuellem
-                  Funktionsumfang insbesondere:
+                  Welche Angaben für andere Nutzer sichtbar sind,
+                  richtet sich nach der jeweiligen Funktion innerhalb
+                  von Momentry.
                 </p>
 
-                <ul className="privacy-list">
-                  <li>
-                    Produktbewertungen
-                  </li>
-                  <li>
-                    Beiträge und Kommentare
-                  </li>
-                  <li>
-                    Fragen und Antworten
-                  </li>
-                  <li>
-                    Reiseforum und Reisegruppen
-                  </li>
-                  <li>
-                    Reisebeiträge und
-                    Community-Profile
-                  </li>
-                </ul>
+                <p>
+                  Freiwillige Profilangaben kannst du grundsätzlich
+                  selbst ändern oder entfernen.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 11 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">11</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiUsers />
+                </div>
+
+                <h3>Community und Nutzerinhalte</h3>
 
                 <p>
-                  Dabei können Benutzerkennung,
-                  Anzeigename, Profilbild,
-                  Zeitpunkt des Beitrags sowie die
-                  von dir veröffentlichten Texte,
-                  Bilder, Sternebewertungen und
-                  sonstigen Inhalte verarbeitet
+                  Momentry enthält Community-Funktionen. Nutzerinnen
+                  und Nutzer können je nach verfügbarer Funktion
+                  unter anderem Beiträge, Stories, Fragen, Antworten,
+                  Kommentare, Reisegruppen, Reiseforum-Beiträge und
+                  weitere Inhalte erstellen.
+                </p>
+
+                <p>
+                  Dabei verarbeiten wir die von dir bereitgestellten
+                  Texte, Bilder, Videos und sonstigen Inhalte sowie
+                  Informationen, die für die Zuordnung zum jeweiligen
+                  Benutzerkonto erforderlich sind.
+                </p>
+
+                <p>
+                  Inhalte, die du in öffentlichen Community-Bereichen
+                  veröffentlichst, können für andere Nutzerinnen und
+                  Nutzer sichtbar sein.
+                </p>
+
+                <p>
+                  Rechtsgrundlage ist insbesondere Art. 6 Abs. 1
+                  lit. b DSGVO.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 12 */}
+
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide datenschutz-card-private">
+
+                <div className="datenschutz-card-number">12</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiLock />
+                </div>
+
+                <h3>Private Reiseplanung und Reisetagebücher</h3>
+
+                <p>
+                  Deine Reiseplanung und deine persönlichen
+                  Reisetagebücher sind private Bereiche deines
+                  Benutzerkontos und nicht als öffentliche
+                  Community-Inhalte vorgesehen.
+                </p>
+
+                <p>
+                  In der Reiseplanung kannst du insbesondere Reiseziel
+                  und Reisezeitraum hinterlegen sowie Buchungen,
+                  Kontakte, Budgets, Aufgaben, Notizen,
+                  Tagesplanungen und Packlisten verwalten.
+                </p>
+
+                <p>
+                  Die dort eingegebenen Informationen können abhängig
+                  davon, was du selbst einträgst, auch persönliche
+                  Informationen über dich oder andere Personen
+                  enthalten.
+                </p>
+
+                <p>
+                  Kontakte werden von dir manuell eingetragen.
+                  Momentry greift hierfür nicht auf das Adressbuch
+                  deines Geräts zu.
+                </p>
+
+                <div className="datenschutz-private-note">
+                  <FiLock />
+
+                  <p>
+                    Bitte trage personenbezogene Daten anderer
+                    Personen nur ein, wenn du dazu berechtigt bist.
+                  </p>
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 13 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">13</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiImage />
+                </div>
+
+                <h3>Fotos, Videos & Fotobibliothek</h3>
+
+                <p>
+                  In Momentry können Bilder und Videos hochgeladen
+                  werden, beispielsweise für Profilbilder, Beiträge,
+                  Stories, Reisegruppen, das Reiseforum,
+                  Gruppenchats oder Reisetagebücher.
+                </p>
+
+                <p>
+                  Hierfür kann die mobile App – nach deiner
+                  entsprechenden Auswahl beziehungsweise
+                  Berechtigung – auf die Fotobibliothek deines
+                  Geräts zugreifen.
+                </p>
+
+                <p>
+                  Ausgewählte Bilder und Videos können in Cloud
+                  Storage for Firebase gespeichert und dem jeweiligen
+                  Inhalt oder Benutzerkonto zugeordnet werden.
+                </p>
+
+                <p>
+                  Momentry verwendet derzeit keinen Gerätestandort
+                  und greift für die beschriebenen Funktionen nicht
+                  auf Kamera oder Mikrofon zu.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 14 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">14</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiBell />
+                </div>
+
+                <h3>Push-Benachrichtigungen</h3>
+
+                <p>
+                  Momentry kann Push-Benachrichtigungen anbieten.
+                  Hierfür verwenden wir Firebase Cloud Messaging.
+                </p>
+
+                <p>
+                  Wenn du Push-Benachrichtigungen erlaubst, wird
+                  insbesondere ein technischer Geräte- beziehungsweise
+                  FCM-Token verarbeitet, damit Nachrichten dem
+                  richtigen Gerät zugestellt werden können.
+                </p>
+
+                <p>
+                  Push-Benachrichtigungen werden nur entsprechend
+                  der von deinem Betriebssystem bereitgestellten
+                  Berechtigungen verwendet. Du kannst die Berechtigung
+                  jederzeit über die Einstellungen deines Geräts
+                  ändern oder entziehen.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 15 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">15</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiActivity />
+                </div>
+
+                <h3>Firebase Analytics</h3>
+
+                <p>
+                  In Momentry verwenden wir Firebase Analytics,
+                  um die Nutzung der Web-App und mobilen App
+                  statistisch auszuwerten und unser Angebot
+                  weiterzuentwickeln.
+                </p>
+
+                <p>
+                  Dabei können insbesondere technische
+                  Geräteinformationen, App-Interaktionen,
+                  Nutzungsereignisse und technische Kennungen
+                  verarbeitet werden.
+                </p>
+
+                <p>
+                  Soweit hierfür eine Einwilligung erforderlich ist,
+                  erfolgt die Verarbeitung auf Grundlage von
+                  Art. 6 Abs. 1 lit. a DSGVO. Eine erteilte
+                  Einwilligung kann mit Wirkung für die Zukunft
+                  widerrufen werden.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 16 */}
+
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide">
+
+                <div className="datenschutz-card-number">16</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiCreditCard />
+                </div>
+
+                <h3>Momentry Premium & RevenueCat</h3>
+
+                <p>
+                  Für die technische Verwaltung und Zuordnung von
+                  Premium-Abonnements verwenden wir RevenueCat.
+                </p>
+
+                <p>
+                  Dabei können insbesondere eine Benutzerkennung,
+                  Informationen zur Plattform, zum gewählten
+                  Abonnement, zum Kauf beziehungsweise zur
+                  Transaktion sowie zum aktuellen Berechtigungs-
+                  und Abonnementstatus verarbeitet werden.
+                </p>
+
+                <p>
+                  Die Verarbeitung ermöglicht insbesondere, den
+                  Premiumstatus einem Momentry-Konto zuzuordnen
+                  und Premium plattformübergreifend bereitzustellen.
+                </p>
+
+                <p>
+                  Rechtsgrundlage ist insbesondere Art. 6 Abs. 1
+                  lit. b DSGVO, soweit die Verarbeitung zur
+                  Bereitstellung des erworbenen Premium-Abonnements
+                  erforderlich ist.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 17 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">17</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiShoppingBag />
+                </div>
+
+                <h3>Apple & Google In-App-Käufe</h3>
+
+                <p>
+                  Premium-Abonnements können innerhalb der mobilen
+                  App über die von Apple beziehungsweise Google
+                  bereitgestellten In-App-Kaufsysteme abgeschlossen
                   werden.
                 </p>
 
-                <div className="privacy-public-note">
-                  <FiGlobe aria-hidden="true" />
+                <p>
+                  Die Zahlungsabwicklung erfolgt dabei über den
+                  jeweiligen Plattformanbieter. Wir erhalten nicht
+                  deine vollständigen Karten- oder
+                  Zahlungsinformationen.
+                </p>
 
-                  <div>
-                    <strong>
-                      Öffentliche Inhalte
-                    </strong>
+                <p>
+                  Wir beziehungsweise die zur Verwaltung des
+                  Premiumstatus eingesetzten Dienste erhalten jedoch
+                  die für die Zuordnung und Bereitstellung des
+                  Abonnements erforderlichen Kauf-, Transaktions-
+                  und Berechtigungsinformationen.
+                </p>
 
-                    <p>
-                      Inhalte, die du in öffentlich
-                      sichtbaren Community-Bereichen
-                      veröffentlichst, können für
-                      andere Nutzerinnen und Nutzer
-                      sichtbar sein. Veröffentliche
-                      dort keine vertraulichen
-                      Informationen oder
-                      personenbezogenen Daten
-                      anderer Personen.
-                    </p>
-                  </div>
+              </AnimatedSection>
+
+
+              {/* 18 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">18</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiCreditCard />
                 </div>
 
-                <p>
-                  Die Verarbeitung erfolgt zur
-                  Bereitstellung der jeweiligen
-                  Funktion auf Grundlage von Art. 6
-                  Abs. 1 lit. b DSGVO. Maßnahmen
-                  zur Moderation, Missbrauchs- und
-                  Betrugsbekämpfung beruhen
-                  ergänzend auf Art. 6 Abs. 1 lit. f
-                  DSGVO.
-                </p>
-
-                <h3>
-                  Gastbewertungen
-                </h3>
+                <h3>Stripe & Web-Premium</h3>
 
                 <p>
-                  Soweit Bewertungen ohne
-                  registriertes Kundenkonto
-                  möglich sind, kann zur
-                  technischen Zuordnung eine
-                  anonyme Firebase-Benutzerkennung
-                  erstellt werden. Öffentlich
-                  angezeigt werden nur der
-                  gewählte Name oder das gewählte
-                  Kürzel, die Bewertung und der
-                  Bewertungstext.
-                </p>
-
-                <h3>
-                  Moderation und Löschung
-                </h3>
-
-                <p>
-                  Wir dürfen Inhalte prüfen,
-                  ausblenden oder löschen, wenn
-                  dies zur Durchsetzung unserer
-                  Regeln, zum Schutz anderer
-                  Personen oder zur Erfüllung
-                  rechtlicher Verpflichtungen
-                  erforderlich ist.
-                </p>
-              </PrivacySection>
-
-              {/* Kontakt */}
-
-              <PrivacySection
-                id="kontakt"
-                number="10"
-                eyebrow="Anfragen und Nachrichten"
-                title="Kontaktaufnahme"
-                icon={FiMail}
-              >
-                <p>
-                  Wenn du uns per E-Mail,
-                  Kontaktformular, über Social
-                  Media oder auf anderem Weg
-                  kontaktierst, verarbeiten wir die
-                  von dir übermittelten
-                  Informationen.
+                  Beim Abschluss eines Premium-Abonnements über
+                  unsere Web-App verwenden wir Stripe für die
+                  Zahlungsabwicklung.
                 </p>
 
                 <p>
-                  Dazu können insbesondere dein
-                  Name, deine E-Mail-Adresse, dein
-                  Social-Media-Benutzername, der
-                  Inhalt deiner Nachricht sowie
-                  gegebenenfalls Bestell- oder
-                  Vertragsinformationen gehören.
+                  Im Rahmen der Zahlungsabwicklung können insbesondere
+                  Name, E-Mail-Adresse, Rechnungsadresse,
+                  Zahlungsinformationen, Transaktionsdaten und
+                  technische Informationen verarbeitet werden.
                 </p>
 
                 <p>
-                  Erfolgt die Anfrage im
-                  Zusammenhang mit einem Vertrag
-                  oder einer Bestellung, ist Art. 6
-                  Abs. 1 lit. b DSGVO die
-                  Rechtsgrundlage. Bei allgemeinen
-                  Anfragen erfolgt die Verarbeitung
-                  auf Grundlage unseres
-                  berechtigten Interesses an der
-                  Bearbeitung und Beantwortung von
-                  Nachrichten gemäß Art. 6 Abs. 1
-                  lit. f DSGVO.
+                  Je nach Verfügbarkeit können über Stripe
+                  insbesondere Kartenzahlungen, PayPal und Apple Pay
+                  angeboten werden.
                 </p>
 
-                <div className="privacy-mail-card">
-                  <span>
-                    <FiMail aria-hidden="true" />
-                  </span>
+                <p>
+                  Die Verarbeitung erfolgt insbesondere zur
+                  Durchführung des Vertrags und der Zahlung gemäß
+                  Art. 6 Abs. 1 lit. b DSGVO sowie, soweit erforderlich,
+                  zur Erfüllung gesetzlicher Pflichten gemäß
+                  Art. 6 Abs. 1 lit. c DSGVO.
+                </p>
 
-                  <div>
-                    <small>
-                      Kontaktadresse
-                    </small>
+              </AnimatedSection>
 
-                    <strong>
-                      {COMPANY.email}
-                    </strong>
-                  </div>
 
-                  <a
-                    href={`mailto:${COMPANY.email}`}
-                    aria-label="E-Mail schreiben"
-                  >
-                    <FiExternalLink
-                      aria-hidden="true"
-                    />
-                  </a>
+              {/* 19 */}
+
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide">
+
+                <div className="datenschutz-card-number">19</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiShoppingBag />
                 </div>
-              </PrivacySection>
 
-              {/* Lokale Speicherung */}
+                <h3>Onlineshop & Bestellungen</h3>
 
-              <PrivacySection
-                id="lokale-speicherung"
-                number="10A"
-                eyebrow="Browser und Endgerät"
-                title="Lokale Speicherung"
-                icon={FiSmartphone}
-              >
                 <p>
-                  Für bestimmte Funktionen können
-                  Informationen lokal auf deinem
-                  Gerät oder in deinem Browser
-                  gespeichert werden. Dies kann
-                  beispielsweise den Warenkorb,
-                  Favoriten, Anzeigeeinstellungen
-                  oder technische
-                  Sitzungsinformationen betreffen.
+                  Wenn du in unserem Onlineshop einen digitalen
+                  Reiseguide oder ein anderes angebotenes Produkt
+                  kaufst, verarbeiten wir die für Bestellung,
+                  Vertragsabwicklung, Zahlung und Bereitstellung
+                  erforderlichen Daten.
                 </p>
 
                 <p>
-                  Soweit diese Speicherung
-                  technisch erforderlich ist,
-                  erfolgt sie zur Bereitstellung
-                  der ausdrücklich gewünschten
-                  Funktion. Nicht erforderliche
-                  Speicherungen würden wir nur
-                  nach vorheriger Einwilligung
-                  einsetzen.
+                  Hierzu gehören insbesondere Name, E-Mail-Adresse,
+                  Rechnungsadresse, bestellte Produkte,
+                  Bestellinformationen, Zahlungsstatus,
+                  Bestell- beziehungsweise Rechnungsnummer und
+                  weitere für die Abwicklung erforderliche Daten.
                 </p>
 
                 <p>
-                  Derzeit setzen wir nach dem
-                  bekannten Funktionsstand keine
-                  eigenständige
-                  Reichweitenanalyse oder
-                  personalisierte
-                  Werbe-Tracking-Technologie ein.
-                  Sollte sich dies ändern, wird
-                  diese Datenschutzerklärung
-                  angepasst und erforderlichenfalls
-                  eine Einwilligung eingeholt.
-                </p>
-              </PrivacySection>
-
-              {/* App */}
-
-              <PrivacySection
-                id="app"
-                number="10B"
-                eyebrow="Mobile Anwendung"
-                title="Momentry App und Web-App"
-                icon={FiSmartphone}
-                variant="app"
-              >
-                <p>
-                  Unsere mobile App und Web-App
-                  dienen der Reiseplanung, der
-                  Speicherung persönlicher
-                  Reiseinformationen und dem
-                  Austausch innerhalb der
-                  Community.
+                  Bestellungen können – soweit angeboten – mit
+                  Benutzerkonto oder als Gast durchgeführt werden.
                 </p>
 
                 <p>
-                  Je nach Nutzung können
-                  insbesondere folgende Daten
-                  verarbeitet werden:
+                  Rechnungen und steuerlich beziehungsweise
+                  handelsrechtlich relevante Unterlagen werden
+                  entsprechend den gesetzlichen
+                  Aufbewahrungspflichten gespeichert.
                 </p>
-
-                <ul className="privacy-list">
-                  <li>
-                    Benutzerkonto und Profil
-                  </li>
-                  <li>
-                    angelegte Reisen und
-                    Reisedaten
-                  </li>
-                  <li>
-                    Packlisten und persönliche
-                    Reiseeinträge
-                  </li>
-                  <li>
-                    Reisegruppen und
-                    Community-Zuordnungen
-                  </li>
-                  <li>
-                    Beiträge, Fragen,
-                    Kommentare und Antworten
-                  </li>
-                  <li>
-                    hochgeladene Bilder und
-                    Profildaten
-                  </li>
-                  <li>
-                    erworbene oder freigeschaltete
-                    Inhalte
-                  </li>
-                </ul>
 
                 <p>
-                  Die Verarbeitung erfolgt zur
-                  Bereitstellung der von dir
-                  genutzten Funktionen auf
-                  Grundlage von Art. 6 Abs. 1 lit. b
-                  DSGVO.
+                  Rechtsgrundlagen sind insbesondere Art. 6 Abs. 1
+                  lit. b und lit. c DSGVO.
                 </p>
 
-                <p className="privacy-note">
-                  Geräteberechtigungen wie
-                  Kamera-, Foto-, Standort- oder
-                  Benachrichtigungszugriff werden
-                  nur verwendet, wenn die
-                  jeweilige Funktion tatsächlich
-                  eingebaut ist und du die
-                  entsprechende Berechtigung über
-                  dein Betriebssystem erteilst.
-                </p>
-              </PrivacySection>
+              </AnimatedSection>
 
-              {/* Speicherdauer */}
 
-              <PrivacySection
-                id="speicherung"
-                number="11"
-                eyebrow="Löschung und Aufbewahrung"
-                title="Speicherdauer"
-                icon={FiTrash2}
-              >
+              {/* 20 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">20</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiHeart />
+                </div>
+
+                <h3>Warenkorb & Favoriten</h3>
+
                 <p>
-                  Wir speichern personenbezogene
-                  Daten grundsätzlich nur so lange,
-                  wie sie für den jeweiligen Zweck
-                  erforderlich sind oder
-                  gesetzliche
+                  Warenkorbinhalte und Favoriten können lokal in
+                  deinem Browser gespeichert werden.
+                </p>
+
+                <p>
+                  Bei angemeldeten Nutzerinnen und Nutzern können
+                  Warenkorb und Favoriten zusätzlich in Cloud
+                  Firestore gespeichert und dem Benutzerkonto
+                  zugeordnet werden.
+                </p>
+
+                <p>
+                  Dies ermöglicht insbesondere die geräte- und
+                  sitzungsübergreifende Nutzung dieser Funktionen.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 21 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">21</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiMessageCircle />
+                </div>
+
+                <h3>Bewertungen</h3>
+
+                <p>
+                  In unserem Onlineshop können Bewertungen abgegeben
+                  werden. Dabei verarbeiten wir insbesondere den
+                  angezeigten Namen, die Sternebewertung, den
+                  Bewertungstext und das Datum.
+                </p>
+
+                <p>
+                  Bei Bewertungen aus einem Benutzerkonto kann als
+                  Anzeigename der dem Konto zugeordnete Display-Name
+                  beziehungsweise Vor- und Nachname verwendet werden.
+                </p>
+
+                <p>
+                  Gastbewertungen können unter einem von der
+                  bewertenden Person selbst gewählten Anzeigenamen
+                  veröffentlicht werden.
+                </p>
+
+                <p>
+                  Da eine Gastbewertung keinem Benutzerkonto
+                  zugeordnet ist, stehen kontobasierte Funktionen
+                  zum nachträglichen Bearbeiten oder Löschen einer
+                  Bewertung dort nicht in gleicher Weise zur Verfügung.
+                  Gesetzliche Datenschutzrechte bleiben unberührt.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 22 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">22</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiMail />
+                </div>
+
+                <h3>Kontaktaufnahme</h3>
+
+                <p>
+                  Wenn du uns kontaktierst, verarbeiten wir die von
+                  dir übermittelten Informationen zur Bearbeitung
+                  deiner Anfrage.
+                </p>
+
+                <p>
+                  Unser Kontaktformular enthält insbesondere Felder
+                  für Name, E-Mail-Adresse, Thema und Nachricht.
+                </p>
+
+                <p>
+                  Das Kontaktformular verwendet eine E-Mail-Verknüpfung
+                  („mailto“). Die von dir vorbereitete Nachricht wird
+                  über dein eigenes E-Mail-Programm beziehungsweise
+                  deinen gewählten E-Mail-Dienst an uns versendet.
+                </p>
+
+                <p>
+                  Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO,
+                  soweit deine Anfrage einen Vertrag oder
+                  vorvertragliche Maßnahmen betrifft, ansonsten
+                  insbesondere Art. 6 Abs. 1 lit. f DSGVO.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 23 */}
+
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide datenschutz-card-newsletter">
+
+                <div className="datenschutz-card-number">23</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiMail />
+                </div>
+
+                <h3>Newsletter & Brevo</h3>
+
+                <p>
+                  Du kannst dich über unsere Website und unseren
+                  Onlineshop für unseren Newsletter anmelden.
+                  Für den Newsletter verwenden wir Brevo.
+                </p>
+
+                <p>
+                  Für die Anmeldung verarbeiten wir deine
+                  E-Mail-Adresse.
+                </p>
+
+                <p>
+                  Die Newsletter-Anmeldung erfolgt im
+                  Double-Opt-In-Verfahren. Nach der Anmeldung
+                  erhältst du zunächst eine Bestätigungs-E-Mail.
+                  Erst wenn du den darin enthaltenen
+                  Bestätigungslink verwendest, wird deine Anmeldung
+                  abgeschlossen.
+                </p>
+
+                <p>
+                  Der Bestätigungslink ist für einen begrenzten
+                  Zeitraum von derzeit 30 Tagen gültig.
+                  Nach erfolgreicher Bestätigung kann über Brevo
+                  eine Willkommens-E-Mail versendet werden.
+                </p>
+
+                <p>
+                  Rechtsgrundlage für den Newsletterversand ist
+                  deine Einwilligung gemäß Art. 6 Abs. 1 lit. a
+                  DSGVO. Du kannst diese Einwilligung jederzeit
+                  mit Wirkung für die Zukunft widerrufen,
+                  insbesondere über die Abmeldemöglichkeit im
+                  Newsletter.
+                </p>
+
+                <div className="datenschutz-newsletter-note">
+                  <FiCheckCircle />
+
+                  <p>
+                    Ein Widerruf der Newsletter-Einwilligung hat
+                    keinen Einfluss auf die Rechtmäßigkeit der bis
+                    zum Widerruf erfolgten Verarbeitung.
+                  </p>
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 24 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">24</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiGlobe />
+                </div>
+
+                <h3>Partnerlinks & TUI</h3>
+
+                <p>
+                  Auf unserer Website können wir auf Angebote
+                  externer Partner verlinken, beispielsweise auf
+                  das TUI Reisebüro in Aschaffenburg.
+                </p>
+
+                <p>
+                  Ein bloßer Link übermittelt grundsätzlich erst
+                  dann Daten an die Zielseite, wenn du den Link
+                  selbst aufrufst. Ab diesem Zeitpunkt gelten die
+                  Datenschutzbestimmungen des jeweiligen externen
+                  Anbieters.
+                </p>
+
+                <p>
+                  Für die Datenverarbeitung auf externen Websites
+                  sind grundsätzlich deren jeweilige Betreiber
+                  verantwortlich.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 25 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">25</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiTrash2 />
+                </div>
+
+                <h3>Accountlöschung</h3>
+
+                <p>
+                  Du kannst dein Momentry-Konto über die hierfür
+                  bereitgestellte Funktion löschen.
+                </p>
+
+                <p>
+                  Bei der Accountlöschung werden die dem Konto
+                  zugeordneten Nutzerdaten nach Maßgabe unserer
+                  technischen Löschprozesse gelöscht. Dazu gehören
+                  insbesondere Profildaten, Reiseplanungen,
+                  Reisetagebücher und die dem Konto zugeordneten
+                  Nutzerinhalte.
+                </p>
+
+                <p>
+                  Daten, für die gesetzliche Aufbewahrungspflichten
+                  bestehen, insbesondere bestimmte Bestell-,
+                  Rechnungs- und Zahlungsunterlagen, werden erst
+                  nach Ablauf der jeweiligen gesetzlichen Fristen
+                  gelöscht.
+                </p>
+
+                <p>
+                  Bei eingesetzten technischen Dienstleistern können
+                  Daten nach einer Löschung vorübergehend noch in
+                  Sicherungs- und Backup-Systemen vorhanden sein,
+                  bevor sie im Rahmen der jeweiligen Löschzyklen
+                  endgültig entfernt werden.
+                </p>
+
+                <div className="datenschutz-delete-note">
+                  <FiTrash2 />
+
+                  <p>
+                    Die Löschung eines Momentry-Kontos beendet ein
+                    über Apple oder Google abgeschlossenes
+                    Premium-Abonnement nicht automatisch.
+                    Ein solches Abonnement muss zusätzlich beim
+                    jeweiligen Anbieter gekündigt werden.
+                  </p>
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 26 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">26</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiDatabase />
+                </div>
+
+                <h3>Speicherdauer</h3>
+
+                <p>
+                  Wir speichern personenbezogene Daten grundsätzlich
+                  nur so lange, wie sie für den jeweiligen Zweck
+                  erforderlich sind oder gesetzliche
                   Aufbewahrungspflichten bestehen.
                 </p>
 
-                <div className="privacy-storage-grid">
-                  <div>
-                    <strong>
-                      Kundenkonto
-                    </strong>
+                <p>
+                  Daten eines aktiven Benutzerkontos können daher
+                  grundsätzlich für die Dauer der Kontonutzung
+                  gespeichert werden.
+                </p>
 
-                    <p>
-                      Bis zur Löschung des Kontos,
-                      sofern keine gesetzlichen
-                      Aufbewahrungspflichten oder
-                      berechtigten Gründe für eine
-                      weitere Speicherung bestehen.
-                    </p>
-                  </div>
+                <p>
+                  Nach Wegfall des Verarbeitungszwecks werden Daten
+                  gelöscht oder gesperrt, sofern keine gesetzlichen
+                  Pflichten oder zulässigen Gründe für eine weitere
+                  Speicherung bestehen.
+                </p>
 
-                  <div>
-                    <strong>
-                      Bestellungen
-                    </strong>
+              </AnimatedSection>
 
-                    <p>
-                      Vertrags-, Buchungs- und
-                      steuerrelevante Unterlagen
-                      werden entsprechend den
-                      gesetzlichen
-                      Aufbewahrungsfristen
-                      gespeichert.
-                    </p>
-                  </div>
 
-                  <div>
-                    <strong>
-                      Newsletter
-                    </strong>
+              {/* 27 */}
 
-                    <p>
-                      Bis zum Widerruf der
-                      Einwilligung. Nachweisdaten
-                      können darüber hinaus zur
-                      Verteidigung gegen
-                      Rechtsansprüche aufbewahrt
-                      werden.
-                    </p>
-                  </div>
+              <AnimatedSection className="datenschutz-card datenschutz-card-wide">
 
-                  <div>
-                    <strong>
-                      Community-Inhalte
-                    </strong>
+                <div className="datenschutz-card-number">27</div>
 
-                    <p>
-                      Bis zur Löschung durch dich,
-                      zur Löschung des Kontos oder
-                      bis der Inhalt aus
-                      rechtlichen oder
-                      moderativen Gründen entfernt
-                      wird.
-                    </p>
-                  </div>
-
-                  <div>
-                    <strong>
-                      Kontaktanfragen
-                    </strong>
-
-                    <p>
-                      Bis die Anfrage abschließend
-                      bearbeitet wurde und keine
-                      gesetzlichen oder
-                      berechtigten Gründe für eine
-                      weitere Speicherung
-                      bestehen.
-                    </p>
-                  </div>
-
-                  <div>
-                    <strong>
-                      Serverprotokolle
-                    </strong>
-
-                    <p>
-                      Nur so lange, wie dies für
-                      Sicherheit, Fehleranalyse
-                      und Missbrauchsabwehr
-                      erforderlich ist.
-                    </p>
-                  </div>
+                <div className="datenschutz-card-icon">
+                  <FiGlobe />
                 </div>
-              </PrivacySection>
 
-              {/* Empfänger */}
+                <h3>Übermittlung in Drittländer</h3>
 
-              <PrivacySection
-                id="empfaenger"
-                number="11A"
-                eyebrow="Dienstleister"
-                title="Empfänger und Auftragsverarbeiter"
-                icon={FiCloud}
-              >
                 <p>
-                  Wir geben personenbezogene Daten
-                  nur weiter, wenn dies zur
-                  Vertragserfüllung erforderlich
-                  ist, eine gesetzliche Pflicht
-                  besteht, du eingewilligt hast
-                  oder wir einen Dienstleister im
-                  Rahmen einer
-                  Auftragsverarbeitung einsetzen.
+                  Einige der von uns eingesetzten Dienstleister
+                  beziehungsweise deren verbundene Unternehmen
+                  befinden sich außerhalb Deutschlands oder des
+                  Europäischen Wirtschaftsraums.
                 </p>
 
                 <p>
-                  Zu den möglichen Empfängern
-                  gehören insbesondere:
+                  Im Rahmen der Nutzung insbesondere von Diensten
+                  international tätiger Anbieter wie Google,
+                  Apple, Stripe oder RevenueCat kann daher eine
+                  Verarbeitung personenbezogener Daten in Staaten
+                  außerhalb des Europäischen Wirtschaftsraums,
+                  einschließlich der USA, nicht ausgeschlossen sein.
                 </p>
 
-                <ul className="privacy-list">
-                  <li>
-                    Hosting- und
-                    Infrastruktur-Anbieter
-                  </li>
-                  <li>
-                    Google Firebase und Google
-                    Cloud
-                  </li>
-                  <li>
-                    Stripe zur
-                    Zahlungsabwicklung
-                  </li>
-                  <li>
-                    Brevo für Newsletter und
-                    E-Mail-Versand
-                  </li>
-                  <li>
-                    Steuerberatung,
-                    Rechtsberatung oder Behörden,
-                    soweit dies erforderlich ist
-                  </li>
+                <p>
+                  Soweit personenbezogene Daten in ein Drittland
+                  übermittelt werden, erfolgt dies nur unter
+                  Beachtung der gesetzlichen Voraussetzungen der
+                  DSGVO, beispielsweise auf Grundlage eines
+                  Angemessenheitsbeschlusses, geeigneter Garantien
+                  wie Standardvertragsklauseln oder einer anderen
+                  zulässigen Rechtsgrundlage.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 28 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">28</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiShield />
+                </div>
+
+                <h3>Datensicherheit</h3>
+
+                <p>
+                  Wir treffen angemessene technische und
+                  organisatorische Maßnahmen, um personenbezogene
+                  Daten vor Verlust, Missbrauch, unberechtigtem
+                  Zugriff und unzulässiger Veränderung zu schützen.
+                </p>
+
+                <p>
+                  Dazu gehören insbesondere technische
+                  Zugriffsbeschränkungen, Authentifizierungsverfahren,
+                  verschlüsselte Datenübertragung und
+                  Zugriffsregelungen innerhalb der eingesetzten
+                  Systeme.
+                </p>
+
+                <p>
+                  Bei Cloud Firestore und Cloud Storage werden
+                  Zugriffsregeln verwendet, um den Zugriff auf
+                  Daten entsprechend der jeweiligen Funktion und
+                  Benutzerberechtigung zu begrenzen.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 29 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">29</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiEye />
+                </div>
+
+                <h3>Deine Datenschutzrechte</h3>
+
+                <p>
+                  Dir stehen nach Maßgabe der gesetzlichen
+                  Voraussetzungen insbesondere folgende Rechte zu:
+                </p>
+
+                <ul>
+                  <li>Recht auf Auskunft,</li>
+                  <li>Recht auf Berichtigung,</li>
+                  <li>Recht auf Löschung,</li>
+                  <li>Recht auf Einschränkung der Verarbeitung,</li>
+                  <li>Recht auf Datenübertragbarkeit,</li>
+                  <li>Recht auf Widerspruch gegen bestimmte Verarbeitungen.</li>
                 </ul>
 
                 <p>
-                  Mit Dienstleistern, die Daten in
-                  unserem Auftrag verarbeiten,
-                  schließen wir soweit erforderlich
-                  Verträge zur
-                  Auftragsverarbeitung gemäß Art.
-                  28 DSGVO.
-                </p>
-              </PrivacySection>
-
-              {/* Sicherheit */}
-
-              <PrivacySection
-                id="sicherheit"
-                number="11B"
-                eyebrow="Schutzmaßnahmen"
-                title="Datensicherheit"
-                icon={FiLock}
-                variant="security"
-              >
-                <p>
-                  Wir treffen angemessene
-                  technische und organisatorische
-                  Maßnahmen, um personenbezogene
-                  Daten vor Verlust, Manipulation,
-                  unberechtigtem Zugriff und
-                  sonstigem Missbrauch zu schützen.
+                  Zur Ausübung deiner Rechte kannst du dich jederzeit
+                  an uns wenden.
                 </p>
 
-                <div className="privacy-security-list">
-                  <div>
-                    <FiLock aria-hidden="true" />
+              </AnimatedSection>
 
-                    <span>
-                      verschlüsselte
-                      Datenübertragung
-                    </span>
-                  </div>
 
-                  <div>
-                    <FiShield aria-hidden="true" />
+              {/* 30 */}
 
-                    <span>
-                      Zugriffs- und
-                      Berechtigungskonzepte
-                    </span>
-                  </div>
+              <AnimatedSection className="datenschutz-card">
 
-                  <div>
-                    <FiDatabase aria-hidden="true" />
+                <div className="datenschutz-card-number">30</div>
 
-                    <span>
-                      serverseitige Prüfungen
-                      kritischer Vorgänge
-                    </span>
-                  </div>
-
-                  <div>
-                    <FiUserCheck
-                      aria-hidden="true"
-                    />
-
-                    <span>
-                      Authentifizierung und
-                      Benutzerzuordnung
-                    </span>
-                  </div>
+                <div className="datenschutz-card-icon">
+                  <FiRefreshCw />
                 </div>
 
-                <p>
-                  Eine vollständig risikofreie
-                  Datenübertragung über das
-                  Internet kann trotz
-                  sorgfältiger Schutzmaßnahmen
-                  nicht garantiert werden.
-                </p>
-              </PrivacySection>
+                <h3>Widerruf von Einwilligungen</h3>
 
-              {/* Rechte */}
-
-              <PrivacySection
-                id="rechte"
-                number="12"
-                eyebrow="Deine Kontrolle"
-                title="Deine Datenschutzrechte"
-                icon={FiShield}
-                variant="rights"
-              >
                 <p>
-                  Dir stehen nach Maßgabe der
-                  gesetzlichen Voraussetzungen
-                  insbesondere folgende Rechte zu:
+                  Soweit eine Verarbeitung auf deiner Einwilligung
+                  beruht, kannst du die Einwilligung jederzeit mit
+                  Wirkung für die Zukunft widerrufen.
                 </p>
 
-                <div className="privacy-rights-grid">
-                  {rights.map(
-                    (right, index) => (
-                      <article key={right.title}>
-                        <span>
-                          {String(
-                            index + 1
-                          ).padStart(2, "0")}
-                        </span>
+                <p>
+                  Durch den Widerruf wird die Rechtmäßigkeit der
+                  aufgrund der Einwilligung bis zum Widerruf
+                  erfolgten Verarbeitung nicht berührt.
+                </p>
 
-                        <strong>
-                          {right.title}
-                        </strong>
+                <p>
+                  Je nach Funktion kannst du Einstellungen direkt
+                  innerhalb unserer Angebote, über dein Gerät oder
+                  durch Kontaktaufnahme mit uns ändern.
+                </p>
 
-                        <p>{right.text}</p>
-                      </article>
-                    )
-                  )}
+              </AnimatedSection>
+
+
+              {/* 31 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">31</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiShield />
                 </div>
 
-                <div className="privacy-objection">
-                  <FiShield aria-hidden="true" />
+                <h3>Beschwerderecht</h3>
 
-                  <div>
-                    <strong>
-                      Besonderer Hinweis zum
-                      Widerspruchsrecht
-                    </strong>
+                <p>
+                  Du hast außerdem das Recht, dich bei einer
+                  zuständigen Datenschutzaufsichtsbehörde über die
+                  Verarbeitung deiner personenbezogenen Daten zu
+                  beschweren.
+                </p>
 
-                    <p>
-                      Soweit wir personenbezogene
-                      Daten auf Grundlage von Art.
-                      6 Abs. 1 lit. f DSGVO
-                      verarbeiten, kannst du aus
-                      Gründen, die sich aus deiner
-                      besonderen Situation ergeben,
-                      jederzeit Widerspruch gegen
-                      die Verarbeitung einlegen.
-                    </p>
-                  </div>
+                <p>
+                  Dieses Recht besteht unbeschadet anderer
+                  verwaltungsrechtlicher oder gerichtlicher
+                  Rechtsbehelfe.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 32 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">32</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiUsers />
                 </div>
 
-                <h3>
-                  Widerruf von Einwilligungen
-                </h3>
+                <h3>Minderjährige</h3>
 
                 <p>
-                  Eine erteilte Einwilligung kann
-                  jederzeit mit Wirkung für die
-                  Zukunft widerrufen werden. Die
-                  Rechtmäßigkeit der bis zum
-                  Widerruf erfolgten Verarbeitung
-                  bleibt davon unberührt.
-                </p>
-
-                <h3>
-                  Beschwerderecht
-                </h3>
-
-                <p>
-                  Du hast außerdem das Recht, dich
-                  bei einer
-                  Datenschutzaufsichtsbehörde zu
-                  beschweren. Du kannst dich
-                  insbesondere an die
-                  Aufsichtsbehörde deines
-                  Aufenthaltsortes, deines
-                  Arbeitsplatzes oder des Orts des
-                  vermuteten Verstoßes wenden.
-                </p>
-              </PrivacySection>
-
-              {/* Pflichtangaben */}
-
-              <PrivacySection
-                id="pflichtangaben"
-                number="13"
-                eyebrow="Bereitstellung von Daten"
-                title="Ist die Angabe deiner Daten verpflichtend?"
-                icon={FiFileText}
-              >
-                <p>
-                  Die Angabe personenbezogener
-                  Daten ist grundsätzlich
-                  freiwillig. Bestimmte Angaben
-                  sind jedoch erforderlich, damit
-                  wir einzelne Funktionen oder
-                  Verträge bereitstellen können.
+                  Momentry enthält keine speziell für Kinder
+                  entwickelten Funktionen.
                 </p>
 
                 <p>
-                  Ohne eine gültige
-                  E-Mail-Adresse können wir
-                  beispielsweise kein
-                  Kundenkonto anlegen, keine
-                  Bestellung abwickeln und keine
-                  digitalen Reiseguides
-                  bereitstellen. Ohne die für eine
-                  Zahlung erforderlichen Angaben
-                  kann Stripe keine Zahlung
-                  durchführen.
-                </p>
-              </PrivacySection>
-
-              {/* Automatisierte Entscheidungen */}
-
-              <PrivacySection
-                id="automatisierung"
-                number="14"
-                eyebrow="Automatisierte Verarbeitung"
-                title="Keine ausschließlich automatisierte Entscheidung"
-                icon={FiCheckCircle}
-              >
-                <p>
-                  Eine ausschließlich auf einer
-                  automatisierten Verarbeitung
-                  beruhende Entscheidung mit
-                  rechtlicher Wirkung oder ähnlich
-                  erheblicher Beeinträchtigung im
-                  Sinne von Art. 22 DSGVO findet
-                  durch uns derzeit nicht statt.
+                  Wir erheben für die allgemeine Kontonutzung
+                  derzeit nicht gezielt das Geburtsdatum.
                 </p>
 
                 <p>
-                  Stripe kann im Rahmen der
-                  Zahlungsabwicklung eigene
-                  automatisierte
-                  Sicherheits- und
-                  Betrugspräventionsprüfungen
-                  durchführen. Für Einzelheiten
-                  gelten die
-                  Datenschutzinformationen von
-                  Stripe.
+                  Für Minderjährige gelten die gesetzlichen
+                  Regelungen zur Geschäftsfähigkeit und – soweit
+                  eine datenschutzrechtliche Einwilligung erforderlich
+                  ist – die hierfür geltenden besonderen gesetzlichen
+                  Anforderungen.
                 </p>
-              </PrivacySection>
 
-              {/* Änderungen */}
-
-              <PrivacySection
-                id="aenderungen"
-                number="15"
-                eyebrow="Aktualität"
-                title="Änderungen dieser Datenschutzerklärung"
-                icon={FiFileText}
-              >
                 <p>
-                  Wir passen diese
-                  Datenschutzerklärung an, wenn
-                  sich unsere Angebote,
-                  eingesetzten Dienste oder
-                  rechtlichen Anforderungen
+                  Alters- beziehungsweise Inhaltsfreigaben in
+                  App-Stores sind von diesen gesetzlichen
+                  Voraussetzungen zu unterscheiden.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 33 */}
+
+              <AnimatedSection className="datenschutz-card" delay={0.03}>
+
+                <div className="datenschutz-card-number">33</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiMail />
+                </div>
+
+                <h3>Datenschutzkontakt</h3>
+
+                <p>
+                  Wenn du Fragen zur Verarbeitung deiner Daten
+                  hast oder deine Datenschutzrechte ausüben
+                  möchtest, kannst du uns direkt kontaktieren.
+                </p>
+
+                <a
+                  href="mailto:mamatochterontour@outlook.de?subject=Datenschutzanfrage"
+                  className="datenschutz-mail-button"
+                >
+                  Datenschutzanfrage senden
+                  <FiMail />
+                </a>
+
+              </AnimatedSection>
+
+
+              {/* 34 */}
+
+              <AnimatedSection className="datenschutz-card">
+
+                <div className="datenschutz-card-number">34</div>
+
+                <div className="datenschutz-card-icon">
+                  <FiRefreshCw />
+                </div>
+
+                <h3>Änderungen dieser Datenschutzerklärung</h3>
+
+                <p>
+                  Wir können diese Datenschutzerklärung anpassen,
+                  wenn sich unsere Angebote, eingesetzte Dienste,
+                  technische Abläufe oder rechtliche Anforderungen
                   ändern.
                 </p>
 
                 <p>
-                  Es gilt die jeweils auf dieser
-                  Seite veröffentlichte Fassung.
-                  Das Datum der letzten
-                  Aktualisierung findest du im
-                  oberen Bereich dieser
-                  Datenschutzerklärung.
+                  Es gilt die jeweils aktuelle auf unseren digitalen
+                  Angeboten bereitgestellte Fassung.
                 </p>
-              </PrivacySection>
+
+              </AnimatedSection>
+
             </div>
+
           </div>
+
         </section>
 
-        {/* =================================================
-            ABSCHLUSS
-        ================================================== */}
 
-        <section className="privacy-footer-section">
-          <div className="privacy-container">
-            <div className="privacy-footer-card">
+        {/* =====================================================
+            CONTACT
+        ===================================================== */}
+
+        <section className="datenschutz-contact">
+
+          <div className="datenschutz-contact-glow datenschutz-contact-glow-green" />
+          <div className="datenschutz-contact-glow datenschutz-contact-glow-purple" />
+
+          <div className="datenschutz-container">
+
+            <AnimatedSection className="datenschutz-contact-card">
+
               <div>
-                <span>
-                  Fragen zum Datenschutz?
-                </span>
+
+                <div className="datenschutz-eyebrow datenschutz-eyebrow-light">
+                  <span className="datenschutz-eyebrow-line" />
+                  <span>Deine Daten. Deine Rechte.</span>
+                </div>
 
                 <h2>
-                  Deine Daten.
-                  <strong>
-                    Deine Entscheidung.
-                  </strong>
+                  Fragen zum
+                  <span>Datenschutz?</span>
                 </h2>
 
                 <p>
-                  Bei Fragen zur Verarbeitung
-                  deiner Daten oder zur Ausübung
-                  deiner Datenschutzrechte kannst
-                  du dich direkt an uns wenden.
+                  Wenn du wissen möchtest, welche Daten wir über
+                  dich verarbeiten, eine Berichtigung oder Löschung
+                  möchtest oder eine andere Datenschutzfrage hast,
+                  kannst du dich direkt an uns wenden.
                 </p>
+
               </div>
 
               <a
-                href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(
-                  "Datenschutzanfrage"
-                )}`}
+                href="mailto:mamatochterontour@outlook.de?subject=Datenschutzanfrage"
+                className="datenschutz-contact-button"
               >
-                <FiMail aria-hidden="true" />
-
-                <span>
-                  <small>
-                    Datenschutzanfrage
-                  </small>
-
-                  <strong>
-                    {COMPANY.email}
-                  </strong>
-                </span>
-
-                <FiArrowRight
-                  aria-hidden="true"
-                />
+                E-Mail schreiben
+                <FiMail />
               </a>
-            </div>
+
+            </AnimatedSection>
+
           </div>
+
         </section>
+
       </main>
 
       <Footer />
     </>
   );
 }
-
-export default Datenschutz;

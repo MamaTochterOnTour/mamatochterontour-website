@@ -1598,7 +1598,7 @@
 ========================================================= */
 
 .cart-digital-consent {
-  margin: 22px 0 16px;
+  margin: 0 0 16px;
 }
 
 .cart-digital-consent__label {
@@ -2012,6 +2012,126 @@
 
   .cart-item__remove {
     font-size: 0.52rem;
+  }
+}
+
+/* =========================================================
+   AGB + WIDERRUFSBELEHRUNG
+========================================================= */
+
+.cart-legal-consent {
+  margin: 22px 0 12px;
+}
+
+.cart-legal-consent__label {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  align-items: flex-start;
+
+  padding: 15px;
+
+  border: 1px solid rgba(53, 91, 73, 0.16);
+  border-radius: 14px;
+
+  background: rgba(247, 243, 236, 0.72);
+
+  cursor: pointer;
+}
+
+.cart-legal-consent__label input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-legal-consent__checkmark {
+  width: 22px;
+  height: 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(53, 91, 73, 0.35);
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: transparent;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.cart-legal-consent__checkmark svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cart-legal-consent__label
+  input:checked
+  + .cart-legal-consent__checkmark {
+  border-color: #355b49;
+  background: #355b49;
+  color: #ffffff;
+}
+
+.cart-legal-consent__label
+  input:focus-visible
+  + .cart-legal-consent__checkmark {
+  outline: 2px solid #355b49;
+  outline-offset: 3px;
+}
+
+.cart-legal-consent__text {
+  color: #59675f;
+
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.cart-legal-consent__text a {
+  color: var(--cart-green-dark);
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.cart-legal-consent__text a:hover {
+  color: var(--cart-green);
+}
+
+.cart-legal-consent__error {
+  margin: 9px 0 0;
+
+  color: #b44343;
+
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 600px) {
+  .cart-legal-consent__label {
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+
+    padding: 13px;
+  }
+
+  .cart-legal-consent__checkmark {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-legal-consent__text {
+    font-size: 0.73rem;
   }
 }
 

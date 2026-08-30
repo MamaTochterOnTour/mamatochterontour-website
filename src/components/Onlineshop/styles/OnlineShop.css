@@ -37,15 +37,15 @@
 .shop-hero {
   position: relative;
 
-  min-height: calc(100vh - 100px);
+  min-height: auto;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   padding:
-    70px
-    24px
-    90px;
+  24px
+  24px
+  80px;
 
   overflow: hidden;
 }

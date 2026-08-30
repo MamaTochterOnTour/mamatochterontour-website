@@ -17,6 +17,7 @@ const {
 } = require("firebase-admin/storage");
 
 const crypto = require("crypto");
+const path = require("path");
 const PDFDocument = require("pdfkit");
 
 const Stripe = require("stripe");
@@ -52,7 +53,7 @@ initializeApp();
 
 const db = getFirestore();
 
-const INVOICE_TAX_RATE = 0.07;
+const INVOICE_TAX_RATE = 0.19;
 
 const BUSINESS_DETAILS = {
   name: "Jennifer Weinreich",
@@ -61,14 +62,14 @@ const BUSINESS_DETAILS = {
   postalCode: "35410",
   city: "Hungen",
   country: "Deutschland",
-
-  /*
-   * WICHTIG:
-   * Hier später deine echte Steuernummer
-   * ODER USt-IdNr. eintragen.
-   */
-  taxNumber: "DE441919331",
+  vatId: "DE441919331",
 };
+
+const INVOICE_LOGO_PATH = path.join(
+  __dirname,
+  "assets",
+  "mamatochterontour-logo.png"
+);
 
 function calculateInvoiceTax(
   grossInCents,
@@ -78,10 +79,10 @@ function calculateInvoiceTax(
     Number(grossInCents || 0);
 
   /*
-   * Bei Bruttopreisen:
-   *
-   * Netto = Brutto / 1,07
-   */
+ * Berechnung aus einem Bruttopreis:
+ *
+ * Netto = Brutto / (1 + Steuersatz)
+ */
   const net = Math.round(
     gross / (1 + taxRate)
   );
@@ -119,11 +120,13 @@ function createInvoicePdf({
             size: "A4",
 
             margins: {
-              top: 55,
-              right: 55,
-              bottom: 55,
-              left: 55,
+              top: 48,
+              right: 48,
+              bottom: 70,
+              left: 48,
             },
+
+            bufferPages: true,
 
             info: {
               Title:
@@ -160,119 +163,68 @@ function createInvoicePdf({
           reject
         );
 
-        const pageWidth =
+        /*
+         * =========================================
+         * FARBEN
+         * =========================================
+         */
+
+        const COLORS = {
+          darkGreen: "#153c31",
+          mediumGreen: "#3f6557",
+          softGreen: "#e8f0eb",
+          lightGreen: "#9bc7ae",
+
+          purple: "#71508f",
+          softPurple: "#f2edf5",
+
+          cream: "#f6f3ee",
+          creamDark: "#ebe5dc",
+
+          text: "#1d2923",
+          muted: "#69736e",
+          mutedLight: "#87918c",
+
+          border: "#dde4df",
+          white: "#ffffff",
+        };
+
+        /*
+         * =========================================
+         * ALLGEMEINE WERTE
+         * =========================================
+         */
+
+        const left =
+          doc.page.margins.left;
+
+        const right =
           doc.page.width -
-          doc.page.margins.left -
           doc.page.margins.right;
 
-        /*
-         * =========================================
-         * HEADER
-         * =========================================
-         */
+        const pageWidth =
+          right - left;
 
-        doc
-          .font("Helvetica-Bold")
-          .fontSize(22)
-          .fillColor("#153c31")
-          .text(
-            "MamaTochterOnTour"
-          );
-
-        doc
-          .moveDown(0.25)
-          .font("Helvetica")
-          .fontSize(9)
-          .fillColor("#65736c")
-          .text(
-            BUSINESS_DETAILS.name
-          )
-          .text(
-            BUSINESS_DETAILS.street
-          )
-          .text(
-            `${BUSINESS_DETAILS.postalCode} ${BUSINESS_DETAILS.city}`
-          )
-          .text(
-            BUSINESS_DETAILS.country
-          );
-
-        doc.moveDown(2);
+        const bottomContentY =
+          doc.page.height - 105;
 
         /*
          * =========================================
-         * KUNDENADRESSE
+         * DATUM
          * =========================================
          */
 
-        doc
-          .font("Helvetica")
-          .fontSize(10)
-          .fillColor("#1d2923");
+        const parsedInvoiceDate =
+          invoiceDate
+            ? new Date(invoiceDate)
+            : new Date();
 
-        if (customerName) {
-          doc.text(customerName);
-        }
-
-        if (
-          billingAddress?.line1
-        ) {
-          doc.text(
-            billingAddress.line1
-          );
-        }
-
-        if (
-          billingAddress?.line2
-        ) {
-          doc.text(
-            billingAddress.line2
-          );
-        }
-
-        const customerCityLine = [
-          billingAddress?.postalCode,
-          billingAddress?.city,
-        ]
-          .filter(Boolean)
-          .join(" ");
-
-        if (customerCityLine) {
-          doc.text(customerCityLine);
-        }
-
-        const countryName =
-          getCountryName(
-            billingAddress?.country
-          );
-
-        if (countryName) {
-          doc.text(countryName);
-        }
-
-        if (customerEmail) {
-          doc
-            .moveDown(0.3)
-            .fontSize(8)
-            .fillColor("#69736e")
-            .text(customerEmail);
-        }
-
-        /*
-         * =========================================
-         * RECHNUNG
-         * =========================================
-         */
-
-        doc.moveDown(2);
-
-        doc
-          .font("Helvetica-Bold")
-          .fontSize(28)
-          .fillColor("#153c31")
-          .text("Rechnung");
-
-        doc.moveDown(0.8);
+        const effectiveInvoiceDate =
+          Number.isNaN(
+            parsedInvoiceDate.getTime()
+          )
+            ? new Date()
+            : parsedInvoiceDate;
 
         const formattedInvoiceDate =
           new Intl.DateTimeFormat(
@@ -286,181 +238,831 @@ function createInvoicePdf({
               year: "numeric",
             }
           ).format(
-            invoiceDate
-              ? new Date(invoiceDate)
-              : new Date()
+            effectiveInvoiceDate
           );
-
-        doc
-          .font("Helvetica")
-          .fontSize(9)
-          .fillColor("#1d2923")
-          .text(
-            `Rechnungsnummer: ${invoiceNumber}`
-          )
-          .text(
-            `Rechnungsdatum: ${formattedInvoiceDate}`
-          )
-          .text(
-            `Bestellnummer: ${orderNumber}`
-          )
-          .text(
-            `Leistungsdatum: ${formattedInvoiceDate}`
-          )
-          .text(
-            `Zahlungsart: ${paymentMethod || "Online-Zahlung"}`
-          );
-
-        doc.moveDown(2);
 
         /*
          * =========================================
-         * PRODUKTTABELLE
+         * HILFSFUNKTION:
+         * KLEINE ÜBERSCHRIFT
          * =========================================
          */
 
-        const columnTitleX =
-          doc.page.margins.left;
+        function drawEyebrow(
+          text,
+          x,
+          y,
+          color =
+            COLORS.purple
+        ) {
+          doc
+            .font(
+              "Helvetica-Bold"
+            )
+            .fontSize(7.5)
+            .fillColor(color)
+            .text(
+              String(
+                text || ""
+              ).toUpperCase(),
+              x,
+              y,
+              {
+                characterSpacing: 1.2,
+              }
+            );
+        }
 
-        const columnQuantityX =
-          columnTitleX + 280;
+        /*
+         * =========================================
+         * HILFSFUNKTION:
+         * SEITENKOPF FÜR FOLGESEITEN
+         * =========================================
+         */
 
-        const columnTaxX =
-          columnTitleX + 335;
-
-        const columnPriceX =
-          columnTitleX + 395;
-
-        const tableTop = doc.y;
-
-        doc
-          .rect(
-            columnTitleX,
-            tableTop,
-            pageWidth,
-            25
-          )
-          .fill("#edf4ef");
-
-        doc
-          .fillColor("#153c31")
-          .font("Helvetica-Bold")
-          .fontSize(8);
-
-        doc.text(
-          "Artikel",
-          columnTitleX + 8,
-          tableTop + 8
-        );
-
-        doc.text(
-          "Menge",
-          columnQuantityX,
-          tableTop + 8
-        );
-
-        doc.text(
-          "USt.",
-          columnTaxX,
-          tableTop + 8
-        );
-
-        doc.text(
-          "Brutto",
-          columnPriceX,
-          tableTop + 8,
-          {
-            width: 85,
-            align: "right",
-          }
-        );
-
-        let currentY =
-          tableTop + 35;
-
-        products.forEach(
-          (product) => {
-            if (
-              currentY >
-              doc.page.height - 180
-            ) {
-              doc.addPage();
-
-              currentY =
-                doc.page.margins.top;
-            }
-
-            doc
-              .font("Helvetica-Bold")
-              .fontSize(9)
-              .fillColor("#1d2923")
-              .text(
-                product.title,
-                columnTitleX,
-                currentY,
-                {
-                  width: 260,
-                }
-              );
-
-            doc
-              .font("Helvetica")
-              .fontSize(8)
-              .fillColor("#69736e")
-              .text(
-                "Digitaler Reiseguide · PDF",
-                columnTitleX,
-                currentY + 14,
-                {
-                  width: 260,
-                }
-              );
-
-            doc
-              .fillColor("#1d2923")
-              .fontSize(9)
-              .text(
-                "1",
-                columnQuantityX,
-                currentY
-              );
-
-            doc.text(
-              "7 %",
-              columnTaxX,
-              currentY
+        function drawContinuationHeader() {
+          doc
+            .font(
+              "Helvetica-Bold"
+            )
+            .fontSize(15)
+            .fillColor(
+              COLORS.darkGreen
+            )
+            .text(
+              "MamaTochterOnTour",
+              left,
+              48
             );
 
-            doc.text(
-              formatMoney(
-                product.priceInCents,
-                currency
-              ),
-              columnPriceX,
-              currentY,
+          doc
+            .font(
+              "Helvetica"
+            )
+            .fontSize(8)
+            .fillColor(
+              COLORS.muted
+            )
+            .text(
+              `Rechnung ${invoiceNumber}`,
+              left,
+              69
+            );
+
+          doc
+            .moveTo(
+              left,
+              91
+            )
+            .lineTo(
+              right,
+              91
+            )
+            .strokeColor(
+              COLORS.border
+            )
+            .lineWidth(0.7)
+            .stroke();
+
+          return 112;
+        }
+
+        /*
+         * =========================================
+         * HILFSFUNKTION:
+         * NEUE SEITE
+         * =========================================
+         */
+
+        function addNewPage() {
+          doc.addPage();
+
+          return (
+            drawContinuationHeader()
+          );
+        }
+
+        /*
+         * =========================================
+         * HERO / HEADER
+         * =========================================
+         */
+
+        const heroHeight = 120;
+
+        doc
+          .roundedRect(
+            left,
+            48,
+            pageWidth,
+            heroHeight,
+            18
+          )
+          .fill(
+            COLORS.darkGreen
+          );
+
+        /*
+ * Logo
+ */
+
+doc.image(
+  INVOICE_LOGO_PATH,
+  left + 20,
+  55,
+  {
+    fit: [125, 75],
+    align: "left",
+    valign: "center",
+  }
+);
+
+/*
+ * Rechnungstitel
+ */
+
+doc
+  .font(
+    "Helvetica-Bold"
+  )
+  .fontSize(27)
+  .fillColor(
+    COLORS.white
+  )
+  .text(
+    "Rechnung",
+    left + 160,
+72,
+    {
+      width: 180,
+    }
+  );
+
+/*
+ * Rechnungsnummer
+ */
+
+doc
+  .font("Helvetica")
+  .fontSize(8.5)
+  .fillColor(
+    "#d8e2dc"
+  )
+  .text(
+    `Rechnungsnummer ${invoiceNumber}`,
+    left + 160,
+108,
+    {
+      width: 220,
+    }
+  );
+
+/*
+ * Rechnungsdatum rechts
+ */
+
+doc
+  .font(
+    "Helvetica-Bold"
+  )
+  .fontSize(8)
+  .fillColor(
+    COLORS.lightGreen
+  )
+  .text(
+    "RECHNUNGSDATUM",
+    right - 125,
+72,
+    {
+      width: 101,
+      align: "right",
+      characterSpacing: 0.8,
+    }
+  );
+
+doc
+  .font(
+    "Helvetica-Bold"
+  )
+  .fontSize(10)
+  .fillColor(
+    COLORS.white
+  )
+  .text(
+    formattedInvoiceDate,
+    right - 125,
+90,
+    {
+      width: 101,
+      align: "right",
+    }
+  );
+
+        /*
+         * =========================================
+         * ABSENDERZEILE
+         * =========================================
+         */
+
+        let currentY = 190;
+
+        drawEyebrow(
+          "Rechnungsempfänger",
+          left,
+          currentY
+        );
+
+        currentY += 19;
+
+        /*
+         * =========================================
+         * KUNDENADRESSE + RECHNUNGSDATEN
+         * =========================================
+         */
+
+        const gap = 18;
+
+        const cardWidth =
+          (
+            pageWidth -
+            gap
+          ) / 2;
+
+        const addressCardX =
+          left;
+
+        const dataCardX =
+          left +
+          cardWidth +
+          gap;
+
+        const cardsY =
+          currentY;
+
+        const cardsHeight =
+  112;
+
+        doc
+          .roundedRect(
+            addressCardX,
+            cardsY,
+            cardWidth,
+            cardsHeight,
+            14
+          )
+          .fill(
+            COLORS.cream
+          );
+
+        doc
+          .roundedRect(
+            dataCardX,
+            cardsY,
+            cardWidth,
+            cardsHeight,
+            14
+          )
+          .fill(
+            COLORS.softGreen
+          );
+
+        /*
+         * Kundenadresse
+         */
+
+        let addressY =
+          cardsY + 18;
+
+        doc
+          .font(
+            "Helvetica-Bold"
+          )
+          .fontSize(10.5)
+          .fillColor(
+            COLORS.darkGreen
+          );
+
+        if (customerName) {
+          doc.text(
+            customerName,
+            addressCardX + 18,
+            addressY,
+            {
+              width:
+                cardWidth - 36,
+            }
+          );
+
+          addressY += 19;
+        }
+
+        doc
+          .font(
+            "Helvetica"
+          )
+          .fontSize(9)
+          .fillColor(
+            COLORS.text
+          );
+
+        if (
+          billingAddress?.line1
+        ) {
+          doc.text(
+            billingAddress.line1,
+            addressCardX + 18,
+            addressY,
+            {
+              width:
+                cardWidth - 36,
+            }
+          );
+
+          addressY += 15;
+        }
+
+        if (
+          billingAddress?.line2
+        ) {
+          doc.text(
+            billingAddress.line2,
+            addressCardX + 18,
+            addressY,
+            {
+              width:
+                cardWidth - 36,
+            }
+          );
+
+          addressY += 15;
+        }
+
+        const customerCityLine = [
+          billingAddress
+            ?.postalCode,
+          billingAddress
+            ?.city,
+        ]
+          .filter(Boolean)
+          .join(" ");
+
+        if (customerCityLine) {
+          doc.text(
+            customerCityLine,
+            addressCardX + 18,
+            addressY,
+            {
+              width:
+                cardWidth - 36,
+            }
+          );
+
+          addressY += 15;
+        }
+
+        const countryName =
+          getCountryName(
+            billingAddress
+              ?.country
+          );
+
+        if (countryName) {
+          doc.text(
+            countryName,
+            addressCardX + 18,
+            addressY,
+            {
+              width:
+                cardWidth - 36,
+            }
+          );
+
+          addressY += 18;
+        }
+
+        if (customerEmail) {
+          doc
+            .font(
+              "Helvetica"
+            )
+            .fontSize(7.5)
+            .fillColor(
+              COLORS.muted
+            )
+            .text(
+              customerEmail,
+              addressCardX + 18,
+              addressY,
               {
-                width: 85,
+                width:
+                  cardWidth - 36,
+              }
+            );
+        }
+
+        /*
+         * Rechnungsdaten rechts
+         */
+
+        let dataY =
+          cardsY + 18;
+
+        function drawInvoiceInfo(
+          label,
+          value
+        ) {
+          doc
+            .font(
+              "Helvetica"
+            )
+            .fontSize(7)
+            .fillColor(
+              COLORS.muted
+            )
+            .text(
+              String(
+                label || ""
+              ).toUpperCase(),
+              dataCardX + 18,
+              dataY,
+              {
+                width: 92,
+                characterSpacing:
+                  0.6,
+              }
+            );
+
+          doc
+            .font(
+              "Helvetica-Bold"
+            )
+            .fontSize(8.5)
+            .fillColor(
+              COLORS.darkGreen
+            )
+            .text(
+              value || "—",
+              dataCardX + 112,
+              dataY,
+              {
+                width:
+                  cardWidth -
+                  130,
                 align: "right",
               }
             );
 
-            currentY += 42;
+          dataY += 18;
+        }
+
+        drawInvoiceInfo(
+          "Rechnungsnr.",
+          invoiceNumber
+        );
+
+        drawInvoiceInfo(
+          "Bestellnr.",
+          orderNumber
+        );
+
+        drawInvoiceInfo(
+          "Rechnungsdatum",
+          formattedInvoiceDate
+        );
+
+        drawInvoiceInfo(
+          "Leistungsdatum",
+          formattedInvoiceDate
+        );
+
+        drawInvoiceInfo(
+          "Zahlungsart",
+          paymentMethod ||
+            "Online-Zahlung"
+        );
+
+        /*
+         * =========================================
+         * PRODUKTE
+         * =========================================
+         */
+
+        currentY =
+  cardsY +
+  cardsHeight +
+  22;
+
+        drawEyebrow(
+          "Bestellübersicht",
+          left,
+          currentY
+        );
+
+        currentY += 17;
+
+        doc
+          .font(
+            "Helvetica-Bold"
+          )
+          .fontSize(20)
+          .fillColor(
+            COLORS.darkGreen
+          )
+          .text(
+            "Deine Reiseguides",
+            left,
+            currentY
+          );
+
+        currentY += 28;
+
+        /*
+         * Tabellen-Spalten
+         */
+
+        const titleWidth = 275;
+        const quantityWidth = 50;
+        const taxWidth = 58;
+        const priceWidth =
+          pageWidth -
+          titleWidth -
+          quantityWidth -
+          taxWidth;
+
+        const titleX =
+          left;
+
+        const quantityX =
+          titleX +
+          titleWidth;
+
+        const taxX =
+          quantityX +
+          quantityWidth;
+
+        const priceX =
+          taxX +
+          taxWidth;
+
+        function drawTableHeader(
+          y
+        ) {
+          doc
+            .roundedRect(
+              left,
+              y,
+              pageWidth,
+              28,
+              8
+            )
+            .fill(
+              COLORS.darkGreen
+            );
+
+          doc
+            .font(
+              "Helvetica-Bold"
+            )
+            .fontSize(7.5)
+            .fillColor(
+              COLORS.white
+            );
+
+          doc.text(
+            "ARTIKEL",
+            titleX + 12,
+            y + 10,
+            {
+              width:
+                titleWidth - 18,
+            }
+          );
+
+          doc.text(
+            "MENGE",
+            quantityX,
+            y + 10,
+            {
+              width:
+                quantityWidth,
+              align: "center",
+            }
+          );
+
+          doc.text(
+            "UST.",
+            taxX,
+            y + 10,
+            {
+              width:
+                taxWidth,
+              align: "center",
+            }
+          );
+
+          doc.text(
+            "BRUTTO",
+            priceX,
+            y + 10,
+            {
+              width:
+                priceWidth - 10,
+              align: "right",
+            }
+          );
+
+          return y + 34;
+        }
+
+        currentY =
+          drawTableHeader(
+            currentY
+          );
+
+        /*
+         * =========================================
+         * PRODUKTZEILEN
+         * =========================================
+         */
+
+        products.forEach(
+          (
+            product,
+            index
+          ) => {
+            const productTitle =
+              product.title ||
+              "Digitaler Reiseguide";
+
+            doc
+              .font(
+                "Helvetica-Bold"
+              )
+              .fontSize(9);
+
+            const titleHeight =
+              doc.heightOfString(
+                productTitle,
+                {
+                  width:
+                    titleWidth -
+                    24,
+                }
+              );
+
+            const rowHeight =
+  Math.max(
+    44,
+    titleHeight + 27
+  );
+
+            if (
+              currentY +
+                rowHeight >
+              bottomContentY
+            ) {
+              currentY =
+                addNewPage();
+
+              currentY =
+                drawTableHeader(
+                  currentY
+                );
+            }
+
+            if (
+              index % 2 === 1
+            ) {
+              doc
+                .rect(
+                  left,
+                  currentY - 5,
+                  pageWidth,
+                  rowHeight
+                )
+                .fill(
+                  "#faf9f7"
+                );
+            }
+
+            doc
+              .font(
+                "Helvetica-Bold"
+              )
+              .fontSize(9)
+              .fillColor(
+                COLORS.text
+              )
+              .text(
+                productTitle,
+                titleX + 10,
+                currentY + 3,
+                {
+                  width:
+                    titleWidth -
+                    20,
+                }
+              );
+
+            doc
+              .font(
+                "Helvetica"
+              )
+              .fontSize(7.5)
+              .fillColor(
+                COLORS.muted
+              )
+              .text(
+                "Digitaler Reiseguide · PDF",
+                titleX + 10,
+                currentY +
+                  8 +
+                  titleHeight,
+                {
+                  width:
+                    titleWidth -
+                    20,
+                }
+              );
+
+            doc
+              .font(
+                "Helvetica"
+              )
+              .fontSize(8.5)
+              .fillColor(
+                COLORS.text
+              )
+              .text(
+                "1",
+                quantityX,
+                currentY + 5,
+                {
+                  width:
+                    quantityWidth,
+                  align: "center",
+                }
+              );
+
+            doc.text(
+              `${Math.round(
+                INVOICE_TAX_RATE *
+                  100
+              )} %`,
+              taxX,
+              currentY + 5,
+              {
+                width:
+                  taxWidth,
+                align: "center",
+              }
+            );
+
+            doc
+              .font(
+                "Helvetica-Bold"
+              )
+              .fontSize(8.5)
+              .fillColor(
+                COLORS.darkGreen
+              )
+              .text(
+                formatMoney(
+                  product
+                    .priceInCents,
+                  currency
+                ),
+                priceX,
+                currentY + 5,
+                {
+                  width:
+                    priceWidth -
+                    10,
+                  align: "right",
+                }
+              );
 
             doc
               .moveTo(
-                columnTitleX,
-                currentY - 8
+                left,
+                currentY +
+                  rowHeight -
+                  6
               )
               .lineTo(
-                columnTitleX +
-                  pageWidth,
-                currentY - 8
+                right,
+                currentY +
+                  rowHeight -
+                  6
               )
               .strokeColor(
-                "#e3e8e5"
+                COLORS.border
               )
               .lineWidth(0.5)
               .stroke();
+
+            currentY +=
+              rowHeight;
           }
         );
 
@@ -470,18 +1072,67 @@ function createInvoicePdf({
          * =========================================
          */
 
-        currentY += 10;
+        const tax =
+          calculateInvoiceTax(
+            totalInCents
+          );
 
-        const summaryLabelX =
-          columnTitleX + 270;
+        const summaryHeight =
+  Number(
+    discountInCents
+  ) > 0
+    ? 120
+    : 104;
 
-        const summaryValueX =
-          columnTitleX + 390;
+        if (
+  currentY +
+    summaryHeight +
+    30 >
+  bottomContentY
+) {
+  currentY =
+    addNewPage();
+} else {
+  currentY += 14;
+}
 
-        function addSummaryRow(
+        const summaryWidth =
+          258;
+
+        const summaryX =
+          right -
+          summaryWidth;
+
+        drawEyebrow(
+          "Gesamt",
+          summaryX,
+          currentY
+        );
+
+        currentY += 16;
+
+        doc
+          .roundedRect(
+            summaryX,
+            currentY,
+            summaryWidth,
+            summaryHeight,
+            14
+          )
+          .fill(
+            COLORS.cream
+          );
+
+        let summaryY =
+  currentY + 14;
+
+        function drawSummaryRow(
           label,
           value,
-          bold = false
+          {
+            bold = false,
+            accent = false,
+          } = {}
         ) {
           doc
             .font(
@@ -490,39 +1141,54 @@ function createInvoicePdf({
                 : "Helvetica"
             )
             .fontSize(
-              bold ? 10 : 9
+              bold ? 10 : 8.5
+            )
+            .fillColor(
+              accent
+                ? COLORS.mediumGreen
+                : COLORS.muted
+            )
+            .text(
+              label,
+              summaryX + 18,
+              summaryY,
+              {
+                width: 130,
+              }
+            );
+
+          doc
+            .font(
+              bold
+                ? "Helvetica-Bold"
+                : "Helvetica"
+            )
+            .fontSize(
+              bold ? 11 : 8.5
             )
             .fillColor(
               bold
-                ? "#153c31"
-                : "#1d2923"
+                ? COLORS.darkGreen
+                : accent
+                ? COLORS.mediumGreen
+                : COLORS.text
+            )
+            .text(
+              value,
+              summaryX + 148,
+              summaryY,
+              {
+                width: 92,
+                align: "right",
+              }
             );
 
-          doc.text(
-            label,
-            summaryLabelX,
-            currentY,
-            {
-              width: 115,
-            }
-          );
-
-          doc.text(
-            value,
-            summaryValueX,
-            currentY,
-            {
-              width: 90,
-              align: "right",
-            }
-          );
-
-          currentY +=
-            bold ? 23 : 19;
+          summaryY +=
+  bold ? 21 : 17;
         }
 
-        addSummaryRow(
-          "Zwischensumme:",
+        drawSummaryRow(
+          "Zwischensumme",
           formatMoney(
             subtotalInCents,
             currency
@@ -534,49 +1200,71 @@ function createInvoicePdf({
             discountInCents
           ) > 0
         ) {
-          addSummaryRow(
-            `${
-              discountLabel ||
-              "Rabatt"
-            }:`,
-            `-${formatMoney(
+          drawSummaryRow(
+            discountLabel ||
+              "Rabatt",
+            `− ${formatMoney(
               discountInCents,
               currency
-            )}`
+            )}`,
+            {
+              accent: true,
+            }
           );
         }
 
-        const tax =
-          calculateInvoiceTax(
-            totalInCents
-          );
-
-        addSummaryRow(
-          "Nettobetrag:",
+        drawSummaryRow(
+          "Nettobetrag",
           formatMoney(
             tax.netInCents,
             currency
           )
         );
 
-        addSummaryRow(
-  "7 % Umsatzsteuer:",
-  formatMoney(
-    tax.taxInCents,
-    currency
-  )
-);
+        drawSummaryRow(
+          `${Math.round(
+            INVOICE_TAX_RATE *
+              100
+          )} % Umsatzsteuer`,
+          formatMoney(
+            tax.taxInCents,
+            currency
+          )
+        );
 
-        addSummaryRow(
-          "Gesamtbetrag:",
+        doc
+          .moveTo(
+            summaryX + 18,
+            summaryY + 1
+          )
+          .lineTo(
+            summaryX +
+              summaryWidth -
+              18,
+            summaryY + 1
+          )
+          .strokeColor(
+            COLORS.creamDark
+          )
+          .lineWidth(0.7)
+          .stroke();
+
+        summaryY += 8;
+
+        drawSummaryRow(
+          "Gesamtbetrag",
           formatMoney(
             totalInCents,
             currency
           ),
-          true
+          {
+            bold: true,
+          }
         );
 
-        doc.moveDown(3);
+        currentY +=
+  summaryHeight +
+  14;
 
         /*
          * =========================================
@@ -584,69 +1272,216 @@ function createInvoicePdf({
          * =========================================
          */
 
-        doc
-          .font("Helvetica-Bold")
-          .fontSize(10)
-          .fillColor("#153c31")
-          .text(
-            "Bereits bezahlt"
-          );
+        if (
+  currentY + 62 >
+  bottomContentY
+) {
+          currentY =
+            addNewPage();
+        }
 
         doc
-          .moveDown(0.4)
-          .font("Helvetica")
-          .fontSize(8.5)
-          .fillColor("#69736e")
-          .text(
-            "Der Rechnungsbetrag wurde bereits im Rahmen deiner Bestellung online bezahlt."
+          .roundedRect(
+  left,
+  currentY,
+  pageWidth,
+  58,
+  14
+)
+          .fill(
+            COLORS.softGreen
           );
 
         /*
-         * =========================================
-         * FOOTER
-         * =========================================
+         * Status-Kreis
          */
 
-        const footerY =
-          doc.page.height - 85;
+        doc
+          .circle(
+  left + 25,
+  currentY + 22,
+  9
+)
+          .fill(
+            COLORS.mediumGreen
+          );
 
         doc
-          .moveTo(
-            doc.page.margins.left,
-            footerY
+          .font(
+            "Helvetica-Bold"
           )
-          .lineTo(
-            doc.page.width -
-              doc.page.margins.right,
-            footerY
+          .fontSize(10)
+          .fillColor(
+            COLORS.white
           )
-          .strokeColor(
-            "#dce5df"
-          )
-          .lineWidth(0.5)
-          .stroke();
-
-        doc
-          .font("Helvetica")
-          .fontSize(7.5)
-          .fillColor("#69736e")
           .text(
-            `${BUSINESS_DETAILS.name} · ${BUSINESS_DETAILS.brand} · ${BUSINESS_DETAILS.street} · ${BUSINESS_DETAILS.postalCode} ${BUSINESS_DETAILS.city}`,
-            doc.page.margins.left,
-            footerY + 12,
+            "✓",
+            left + 19,
+currentY + 16,
             {
-              width: pageWidth,
+              width: 12,
               align: "center",
             }
           );
 
-        doc.text(
-          `Steuernummer: ${BUSINESS_DETAILS.taxNumber}`,
-          {
-            width: pageWidth,
-            align: "center",
-          }
-        );
+        doc
+          .font(
+            "Helvetica-Bold"
+          )
+          .fontSize(10.5)
+          .fillColor(
+            COLORS.darkGreen
+          )
+          .text(
+            "Zahlungsstatus: Bezahlt",
+            left + 44,
+            currentY + 12
+          );
+
+        doc
+          .font(
+            "Helvetica"
+          )
+          .fontSize(8.5)
+          .fillColor(
+            COLORS.muted
+          )
+          .text(
+            "Vielen Dank. Der Rechnungsbetrag wurde bereits vollständig beglichen.",
+            left + 44,
+            currentY + 28,
+            {
+              width:
+                pageWidth -
+                64,
+            }
+          );
+
+        doc
+          .font(
+            "Helvetica"
+          )
+          .fontSize(7.5)
+          .fillColor(
+            COLORS.mutedLight
+          )
+          .text(
+            `Im Gesamtbetrag sind ${Math.round(
+              INVOICE_TAX_RATE *
+                100
+            )} % gesetzliche Umsatzsteuer enthalten.`,
+            left + 44,
+            currentY + 42,
+            {
+              width:
+                pageWidth -
+                64,
+            }
+          );
+
+        /*
+         * =========================================
+         * FOOTER AUF ALLEN SEITEN
+         * =========================================
+         */
+
+        const pageRange =
+          doc.bufferedPageRange();
+
+        for (
+          let pageIndex = 0;
+          pageIndex <
+          pageRange.count;
+          pageIndex++
+        ) {
+          doc.switchToPage(
+            pageIndex
+          );
+
+          const footerY =
+  doc.page.height -
+  doc.page.margins.bottom -
+  52;
+
+          doc
+            .moveTo(
+              left,
+              footerY
+            )
+            .lineTo(
+              right,
+              footerY
+            )
+            .strokeColor(
+              COLORS.border
+            )
+            .lineWidth(0.6)
+            .stroke();
+
+          doc
+            .font(
+              "Helvetica"
+            )
+            .fontSize(6.8)
+            .fillColor(
+              COLORS.muted
+            )
+            .text(
+              `${BUSINESS_DETAILS.name} · ${BUSINESS_DETAILS.brand} · ${BUSINESS_DETAILS.street} · ${BUSINESS_DETAILS.postalCode} ${BUSINESS_DETAILS.city} · ${BUSINESS_DETAILS.country}`,
+              left,
+              footerY + 11,
+              {
+                width:
+                  pageWidth,
+                align:
+                  "center",
+              }
+            );
+
+          doc
+            .font(
+              "Helvetica"
+            )
+            .fontSize(6.8)
+            .fillColor(
+              COLORS.muted
+            )
+            .text(
+              `USt-IdNr.: ${BUSINESS_DETAILS.vatId} · mamatochterontour@outlook.de`,
+              left,
+              footerY + 23,
+              {
+                width:
+                  pageWidth,
+                align:
+                  "center",
+              }
+            );
+
+          doc
+            .font(
+              "Helvetica"
+            )
+            .fontSize(6.5)
+            .fillColor(
+              COLORS.mutedLight
+            )
+            .text(
+              `Seite ${
+                pageIndex + 1
+              } von ${
+                pageRange.count
+              }`,
+              left,
+              footerY + 38,
+              {
+                width:
+                  pageWidth,
+                align:
+                  "center",
+              }
+            );
+        }
 
         doc.end();
       } catch (error) {
@@ -985,39 +1820,71 @@ exports.subscribeToNewsletter = onCall(
         };
       }
 
-      /*
-       * Kontakt erstellen oder vorhandenen
-       * Kontakt der temporären Liste 9 hinzufügen.
-       */
+      let brevoResponse;
 
-      const brevoResponse =
-        await fetch(
-          "https://api.brevo.com/v3/contacts",
-          {
-            method: "POST",
+if (existingContact) {
+  /*
+   * Kontakt existiert bereits bei Brevo,
+   * ist aber noch nicht in Liste 9.
+   *
+   * Deshalb explizit zur Liste 9 hinzufügen.
+   * Dadurch wird auch der Brevo-Trigger
+   * "Kontakt zu Liste hinzugefügt" sauber ausgelöst.
+   */
+  brevoResponse =
+    await fetch(
+      `https://api.brevo.com/v3/contacts/lists/${NEWSLETTER_TEMP_LIST_ID}/contacts/add`,
+      {
+        method: "POST",
 
-            headers: {
-              accept:
-                "application/json",
+        headers: {
+          accept:
+            "application/json",
 
-              "content-type":
-                "application/json",
+          "content-type":
+            "application/json",
 
-              "api-key":
-                BREVO_API_KEY.value(),
-            },
+          "api-key":
+            BREVO_API_KEY.value(),
+        },
 
-            body: JSON.stringify({
-              email,
+        body: JSON.stringify({
+          emails: [email],
+        }),
+      }
+    );
+} else {
+  /*
+   * Komplett neuer Kontakt:
+   * direkt erstellen und Liste 9 zuweisen.
+   */
+  brevoResponse =
+    await fetch(
+      "https://api.brevo.com/v3/contacts",
+      {
+        method: "POST",
 
-              listIds: [
-                NEWSLETTER_TEMP_LIST_ID,
-              ],
+        headers: {
+          accept:
+            "application/json",
 
-              updateEnabled: true,
-            }),
-          }
-        );
+          "content-type":
+            "application/json",
+
+          "api-key":
+            BREVO_API_KEY.value(),
+        },
+
+        body: JSON.stringify({
+          email,
+
+          listIds: [
+            NEWSLETTER_TEMP_LIST_ID,
+          ],
+        }),
+      }
+    );
+}
 
       if (
         brevoResponse.ok
@@ -1614,13 +2481,28 @@ exports.createCheckoutSession = onCall(
   const rawProductIds =
     request.data?.productIds;
 
-  const digitalContentConsent =
+  const legalTermsAccepted =
+  request.data?.legalTermsAccepted === true;
+
+const legalTermsAcceptedAt =
+  String(
+    request.data?.legalTermsAcceptedAt || ""
+  ).trim();
+
+const digitalContentConsent =
   request.data?.digitalContentConsent === true;
 
 const digitalContentConsentAt =
   String(
     request.data?.digitalContentConsentAt || ""
   ).trim();
+
+if (!legalTermsAccepted) {
+  throw new HttpsError(
+    "failed-precondition",
+    "Bitte akzeptiere die AGB und bestätige, dass du die Widerrufsbelehrung zur Kenntnis genommen hast."
+  );
+}
 
 if (!digitalContentConsent) {
   throw new HttpsError(
@@ -2215,11 +3097,11 @@ try {
     stripeDiscounts,
 
   success_url:
-    "http://localhost:5173/shop/checkout-erfolgreich" +
-    "?session_id={CHECKOUT_SESSION_ID}",
+  "https://www.mamatochterontour.de/shop/checkout-erfolgreich" +
+  "?session_id={CHECKOUT_SESSION_ID}",
 
-  cancel_url:
-    "http://localhost:5173/shop/warenkorb",
+cancel_url:
+  "https://www.mamatochterontour.de/shop/warenkorb",
 
   metadata: {
     productIds:
@@ -2272,12 +3154,19 @@ try {
     ? stripeCustomerId
     : "",
 
-    digitalContentConsent:
-      "true",
+    legalTermsAccepted:
+  "true",
 
-    digitalContentConsentAt:
-      digitalContentConsentAt ||
-      new Date().toISOString(),
+legalTermsAcceptedAt:
+  legalTermsAcceptedAt ||
+  new Date().toISOString(),
+
+digitalContentConsent:
+  "true",
+
+digitalContentConsentAt:
+  digitalContentConsentAt ||
+  new Date().toISOString(),
   },
 };
 
@@ -2952,6 +3841,15 @@ exports.stripeWebhook = onRequest(
 const billingAddress =
   session.customer_details?.address || {};
 
+const legalTermsAccepted =
+  session.metadata?.legalTermsAccepted ===
+  "true";
+
+const legalTermsAcceptedAt = String(
+  session.metadata?.legalTermsAcceptedAt ||
+    ""
+).trim();
+
 const digitalContentConsent =
   session.metadata?.digitalContentConsent ===
   "true";
@@ -3233,7 +4131,7 @@ invoiceNumber =
 invoiceDate,
 
 invoiceTaxRate:
-  7,
+  INVOICE_TAX_RATE * 100,
 
   invoiceStoragePath:
   "",
@@ -3288,6 +4186,13 @@ customerName,
                 billingAddress.country ||
                 "",
             },
+
+            legalTermsAccepted,
+
+legalTermsAcceptedAt,
+
+legalTermsAcceptedText:
+  "Ich akzeptiere die AGB und habe die Widerrufsbelehrung zur Kenntnis genommen.",
 
             digitalContentConsent,
 
@@ -3487,6 +4392,13 @@ stripeCouponId:
                 billingAddress.country ||
                 "",
             },
+
+            legalTermsAccepted,
+
+legalTermsAcceptedAt,
+
+legalTermsAcceptedText:
+  "Ich akzeptiere die AGB und habe die Widerrufsbelehrung zur Kenntnis genommen.",
 
             digitalContentConsent,
 
@@ -3791,13 +4703,24 @@ const templateParams = {
       billingAddress.country
     ),
 
-  digitalContentConsentAt:
-    formatConsentDate(
-      digitalContentConsentAt
-    ),
+  legalTermsAcceptedText:
+  "Ich akzeptiere die AGB und habe die Widerrufsbelehrung zur Kenntnis genommen.",
 
-  invoiceNotice:
-  `Deine Rechnung ${invoiceNumber} findest du als PDF unten im Anhang dieser E-Mail.`,
+legalTermsAcceptedAt:
+  formatConsentDate(
+    legalTermsAcceptedAt
+  ),
+
+digitalContentConsentText:
+  "Ich stimme ausdrücklich zu, dass MamaTochterOnTour vor Ablauf der Widerrufsfrist mit der Ausführung des Vertrags beginnt. Mir ist bekannt, dass ich mit Beginn der Bereitstellung der digitalen Reiseguides mein Widerrufsrecht verliere.",
+
+digitalContentConsentAt:
+  formatConsentDate(
+    digitalContentConsentAt
+  ),
+
+invoiceNotice:
+  `Deine Rechnung ${invoiceNumber} findest du als PDF im Anhang dieser E-Mail.`,
 
   /*
    * Hier unbedingt deine echten

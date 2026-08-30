@@ -1,697 +1,549 @@
 import {
-  FiArrowRight,
-  FiCamera,
-  FiCode,
-  FiExternalLink,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
+
+import {
+  FiBriefcase,
+  FiCheckCircle,
   FiFileText,
+  FiHash,
+  FiHome,
   FiMail,
   FiMapPin,
-  FiPhone,
-  FiShield,
-  FiSmartphone,
+  FiPenTool,
   FiUser,
 } from "react-icons/fi";
+
+import {
+  Link,
+} from "react-router-dom";
 
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 
 import "./Impressum.css";
 
-const COMPANY = {
-  brandName: "MamaTochterOnTour",
-  ownerName: "Jennifer Weinreich",
-  street: "Stettiner Straße 41",
-  postalCode: "35410",
-  city: "Hungen",
-  country: "Deutschland",
-  phoneDisplay: "+49 178 6947734",
-  phoneLink: "+491786947734",
-  email: "mamatochterontour@outlook.de",
-  vatId: "DE441919331",
-};
 
-const navigationItems = [
-  {
-    href: "#anbieter",
-    label: "Anbieter",
-    number: "01",
-  },
-  {
-    href: "#kontakt",
-    label: "Kontakt",
-    number: "02",
-  },
-  {
-    href: "#steuer",
-    label: "Steuerangaben",
-    number: "03",
-  },
-  {
-    href: "#redaktion",
-    label: "Redaktion",
-    number: "04",
-  },
-  {
-    href: "#streitbeilegung",
-    label: "Streitbeilegung",
-    number: "05",
-  },
-  {
-    href: "#entwicklung",
-    label: "Entwicklung",
-    number: "06",
-  },
-  {
-    href: "#urheberrecht",
-    label: "Urheberrecht",
-    number: "07",
-  },
-];
+/* =========================================================
+   ANIMATION
+========================================================= */
 
-function LegalSection({
-  id,
-  number,
-  eyebrow,
-  title,
-  icon: Icon,
+function AnimatedSection({
   children,
-  variant = "",
+  className = "",
+  delay = 0,
 }) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <div className={className}>
+        {children}
+      </div>
+    );
+  }
+
   return (
-    <section
-      id={id}
-      className={`imprint-section ${
-        variant
-          ? `imprint-section--${variant}`
-          : ""
-      }`}
+    <motion.div
+      className={className}
+      initial={{
+        opacity: 0,
+        y: 34,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.12,
+      }}
+      transition={{
+        duration: 0.72,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
-      <div className="imprint-section__head">
-        <span className="imprint-section__number">
-          {number}
-        </span>
-
-        <span className="imprint-section__icon">
-          <Icon aria-hidden="true" />
-        </span>
-      </div>
-
-      <div className="imprint-section__body">
-        <p className="imprint-section__eyebrow">
-          {eyebrow}
-        </p>
-
-        <h2>{title}</h2>
-
-        <div className="imprint-section__content">
-          {children}
-        </div>
-      </div>
-    </section>
+      {children}
+    </motion.div>
   );
 }
 
-function Impressum() {
+
+/* =========================================================
+   IMPRESSUM
+========================================================= */
+
+export default function Impressum() {
   return (
     <>
       <Navbar />
 
-      <main className="imprint-page">
-        {/* =================================================
+      <main className="impressum-page">
+
+        {/* =====================================================
             HERO
-        ================================================== */}
+        ===================================================== */}
 
-        <section className="imprint-hero">
-          <div
-            className="imprint-hero__glow imprint-hero__glow--green"
-            aria-hidden="true"
-          />
+        <section className="impressum-hero">
 
-          <div
-            className="imprint-hero__glow imprint-hero__glow--purple"
-            aria-hidden="true"
-          />
+          <div className="impressum-hero-glow impressum-hero-glow-green" />
+          <div className="impressum-hero-glow impressum-hero-glow-purple" />
 
-          <div
-            className="imprint-hero__grid"
-            aria-hidden="true"
-          />
+          <div className="impressum-container impressum-hero-inner">
 
-          <div className="imprint-container imprint-hero__layout">
-            <div className="imprint-hero__content">
-              <span className="imprint-hero__eyebrow">
-                Rechtliche Informationen
-              </span>
+            <AnimatedSection className="impressum-hero-content">
 
-              <h1>
-                Impressum.
-                <span>
-                  Klar, persönlich und
-                  transparent.
-                </span>
+              <div className="impressum-eyebrow impressum-eyebrow-light">
+                <span className="impressum-eyebrow-line" />
+                <span>Rechtliches</span>
+              </div>
+
+              <h1 className="impressum-hero-title">
+                Unser
+                <span>Impressum.</span>
               </h1>
 
-              <p className="imprint-hero__lead">
-                Hier findest du die gesetzlich
-                vorgeschriebenen Anbieterangaben
-                für die Website, den Online-Shop,
-                die Web-App und die mobile App von
-                MamaTochterOnTour.
+              <p className="impressum-hero-text">
+                Hier findest du die gesetzlich vorgeschriebenen
+                Angaben zu MamaTochterOnTour sowie die
+                Möglichkeiten, uns direkt zu kontaktieren.
               </p>
 
-              <div className="imprint-hero__meta">
-                <span>
-                  <FiFileText
-                    aria-hidden="true"
-                  />
+              <div className="impressum-hero-pills">
 
-                  Angaben gemäß § 5 DDG
-                </span>
+                <div className="impressum-hero-pill">
+                  <FiUser />
+                  <span>Jennifer Weinreich</span>
+                </div>
 
-                <span>
-                  Stand: August 2026
-                </span>
-              </div>
-            </div>
+                <div className="impressum-hero-pill">
+                  <FiBriefcase />
+                  <span>Einzelunternehmen</span>
+                </div>
 
-            <aside className="imprint-hero__identity">
-              <div className="imprint-hero__identity-top">
-                <span>Betreiberin</span>
+                <div className="impressum-hero-pill">
+                  <FiMail />
+                  <span>Direkt erreichbar</span>
+                </div>
 
-                <FiUser aria-hidden="true" />
               </div>
 
-              <strong>
-                Jennifer
-                <br />
-                Weinreich
-              </strong>
+            </AnimatedSection>
 
-              <p>
-                Einzelunternehmerin
-                <br />
-                handelnd unter
-              </p>
-
-              <div className="imprint-hero__brand">
-                Mama
-                <span>Tochter</span>
-                OnTour
-              </div>
-
-              <div className="imprint-hero__identity-line">
-                <span>Website</span>
-                <span>Shop</span>
-                <span>App</span>
-                <span>Web-App</span>
-              </div>
-            </aside>
           </div>
+
         </section>
 
-        {/* =================================================
-            INHALT
-        ================================================== */}
 
-        <section className="imprint-content">
-          <div className="imprint-container imprint-content__layout">
-            <aside className="imprint-navigation">
-              <div className="imprint-navigation__inner">
-                <p>
-                  Auf dieser Seite
-                </p>
+        {/* =====================================================
+            INTRO
+        ===================================================== */}
 
-                <nav aria-label="Inhalt des Impressums">
-                  {navigationItems.map(
-                    (item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                      >
-                        <span>
-                          {item.number}
-                        </span>
+        <section className="impressum-intro">
 
-                        <strong>
-                          {item.label}
-                        </strong>
+          <div className="impressum-container">
 
-                        <FiArrowRight
-                          aria-hidden="true"
-                        />
-                      </a>
-                    )
-                  )}
-                </nav>
+            <AnimatedSection className="impressum-intro-grid">
 
-                <div className="imprint-navigation__contact">
-                  <span>
-                    Direkter Kontakt
-                  </span>
+              <div className="impressum-intro-left">
 
-                  <a
-                    href={`mailto:${COMPANY.email}`}
-                  >
-                    <FiMail
-                      aria-hidden="true"
-                    />
-
-                    {COMPANY.email}
-                  </a>
+                <div className="impressum-eyebrow impressum-eyebrow-dark">
+                  <span className="impressum-eyebrow-line" />
+                  <span>Anbieterkennzeichnung</span>
                 </div>
-              </div>
-            </aside>
-
-            <div className="imprint-sections">
-              {/* Anbieter */}
-
-              <LegalSection
-                id="anbieter"
-                number="01"
-                eyebrow="Diensteanbieterin"
-                title="Angaben gemäß § 5 DDG"
-                icon={FiUser}
-                variant="primary"
-              >
-                <div className="imprint-provider">
-                  <div>
-                    <span className="imprint-detail-label">
-                      Geschäftsbezeichnung
-                    </span>
-
-                    <strong>
-                      {COMPANY.brandName}
-                    </strong>
-                  </div>
-
-                  <div>
-                    <span className="imprint-detail-label">
-                      Inhaberin
-                    </span>
-
-                    <strong>
-                      {COMPANY.ownerName}
-                    </strong>
-
-                    <p>
-                      Einzelunternehmerin,
-                      handelnd unter{" "}
-                      {COMPANY.brandName}
-                    </p>
-                  </div>
-
-                  <div>
-                    <span className="imprint-detail-label">
-                      Geschäftsanschrift
-                    </span>
-
-                    <address>
-                      {COMPANY.street}
-                      <br />
-                      {COMPANY.postalCode}{" "}
-                      {COMPANY.city}
-                      <br />
-                      {COMPANY.country}
-                    </address>
-                  </div>
-                </div>
-              </LegalSection>
-
-              {/* Kontakt */}
-
-              <LegalSection
-                id="kontakt"
-                number="02"
-                eyebrow="Erreichbarkeit"
-                title="Kontakt"
-                icon={FiMessageIcon}
-              >
-                <div className="imprint-contact-grid">
-                  <a
-                    href={`mailto:${COMPANY.email}`}
-                    className="imprint-contact-card"
-                  >
-                    <span className="imprint-contact-card__icon">
-                      <FiMail
-                        aria-hidden="true"
-                      />
-                    </span>
-
-                    <span>
-                      <small>
-                        E-Mail
-                      </small>
-
-                      <strong>
-                        {COMPANY.email}
-                      </strong>
-                    </span>
-
-                    <FiExternalLink
-                      className="imprint-contact-card__arrow"
-                      aria-hidden="true"
-                    />
-                  </a>
-
-                  <a
-                    href={`tel:${COMPANY.phoneLink}`}
-                    className="imprint-contact-card"
-                  >
-                    <span className="imprint-contact-card__icon">
-                      <FiPhone
-                        aria-hidden="true"
-                      />
-                    </span>
-
-                    <span>
-                      <small>
-                        Telefon
-                      </small>
-
-                      <strong>
-                        {COMPANY.phoneDisplay}
-                      </strong>
-                    </span>
-
-                    <FiExternalLink
-                      className="imprint-contact-card__arrow"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </div>
-
-                <div className="imprint-address-line">
-                  <FiMapPin aria-hidden="true" />
-
-                  <span>
-                    {COMPANY.street},{" "}
-                    {COMPANY.postalCode}{" "}
-                    {COMPANY.city},{" "}
-                    {COMPANY.country}
-                  </span>
-                </div>
-              </LegalSection>
-
-              {/* Steuer */}
-
-              <LegalSection
-                id="steuer"
-                number="03"
-                eyebrow="Steuerliche Angaben"
-                title="Umsatzsteuer"
-                icon={FiFileText}
-              >
-                <p>
-                  Umsatzsteuer-Identifikationsnummer
-                  gemäß § 27a Umsatzsteuergesetz:
-                </p>
-
-                <div className="imprint-vat">
-                  <span>USt-IdNr.</span>
-
-                  <strong>
-                    {COMPANY.vatId}
-                  </strong>
-                </div>
-              </LegalSection>
-
-              {/* Redaktion */}
-
-              <LegalSection
-                id="redaktion"
-                number="04"
-                eyebrow="Inhaltliche Verantwortung"
-                title="Redaktionell verantwortlich"
-                icon={FiFileText}
-              >
-                <p>
-                  Verantwortlich für
-                  journalistisch-redaktionelle
-                  Inhalte im Sinne des § 18
-                  Absatz 2 Medienstaatsvertrag:
-                </p>
-
-                <div className="imprint-person-card">
-                  <span className="imprint-person-card__avatar">
-                    JW
-                  </span>
-
-                  <div>
-                    <strong>
-                      {COMPANY.ownerName}
-                    </strong>
-
-                    <address>
-                      {COMPANY.street}
-                      <br />
-                      {COMPANY.postalCode}{" "}
-                      {COMPANY.city}
-                      <br />
-                      {COMPANY.country}
-                    </address>
-                  </div>
-                </div>
-              </LegalSection>
-
-              {/* Streitbeilegung */}
-
-              <LegalSection
-                id="streitbeilegung"
-                number="05"
-                eyebrow="Verbraucherinformation"
-                title="Streitbeilegung"
-                icon={FiShield}
-                variant="purple"
-              >
-                <p>
-                  Wir sind weder verpflichtet
-                  noch bereit, an
-                  Streitbeilegungsverfahren vor
-                  einer Verbraucherschlichtungsstelle
-                  teilzunehmen.
-                </p>
-
-                <div className="imprint-legal-highlight">
-                  <FiShield
-                    aria-hidden="true"
-                  />
-
-                  <p>
-                    Sollte es einmal ein Problem
-                    mit einer Bestellung oder
-                    einem unserer digitalen
-                    Angebote geben, kannst du
-                    dich selbstverständlich
-                    direkt an uns wenden.
-                  </p>
-                </div>
-
-                <a
-                  href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(
-                    "Frage zu einer Bestellung"
-                  )}`}
-                  className="imprint-inline-link"
-                >
-                  Direkt Kontakt aufnehmen
-
-                  <FiArrowRight
-                    aria-hidden="true"
-                  />
-                </a>
-              </LegalSection>
-
-              {/* Eigene Entwicklung */}
-
-              <LegalSection
-                id="entwicklung"
-                number="06"
-                eyebrow="Made by us"
-                title="Eigene Konzeption und Entwicklung"
-                icon={FiCode}
-                variant="dark"
-              >
-                <p>
-                  Konzeption, Gestaltung,
-                  individuelle Entwicklung und
-                  redaktionelle Betreuung dieser
-                  Website, des Online-Shops, der
-                  Web-App sowie der mobilen App
-                  „Momentry by
-                  MamaTochterOnTour“ erfolgen
-                  eigenständig durch
-                  MamaTochterOnTour.
-                </p>
-
-                <p>
-                  Unsere digitalen Angebote
-                  wurden nicht durch eine externe
-                  Webdesign-, Software- oder
-                  Entwicklungsagentur für uns
-                  erstellt.
-                </p>
-
-                <div className="imprint-development-grid">
-                  <div>
-                    <FiCode
-                      aria-hidden="true"
-                    />
-
-                    <span>
-                      Website und Online-Shop
-                    </span>
-                  </div>
-
-                  <div>
-                    <FiSmartphone
-                      aria-hidden="true"
-                    />
-
-                    <span>
-                      Mobile App und Web-App
-                    </span>
-                  </div>
-
-                  <div>
-                    <FiCamera
-                      aria-hidden="true"
-                    />
-
-                    <span>
-                      Inhalte und Fotografien
-                    </span>
-                  </div>
-                </div>
-
-                <p className="imprint-note imprint-note--dark">
-  Für einzelne technische Funktionen,
-  Zahlungsprozesse, den Versand von
-  Nachrichten und den Betrieb unserer
-  digitalen Angebote nutzen wir
-  technische Dienste externer Anbieter.
-  Diese stellen einzelne Infrastrukturen
-  und Dienstleistungen bereit, haben
-  unsere Website, unseren Online-Shop,
-  unsere Web-App und unsere mobile App
-  jedoch nicht für uns konzipiert oder
-  entwickelt. Weitere Informationen zu
-  den eingesetzten Diensten findest du
-  in unserer Datenschutzerklärung.
-</p>
-              </LegalSection>
-
-              {/* Urheberrecht */}
-
-              <LegalSection
-                id="urheberrecht"
-                number="07"
-                eyebrow="Texte, Bilder und Guides"
-                title="Urheberrecht und Bildnachweise"
-                icon={FiCamera}
-              >
-                <p>
-  Die auf dieser Website, im Online-Shop,
-  in der Web-App und in der mobilen App
-  veröffentlichten eigenen Texte,
-  Reiseguides, Fotografien und sonstigen
-  redaktionellen Inhalte wurden – soweit
-  nicht ausdrücklich anders gekennzeichnet –
-  von MamaTochterOnTour selbst erstellt.
-</p>
-
-<p>
-  Die verwendeten Reise-, Erlebnis- und
-  Produktfotografien stammen – soweit nicht
-  anders angegeben – aus unserem eigenen
-  Bildarchiv und wurden von uns selbst
-  aufgenommen.
-</p>
-
-<p>
-  Davon ausgenommen sind insbesondere
-  technisch eingebundene Symbole,
-  Markenkennzeichen, Benutzerinhalte und
-  sonstige Inhalte Dritter. Für diese gelten
-  die Rechte und Lizenzbedingungen der
-  jeweiligen Rechteinhaberinnen und
-  Rechteinhaber.
-</p>
-
-<p>
-  Die durch uns erstellten Inhalte und Werke
-  unterliegen dem deutschen Urheberrecht.
-  Eine Vervielfältigung, Bearbeitung,
-  Verbreitung oder sonstige Verwertung
-  außerhalb der gesetzlich zulässigen Grenzen
-  bedarf unserer vorherigen Zustimmung.
-</p>
-              </LegalSection>
-            </div>
-          </div>
-        </section>
-
-        {/* =================================================
-            ABSCHLUSS
-        ================================================== */}
-
-        <section className="imprint-footer-section">
-          <div className="imprint-container">
-            <div className="imprint-footer-card">
-              <div>
-                <span>
-                  Noch etwas unklar?
-                </span>
 
                 <h2>
-                  Sprich direkt
-                  <strong>
-                    mit uns.
-                  </strong>
+                  Transparent.
+                  <span>Direkt erreichbar.</span>
+                </h2>
+
+              </div>
+
+              <div className="impressum-intro-right">
+
+                <p>
+                  MamaTochterOnTour wird als Einzelunternehmen
+                  von Jennifer Weinreich betrieben.
+                </p>
+
+                <p>
+                  Auf dieser Seite findest du unsere
+                  Anbieterangaben, Kontaktmöglichkeiten und
+                  weitere rechtlich relevante Informationen.
+                </p>
+
+              </div>
+
+            </AnimatedSection>
+
+          </div>
+
+        </section>
+
+
+        {/* =====================================================
+            CONTENT
+        ===================================================== */}
+
+        <section className="impressum-content-section">
+
+          <div className="impressum-container">
+
+            <div className="impressum-card-grid">
+
+
+              {/* 01 */}
+
+              <AnimatedSection className="impressum-card impressum-card-wide">
+
+                <div className="impressum-card-number">
+                  01
+                </div>
+
+                <div className="impressum-card-icon">
+                  <FiHome />
+                </div>
+
+                <h3>
+                  Angaben gemäß § 5 DDG
+                </h3>
+
+                <div className="impressum-business-card">
+
+                  <div className="impressum-business-logo">
+                    <FiUser />
+                  </div>
+
+                  <div>
+
+                    <span className="impressum-business-label">
+                      Diensteanbieterin
+                    </span>
+
+                    <strong>
+                      Jennifer Weinreich
+                    </strong>
+
+                    <span>
+                      MamaTochterOnTour
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <div className="impressum-address">
+
+                  <div className="impressum-address-row">
+
+                    <FiMapPin />
+
+                    <div>
+                      <span>
+                        Stettiner Straße 41
+                      </span>
+
+                      <span>
+                        35410 Hungen
+                      </span>
+
+                      <span>
+                        Deutschland
+                      </span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <p>
+                  MamaTochterOnTour wird als Einzelunternehmen
+                  betrieben.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 02 */}
+
+              <AnimatedSection
+                className="impressum-card"
+                delay={0.03}
+              >
+
+                <div className="impressum-card-number">
+                  02
+                </div>
+
+                <div className="impressum-card-icon">
+                  <FiMail />
+                </div>
+
+                <h3>
+                  Kontakt
+                </h3>
+
+                <p>
+  Für Fragen zu unserer Website, unserem
+  Onlineshop, unseren Reiseguides, Momentry by
+  MamaTochterOnTour, deinem Benutzerkonto,
+  Premium-Abonnements oder deiner Bestellung
+  kannst du uns per E-Mail kontaktieren.
+</p>
+
+                <a
+                  href="mailto:mamatochterontour@outlook.de"
+                  className="impressum-contact-mail"
+                >
+                  <FiMail />
+
+                  <span>
+                    mamatochterontour@outlook.de
+                  </span>
+                </a>
+
+                <p className="impressum-small-text">
+                  E-Mail-Anfragen werden regelmäßig bearbeitet.
+                </p>
+
+              </AnimatedSection>
+
+
+              {/* 03 */}
+
+              <AnimatedSection
+                className="impressum-card"
+                delay={0.05}
+              >
+
+                <div className="impressum-card-number">
+                  03
+                </div>
+
+                <div className="impressum-card-icon">
+                  <FiHash />
+                </div>
+
+                <h3>
+                  Umsatzsteuer
+                </h3>
+
+                <p>
+                  Umsatzsteuer-Identifikationsnummer gemäß
+                  § 27a Umsatzsteuergesetz:
+                </p>
+
+                <div className="impressum-tax-number">
+                  DE441919331
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 04 */}
+
+              <AnimatedSection className="impressum-card impressum-card-wide impressum-card-accent">
+
+                <div className="impressum-card-number">
+                  04
+                </div>
+
+                <div className="impressum-card-icon">
+                  <FiPenTool />
+                </div>
+
+                <h3>
+                  Verantwortlich für redaktionelle Inhalte
+                </h3>
+
+                <p>
+                  Verantwortlich für journalistisch-redaktionelle
+                  Inhalte gemäß § 18 Abs. 2 Medienstaatsvertrag
+                  (MStV):
+                </p>
+
+                <div className="impressum-editorial-box">
+
+                  <div className="impressum-editorial-icon">
+                    <FiUser />
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      Jennifer Weinreich
+                    </strong>
+
+                    <span>
+                      Stettiner Straße 41
+                    </span>
+
+                    <span>
+                      35410 Hungen
+                    </span>
+
+                    <span>
+                      Deutschland
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 05 */}
+
+              <AnimatedSection className="impressum-card">
+
+                <div className="impressum-card-number">
+                  05
+                </div>
+
+                <div className="impressum-card-icon">
+                  <FiFileText />
+                </div>
+
+                <h3>
+                  Register & Aufsicht
+                </h3>
+
+                <p>
+                  Es besteht keine Eintragung in einem
+                  Handels-, Vereins-, Partnerschafts- oder
+                  Genossenschaftsregister.
+                </p>
+
+                <p>
+                  Die über MamaTochterOnTour ausgeübte Tätigkeit
+                  bedarf keiner besonderen behördlichen
+                  Zulassung.
+                </p>
+
+                <div className="impressum-status">
+
+                  <FiCheckCircle />
+
+                  <span>
+                    Keine Register- oder Aufsichtsangabe erforderlich
+                  </span>
+
+                </div>
+
+              </AnimatedSection>
+
+
+              {/* 06 */}
+
+              <AnimatedSection
+                className="impressum-card"
+                delay={0.03}
+              >
+
+                <div className="impressum-card-number">
+                  06
+                </div>
+
+                <div className="impressum-card-icon">
+                  <FiBriefcase />
+                </div>
+
+                <h3>
+                  Weitere rechtliche Informationen
+                </h3>
+
+                <p>
+  Weitere Informationen zu Bestellungen,
+  digitalen Reiseguides, der Nutzung von
+  Momentry by MamaTochterOnTour sowie deinen
+  Rechten als Nutzerin, Nutzer, Kundin oder
+  Kunde findest du in unseren rechtlichen
+  Hinweisen.
+</p>
+
+                <div className="impressum-legal-links">
+
+                  <Link to="/agb">
+                    AGB ansehen
+                    <FiFileText />
+                  </Link>
+
+                  <Link to="/widerruf">
+                    Widerrufsbelehrung
+                    <FiFileText />
+                  </Link>
+
+                  <Link to="/datenschutz">
+                    Datenschutz
+                    <FiFileText />
+                  </Link>
+
+                </div>
+
+              </AnimatedSection>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* =====================================================
+            CONTACT
+        ===================================================== */}
+
+        <section className="impressum-contact">
+
+          <div className="impressum-contact-glow impressum-contact-glow-green" />
+          <div className="impressum-contact-glow impressum-contact-glow-purple" />
+
+          <div className="impressum-container">
+
+            <AnimatedSection className="impressum-contact-card">
+
+              <div>
+
+                <div className="impressum-eyebrow impressum-eyebrow-light">
+                  <span className="impressum-eyebrow-line" />
+                  <span>Noch eine Frage?</span>
+                </div>
+
+                <h2>
+                  Schreib uns
+                  <span>einfach.</span>
                 </h2>
 
                 <p>
-                  Bei Fragen zu unseren
-                  rechtlichen Angaben, unseren
-                  digitalen Angeboten oder einer
-                  Bestellung erreichst du uns
-                  direkt per E-Mail.
-                </p>
+  Wenn du Fragen zu MamaTochterOnTour, unserem
+  Onlineshop, Momentry by MamaTochterOnTour,
+  deinem Benutzerkonto oder einer Bestellung
+  hast, erreichst du uns über unsere
+  Kontaktseite.
+</p>
+
               </div>
 
-              <a
-                href={`mailto:${COMPANY.email}`}
+              <Link
+                to="/kontakt"
+                className="impressum-contact-button"
               >
-                <FiMail aria-hidden="true" />
+                Kontakt aufnehmen
+                <FiMail />
+              </Link>
 
-                <span>
-                  <small>
-                    E-Mail schreiben
-                  </small>
+            </AnimatedSection>
 
-                  <strong>
-                    {COMPANY.email}
-                  </strong>
-                </span>
-
-                <FiArrowRight
-                  aria-hidden="true"
-                />
-              </a>
-            </div>
           </div>
+
         </section>
+
       </main>
 
       <Footer />
     </>
   );
 }
-
-/*
- * Kleiner Alias, damit wir im JSX einen
- * verständlichen Namen verwenden können.
- */
-function FiMessageIcon(props) {
-  return <FiMail {...props} />;
-}
-
-export default Impressum;

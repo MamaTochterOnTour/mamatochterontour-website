@@ -1,69 +1,93 @@
 /* =========================================================
-   IMPRESSUM
-   Dunkles Editorial-Design
-   Laptop · Tablet · Handy
+   IMPRESSUM PAGE
+   DARK TRAVEL LUXURY × MODERN ADVENTURE
 ========================================================= */
 
-.imprint-page {
-  --imprint-black: #0a0b0d;
-  --imprint-black-soft: #111317;
-  --imprint-dark: #15171b;
-  --imprint-dark-light: #1d2025;
+.impressum-page {
+  --impressum-black: #08090a;
+  --impressum-black-soft: #101214;
 
-  --imprint-green: #78b99b;
-  --imprint-green-bright: #9dd8b9;
-  --imprint-green-dark: #284f40;
-  --imprint-green-soft: #dcece3;
+  --impressum-green-dark: #153c31;
+  --impressum-green: #2f6855;
+  --impressum-green-light: #9bc7ae;
+  --impressum-green-soft: #dcebe2;
 
-  --imprint-purple: #9b7fc6;
-  --imprint-purple-light: #c7b1e5;
-  --imprint-purple-dark: #4c3d66;
-  --imprint-purple-soft: #eee8f7;
+  --impressum-purple: #71508f;
+  --impressum-purple-light: #b69acb;
+  --impressum-purple-dark: #3c284d;
 
-  --imprint-cream: #f5f1ea;
-  --imprint-cream-light: #fbf9f5;
-  --imprint-white: #ffffff;
+  --impressum-cream: #f2eee7;
+  --impressum-cream-light: #faf8f3;
 
-  --imprint-text: #1c2420;
-  --imprint-text-soft: #667169;
-  --imprint-text-dark-soft:
-    rgba(255, 255, 255, 0.66);
+  --impressum-white: #ffffff;
 
-  --imprint-border:
-    rgba(33, 65, 52, 0.13);
+  --impressum-text-dark: #1d2923;
+  --impressum-muted-dark: #637069;
 
-  --imprint-dark-border:
-    rgba(255, 255, 255, 0.12);
-
-  min-height: 100vh;
+  width: 100%;
   overflow: hidden;
 
-  color: var(--imprint-text);
-  background: var(--imprint-cream);
+  background: var(--impressum-cream);
+  color: var(--impressum-text-dark);
 }
 
-.imprint-page *,
-.imprint-page *::before,
-.imprint-page *::after {
-  box-sizing: border-box;
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.impressum-container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
 }
 
-.imprint-page a {
-  color: inherit;
-  text-decoration: none;
+.impressum-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-bottom: 24px;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
 }
 
-.imprint-page address {
-  font-style: normal;
+.impressum-eyebrow-line {
+  width: 36px;
+  height: 2px;
+
+  border-radius: 999px;
 }
 
-.imprint-container {
-  width: min(
-    calc(100% - 64px),
-    1320px
-  );
+.impressum-eyebrow-light {
+  color: rgba(255, 255, 255, 0.72);
+}
 
-  margin-inline: auto;
+.impressum-eyebrow-light
+.impressum-eyebrow-line {
+  background:
+    linear-gradient(
+      90deg,
+      var(--impressum-green-light),
+      var(--impressum-purple-light)
+    );
+}
+
+.impressum-eyebrow-dark {
+  color: var(--impressum-green);
+}
+
+.impressum-eyebrow-dark
+.impressum-eyebrow-line {
+  background:
+    linear-gradient(
+      90deg,
+      var(--impressum-green),
+      var(--impressum-purple)
+    );
 }
 
 
@@ -71,432 +95,292 @@
    HERO
 ========================================================= */
 
-.imprint-hero {
+.impressum-hero {
   position: relative;
 
-  min-height: 790px;
-  padding: 145px 0 90px;
+  min-height: 590px;
 
   display: flex;
   align-items: center;
 
   overflow: hidden;
 
-  color: var(--imprint-white);
+  padding:
+    128px
+    0
+    100px;
+
   background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(47, 104, 85, 0.23),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 84% 22%,
+      rgba(113, 80, 143, 0.22),
+      transparent 31%
+    ),
     linear-gradient(
-      135deg,
-      #08090b 0%,
-      #101316 48%,
-      #111019 100%
+      145deg,
+      #070809 0%,
+      #101313 52%,
+      #08090a 100%
     );
 }
 
-.imprint-hero::before {
-  position: absolute;
-  top: -280px;
-  left: -250px;
-
-  width: 650px;
-  height: 650px;
-
-  border:
-    1px solid
-    rgba(120, 185, 155, 0.12);
-
-  border-radius: 50%;
-
+.impressum-hero::after {
   content: "";
-}
 
-.imprint-hero::after {
-  position: absolute;
-  right: -320px;
-  bottom: -400px;
-
-  width: 820px;
-  height: 820px;
-
-  border:
-    1px solid
-    rgba(155, 127, 198, 0.12);
-
-  border-radius: 50%;
-
-  content: "";
-}
-
-.imprint-hero__grid {
   position: absolute;
   inset: 0;
 
-  opacity: 0.2;
+  pointer-events: none;
 
-  background-image:
+  background:
     linear-gradient(
-      rgba(255, 255, 255, 0.035)
-        1px,
+      90deg,
+      rgba(255, 255, 255, 0.015) 1px,
       transparent 1px
     ),
     linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.035)
-        1px,
+      rgba(255, 255, 255, 0.012) 1px,
       transparent 1px
     );
 
-  background-size: 70px 70px;
+  background-size: 90px 90px;
 
   mask-image:
     linear-gradient(
       to bottom,
       black,
-      transparent 92%
+      transparent 88%
     );
-
-  pointer-events: none;
 }
 
-.imprint-hero__glow {
-  position: absolute;
-
-  border-radius: 50%;
-
-  filter: blur(85px);
-
-  pointer-events: none;
-}
-
-.imprint-hero__glow--green {
-  top: 80px;
-  left: 8%;
-
-  width: 300px;
-  height: 300px;
-
-  background:
-    rgba(89, 160, 126, 0.17);
-}
-
-.imprint-hero__glow--purple {
-  right: 11%;
-  bottom: 80px;
-
-  width: 340px;
-  height: 340px;
-
-  background:
-    rgba(130, 92, 182, 0.18);
-}
-
-.imprint-hero__layout {
+.impressum-hero-inner {
   position: relative;
-  z-index: 2;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(390px, 0.72fr);
-
-  align-items: center;
-
-  gap: clamp(70px, 9vw, 145px);
+  z-index: 3;
 }
 
-.imprint-hero__content {
-  max-width: 790px;
+.impressum-hero-content {
+  width: min(100%, 1080px);
 }
 
-.imprint-hero__eyebrow {
-  width: fit-content;
+.impressum-hero-title {
+  max-width: 1080px;
 
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  margin:
+    0
+    0
+    30px;
 
-  margin-bottom: 27px;
-  padding: 9px 15px;
-
-  border:
-    1px solid
-    rgba(157, 216, 185, 0.23);
-
-  border-radius: 999px;
-
-  color: var(--imprint-green-bright);
-  background:
-    rgba(120, 185, 155, 0.07);
-
-  font-size: 0.67rem;
-  font-weight: 800;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-}
-
-.imprint-hero__eyebrow::before {
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background:
-    var(--imprint-purple-light);
-
-  box-shadow:
-    0 0 15px
-    rgba(199, 177, 229, 0.7);
-
-  content: "";
-}
-
-.imprint-hero h1 {
-  max-width: 850px;
-  margin: 0;
-
-  color: var(--imprint-white);
+  color: var(--impressum-white);
 
   font-size:
-    clamp(4rem, 6.4vw, 7rem);
+    clamp(
+      4rem,
+      8.2vw,
+      7.7rem
+    );
 
   font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.072em;
+  line-height: 0.86;
+  letter-spacing: -0.075em;
 }
 
-.imprint-hero h1 span {
+.impressum-hero-title span {
   display: block;
 
-  background:
-    linear-gradient(
-      105deg,
-      var(--imprint-green-bright),
-      #c0d5c8 48%,
-      var(--imprint-purple-light)
-    );
-
-  background-clip: text;
-  -webkit-background-clip: text;
-
-  color: transparent;
+  color: var(--impressum-green-light);
 }
 
-.imprint-hero__lead {
-  max-width: 680px;
-  margin: 29px 0 0;
+.impressum-hero-text {
+  max-width: 710px;
 
-  color: var(--imprint-text-dark-soft);
+  margin: 0;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.69
+    );
 
   font-size:
-    clamp(1rem, 1.3vw, 1.12rem);
+    clamp(
+      1rem,
+      1.4vw,
+      1.15rem
+    );
 
   line-height: 1.78;
 }
 
-.imprint-hero__meta {
-  margin-top: 34px;
-
+.impressum-hero-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 11px;
+  gap: 12px;
+
+  margin-top: 38px;
 }
 
-.imprint-hero__meta span {
-  min-height: 38px;
-  padding: 0 13px;
+.impressum-hero-pill {
+  min-height: 43px;
 
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+
+  padding:
+    0
+    16px;
 
   border:
-    1px solid
+    1px
+    solid
     rgba(255, 255, 255, 0.11);
 
-  border-radius: 10px;
-
-  color:
-    rgba(255, 255, 255, 0.62);
+  border-radius: 999px;
 
   background:
-    rgba(255, 255, 255, 0.035);
+    rgba(255, 255, 255, 0.055);
 
-  font-size: 0.67rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.82
+    );
+
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
-.imprint-hero__meta svg {
-  width: 15px;
-  height: 15px;
+.impressum-hero-pill svg {
+  color: var(--impressum-green-light);
+}
 
-  color: var(--imprint-green);
+.impressum-hero-glow,
+.impressum-contact-glow {
+  position: absolute;
+
+  border-radius: 999px;
+
+  filter: blur(15px);
+
+  pointer-events: none;
+}
+
+.impressum-hero-glow-green {
+  width: 440px;
+  height: 440px;
+
+  top: -180px;
+  left: -170px;
+
+  background:
+    rgba(
+      47,
+      104,
+      85,
+      0.15
+    );
+}
+
+.impressum-hero-glow-purple {
+  width: 390px;
+  height: 390px;
+
+  right: -130px;
+  bottom: -170px;
+
+  background:
+    rgba(
+      113,
+      80,
+      143,
+      0.15
+    );
 }
 
 
 /* =========================================================
-   HERO-IDENTITÄTSKARTE
+   INTRO
 ========================================================= */
 
-.imprint-hero__identity {
-  position: relative;
-
-  min-height: 485px;
-  padding: 35px;
-
-  display: flex;
-  flex-direction: column;
-
-  overflow: hidden;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.12);
-
-  border-radius: 34px;
+.impressum-intro {
+  padding:
+    105px
+    0
+    100px;
 
   background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.075),
-      rgba(255, 255, 255, 0.025)
-    );
-
-  box-shadow:
-    0 35px 100px
-    rgba(0, 0, 0, 0.32);
-
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+    var(--impressum-cream-light);
 }
 
-.imprint-hero__identity::before {
-  position: absolute;
-  top: -115px;
-  right: -105px;
+.impressum-intro-grid {
+  display: grid;
 
-  width: 270px;
-  height: 270px;
+  grid-template-columns:
+    minmax(0, 0.94fr)
+    minmax(0, 0.85fr);
 
-  border-radius: 50%;
+  align-items: end;
 
-  background:
-    rgba(155, 127, 198, 0.16);
-
-  content: "";
+  gap: 90px;
 }
 
-.imprint-hero__identity::after {
-  position: absolute;
-  left: -100px;
-  bottom: -115px;
+.impressum-intro-left h2 {
+  max-width: 720px;
 
-  width: 260px;
-  height: 260px;
-
-  border:
-    1px solid
-    rgba(120, 185, 155, 0.14);
-
-  border-radius: 50%;
-
-  content: "";
-}
-
-.imprint-hero__identity-top,
-.imprint-hero__identity > strong,
-.imprint-hero__identity > p,
-.imprint-hero__brand,
-.imprint-hero__identity-line {
-  position: relative;
-  z-index: 2;
-}
-
-.imprint-hero__identity-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin: 0;
 
   color:
-    rgba(255, 255, 255, 0.52);
-}
-
-.imprint-hero__identity-top span {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.imprint-hero__identity-top svg {
-  width: 24px;
-  height: 24px;
-
-  color: var(--imprint-purple-light);
-}
-
-.imprint-hero__identity > strong {
-  margin-top: 85px;
-
-  color: var(--imprint-white);
+    var(--impressum-green-dark);
 
   font-size:
-    clamp(2.8rem, 4vw, 4.3rem);
+    clamp(
+      3.2rem,
+      6.3vw,
+      6.4rem
+    );
 
-  line-height: 0.89;
-  letter-spacing: -0.065em;
-}
-
-.imprint-hero__identity > p {
-  margin: 22px 0 0;
-
-  color:
-    rgba(255, 255, 255, 0.52);
-
-  font-size: 0.76rem;
-  line-height: 1.6;
-}
-
-.imprint-hero__brand {
-  margin-top: 17px;
-
-  color: var(--imprint-green-bright);
-
-  font-size: 1.12rem;
   font-weight: 800;
-  letter-spacing: -0.025em;
+  line-height: 0.91;
+  letter-spacing: -0.068em;
 }
 
-.imprint-hero__brand span {
-  color: var(--imprint-purple-light);
+.impressum-intro-left h2 span {
+  display: block;
+
+  color: var(--impressum-purple);
 }
 
-.imprint-hero__identity-line {
-  margin-top: auto;
-  padding-top: 27px;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-
-  border-top:
-    1px solid
-    rgba(255, 255, 255, 0.1);
+.impressum-intro-right {
+  padding-bottom: 5px;
 }
 
-.imprint-hero__identity-line span {
-  padding: 7px 10px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.1);
-
-  border-radius: 999px;
+.impressum-intro-right p {
+  margin:
+    0
+    0
+    20px;
 
   color:
-    rgba(255, 255, 255, 0.58);
+    var(--impressum-muted-dark);
 
-  font-size: 0.58rem;
-  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.impressum-intro-right p:last-child {
+  margin-bottom: 0;
 }
 
 
@@ -504,1384 +388,1344 @@
    CONTENT
 ========================================================= */
 
-.imprint-content {
-  padding: 115px 0 125px;
+.impressum-content-section {
+  padding:
+    110px
+    0
+    130px;
 
   background:
     linear-gradient(
-      180deg,
-      var(--imprint-cream) 0%,
-      var(--imprint-cream-light) 100%
+      148deg,
+      #f1ede5 0%,
+      #f7f1f7 47%,
+      #edf5ef 100%
     );
 }
 
-.imprint-content__layout {
+.impressum-card-grid {
   display: grid;
 
   grid-template-columns:
-    245px
-    minmax(0, 1fr);
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
 
-  align-items: start;
-
-  gap: clamp(55px, 8vw, 115px);
+  gap: 22px;
 }
 
 
 /* =========================================================
-   STICKY NAVIGATION
+   CARD
 ========================================================= */
 
-.imprint-navigation {
+.impressum-card {
   position: relative;
-}
 
-.imprint-navigation__inner {
-  position: sticky;
-  top: 125px;
-}
+  overflow: hidden;
 
-.imprint-navigation__inner > p {
-  margin: 0 0 19px;
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.imprint-navigation nav {
-  display: grid;
-}
-
-.imprint-navigation nav a {
-  min-height: 51px;
-
-  display: grid;
-
-  grid-template-columns:
-    28px
-    minmax(0, 1fr)
-    auto;
-
-  align-items: center;
-  gap: 9px;
-
-  border-bottom:
-    1px solid
-    var(--imprint-border);
-
-  color: var(--imprint-text-soft);
-
-  transition:
-    color 180ms ease,
-    padding-left 180ms ease;
-}
-
-.imprint-navigation nav a:hover {
-  padding-left: 5px;
-
-  color: var(--imprint-green-dark);
-}
-
-.imprint-navigation nav a > span {
-  color: var(--imprint-purple);
-
-  font-size: 0.57rem;
-  font-weight: 800;
-}
-
-.imprint-navigation nav a strong {
-  font-size: 0.77rem;
-  font-weight: 750;
-}
-
-.imprint-navigation nav a svg {
-  width: 15px;
-  height: 15px;
-
-  opacity: 0;
-
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
-}
-
-.imprint-navigation nav a:hover svg {
-  opacity: 1;
-  transform: translateX(3px);
-}
-
-.imprint-navigation__contact {
-  margin-top: 29px;
-  padding: 18px;
+  padding:
+    36px
+    36px
+    38px;
 
   border:
-    1px solid
-    var(--imprint-border);
+    1px
+    solid
+    rgba(21, 60, 49, 0.09);
 
-  border-radius: 17px;
+  border-radius: 27px;
 
   background:
-    rgba(255, 255, 255, 0.55);
+    rgba(
+      255,
+      255,
+      255,
+      0.8
+    );
+
+  box-shadow:
+    0 18px 45px
+    rgba(16, 27, 22, 0.055);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.imprint-navigation__contact > span {
-  display: block;
+.impressum-card::before {
+  content: "";
 
-  color: var(--imprint-text-soft);
+  position: absolute;
 
-  font-size: 0.58rem;
+  top: 0;
+  left: 30px;
+  right: 30px;
+
+  height: 3px;
+
+  border-radius:
+    0
+    0
+    999px
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--impressum-green-light),
+      var(--impressum-purple-light)
+    );
+}
+
+.impressum-card:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(
+      47,
+      104,
+      85,
+      0.17
+    );
+
+  box-shadow:
+    0 24px 58px
+    rgba(16, 27, 22, 0.085);
+}
+
+.impressum-card-wide {
+  grid-column: 1 / -1;
+}
+
+.impressum-card-number {
+  position: absolute;
+
+  top: 28px;
+  right: 30px;
+
+  color:
+    rgba(
+      21,
+      60,
+      49,
+      0.11
+    );
+
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.impressum-card-icon {
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 26px;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(47, 104, 85, 0.11),
+      rgba(113, 80, 143, 0.11)
+    );
+
+  color:
+    var(--impressum-green-dark);
+
+  font-size: 1.13rem;
+}
+
+.impressum-card h3 {
+  max-width:
+    calc(100% - 45px);
+
+  margin:
+    0
+    0
+    19px;
+
+  color:
+    var(--impressum-text-dark);
+
+  font-size:
+    clamp(
+      1.35rem,
+      2.1vw,
+      1.8rem
+    );
+
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.impressum-card p {
+  margin:
+    0
+    0
+    15px;
+
+  color:
+    var(--impressum-muted-dark);
+
+  font-size: 0.94rem;
+  line-height: 1.78;
+}
+
+.impressum-card p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   BUSINESS
+========================================================= */
+
+.impressum-business-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin:
+    27px
+    0;
+
+  padding:
+    24px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(220, 235, 226, 0.52),
+      rgba(240, 232, 244, 0.45)
+    );
+}
+
+.impressum-business-logo {
+  flex:
+    0
+    0
+    48px;
+
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 15px;
+
+  background:
+    var(--impressum-green-dark);
+
+  color: var(--impressum-white);
+
+  font-size: 1.1rem;
+}
+
+.impressum-business-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.impressum-business-label {
+  margin-bottom: 3px;
+
+  color:
+    var(--impressum-purple);
+
+  font-size: 0.69rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.imprint-navigation__contact a {
-  margin-top: 11px;
+.impressum-business-card strong {
+  color:
+    var(--impressum-green-dark);
 
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-
-  overflow-wrap: anywhere;
-
-  color: var(--imprint-green-dark);
-
-  font-size: 0.68rem;
-  font-weight: 750;
-  line-height: 1.45;
+  font-size: 1.07rem;
 }
 
-.imprint-navigation__contact svg {
-  flex: 0 0 auto;
+.impressum-business-card
+> div:last-child
+> span:last-child {
+  color:
+    var(--impressum-muted-dark);
 
-  width: 15px;
-  height: 15px;
-  margin-top: 2px;
+  font-size: 0.9rem;
 }
 
 
 /* =========================================================
-   RECHTSBEREICHE
+   ADDRESS
 ========================================================= */
 
-.imprint-sections {
-  min-width: 0;
+.impressum-address {
+  margin:
+    0
+    0
+    24px;
 
-  display: grid;
-  gap: 18px;
-}
-
-.imprint-section {
-  scroll-margin-top: 120px;
-
-  display: grid;
-
-  grid-template-columns:
-    72px
-    minmax(0, 1fr);
-
-  gap: 28px;
-
-  padding: 35px;
+  padding: 22px;
 
   border:
-    1px solid
-    var(--imprint-border);
+    1px
+    solid
+    rgba(21, 60, 49, 0.08);
 
-  border-radius: 27px;
+  border-radius: 18px;
 
   background:
-    rgba(255, 255, 255, 0.64);
-
-  transition:
-    border-color 220ms ease,
-    transform 220ms ease,
-    box-shadow 220ms ease;
+    rgba(
+      255,
+      255,
+      255,
+      0.63
+    );
 }
 
-.imprint-section:hover {
-  border-color:
-    rgba(40, 79, 64, 0.25);
+.impressum-address-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.impressum-address-row > svg {
+  flex:
+    0
+    0
+    auto;
+
+  margin-top: 4px;
+
+  color:
+    var(--impressum-purple);
+
+  font-size: 1rem;
+}
+
+.impressum-address-row > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  color:
+    var(--impressum-text-dark);
+
+  font-size: 0.91rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CONTACT MAIL
+========================================================= */
+
+.impressum-contact-mail {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  width: fit-content;
+
+  max-width: 100%;
+
+  margin:
+    22px
+    0
+    16px;
+
+  padding:
+    13px
+    16px;
+
+  border-radius: 14px;
+
+  background:
+    rgba(
+      21,
+      60,
+      49,
+      0.06
+    );
+
+  color:
+    var(--impressum-green-dark);
+
+  font-size: 0.86rem;
+  font-weight: 750;
+
+  text-decoration: none;
+
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.impressum-contact-mail:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    rgba(
+      21,
+      60,
+      49,
+      0.1
+    );
+}
+
+.impressum-contact-mail svg {
+  flex:
+    0
+    0
+    auto;
+
+  color:
+    var(--impressum-purple);
+}
+
+.impressum-contact-mail span {
+  overflow-wrap: anywhere;
+}
+
+.impressum-small-text {
+  color:
+    var(--impressum-muted-dark) !important;
+
+  font-size: 0.82rem !important;
+}
+
+
+/* =========================================================
+   TAX
+========================================================= */
+
+.impressum-tax-number {
+  width: fit-content;
+
+  margin-top: 24px;
+
+  padding:
+    15px
+    19px;
+
+  border:
+    1px
+    solid
+    rgba(113, 80, 143, 0.13);
+
+  border-radius: 15px;
+
+  background:
+    rgba(
+      182,
+      154,
+      203,
+      0.12
+    );
+
+  color:
+    var(--impressum-purple-dark);
+
+  font-size: 1.03rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+}
+
+
+/* =========================================================
+   ACCENT CARD
+========================================================= */
+
+.impressum-card-accent {
+  border:
+    1px
+    solid
+    rgba(255, 255, 255, 0.11);
+
+  background:
+    radial-gradient(
+      circle at 12% 15%,
+      rgba(155, 199, 174, 0.15),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 87% 80%,
+      rgba(182, 154, 203, 0.18),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #14352d 0%,
+      #213d35 50%,
+      #342843 100%
+    );
 
   box-shadow:
     0 24px 60px
-    rgba(28, 47, 39, 0.08);
-
-  transform: translateY(-3px);
+    rgba(15, 30, 24, 0.13);
 }
 
-.imprint-section__head {
+.impressum-card-accent
+.impressum-card-number {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.11
+    );
+}
+
+.impressum-card-accent
+.impressum-card-icon {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.09
+    );
+
+  color:
+    var(--impressum-green-light);
+}
+
+.impressum-card-accent h3 {
+  color:
+    var(--impressum-white);
+}
+
+.impressum-card-accent p {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.74
+    );
+}
+
+
+/* =========================================================
+   EDITORIAL
+========================================================= */
+
+.impressum-editorial-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  width: fit-content;
+
+  min-width: min(100%, 430px);
+
+  margin-top: 27px;
+
+  padding:
+    23px
+    25px;
+
+  border:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      0.11
+    );
+
+  border-radius: 20px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.065
+    );
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.impressum-editorial-icon {
+  flex:
+    0
+    0
+    40px;
+
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 13px;
+
+  background:
+    rgba(
+      155,
+      199,
+      174,
+      0.15
+    );
+
+  color:
+    var(--impressum-green-light);
+}
+
+.impressum-editorial-box
+> div:last-child {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 13px;
+
+  gap: 4px;
 }
 
-.imprint-section__number {
-  color: var(--imprint-purple);
+.impressum-editorial-box strong {
+  margin-bottom: 4px;
 
-  font-size: 0.58rem;
-  font-weight: 850;
-  letter-spacing: 0.11em;
+  color:
+    var(--impressum-white);
+
+  font-size: 0.95rem;
 }
 
-.imprint-section__icon {
-  width: 51px;
-  height: 51px;
+.impressum-editorial-box span {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.72
+    );
+
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.impressum-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  margin-top: 22px;
+
+  padding:
+    16px
+    17px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(
+      220,
+      235,
+      226,
+      0.45
+    );
+
+  color:
+    var(--impressum-green-dark);
+
+  font-size: 0.83rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.impressum-status svg {
+  flex:
+    0
+    0
+    auto;
+
+  margin-top: 2px;
+
+  color:
+    var(--impressum-green);
+}
+
+
+/* =========================================================
+   LEGAL LINKS
+========================================================= */
+
+.impressum-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+
+  margin-top: 23px;
+}
+
+.impressum-legal-links a {
+  min-height: 42px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+
+  padding:
+    0
+    15px;
 
   border:
-    1px solid
-    var(--imprint-border);
+    1px
+    solid
+    rgba(21, 60, 49, 0.11);
 
-  border-radius: 16px;
-
-  color: var(--imprint-green-dark);
-  background: var(--imprint-green-soft);
-}
-
-.imprint-section__icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.imprint-section__body {
-  min-width: 0;
-}
-
-.imprint-section__eyebrow {
-  margin: 0 0 13px;
-
-  color: var(--imprint-green-dark);
-
-  font-size: 0.61rem;
-  font-weight: 850;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.imprint-section h2 {
-  max-width: 760px;
-  margin: 0;
-
-  color: var(--imprint-text);
-
-  font-size:
-    clamp(2.1rem, 3.4vw, 3.35rem);
-
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.052em;
-}
-
-.imprint-section__content {
-  max-width: 810px;
-  margin-top: 25px;
-}
-
-.imprint-section__content > p {
-  margin: 0;
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.9rem;
-  line-height: 1.78;
-}
-
-.imprint-section__content > p + p {
-  margin-top: 18px;
-}
-
-
-/* =========================================================
-   BESONDERE SEKTIONEN
-========================================================= */
-
-.imprint-section--primary {
-  border-color:
-    rgba(40, 79, 64, 0.19);
+  border-radius: 999px;
 
   background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.82),
-      rgba(220, 236, 227, 0.65)
-    );
-}
-
-.imprint-section--purple {
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.76),
-      rgba(238, 232, 247, 0.72)
-    );
-}
-
-.imprint-section--purple
-  .imprint-section__icon {
-  color: var(--imprint-purple-dark);
-  background: var(--imprint-purple-soft);
-}
-
-.imprint-section--dark {
-  color: var(--imprint-white);
-
-  border-color:
-    rgba(255, 255, 255, 0.1);
-
-  background:
-    radial-gradient(
-      circle at 92% 8%,
-      rgba(155, 127, 198, 0.18),
-      transparent 30%
-    ),
-    linear-gradient(
-      145deg,
-      var(--imprint-black-soft),
-      #171a1d
+    rgba(
+      255,
+      255,
+      255,
+      0.58
     );
 
-  box-shadow:
-    0 30px 80px
-    rgba(6, 8, 9, 0.18);
-}
-
-.imprint-section--dark:hover {
-  border-color:
-    rgba(157, 216, 185, 0.22);
-
-  box-shadow:
-    0 35px 90px
-    rgba(6, 8, 9, 0.25);
-}
-
-.imprint-section--dark
-  .imprint-section__number {
-  color: var(--imprint-purple-light);
-}
-
-.imprint-section--dark
-  .imprint-section__icon {
-  border-color:
-    rgba(255, 255, 255, 0.12);
-
-  color: var(--imprint-green-bright);
-  background:
-    rgba(120, 185, 155, 0.1);
-}
-
-.imprint-section--dark
-  .imprint-section__eyebrow {
-  color: var(--imprint-green-bright);
-}
-
-.imprint-section--dark h2 {
-  color: var(--imprint-white);
-}
-
-.imprint-section--dark
-  .imprint-section__content
-  > p {
   color:
-    rgba(255, 255, 255, 0.68);
+    var(--impressum-green-dark);
+
+  font-size: 0.76rem;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.impressum-legal-links a:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(
+      47,
+      104,
+      85,
+      0.22
+    );
+
+  background:
+    var(--impressum-white);
+}
+
+.impressum-legal-links svg {
+  color:
+    var(--impressum-purple);
 }
 
 
 /* =========================================================
-   ANBIETERDETAILS
+   CONTACT
 ========================================================= */
 
-.imprint-provider {
+.impressum-contact {
+  position: relative;
+
+  overflow: hidden;
+
+  padding:
+    105px
+    0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #08090a,
+      #111514 55%,
+      #0b0c0d
+    );
+}
+
+.impressum-contact-card {
+  position: relative;
+  z-index: 2;
+
   display: grid;
 
   grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+    minmax(0, 1fr)
+    auto;
 
-  gap: 14px;
-}
+  align-items: center;
 
-.imprint-provider > div {
-  min-height: 150px;
-  padding: 20px;
+  gap: 70px;
+
+  padding:
+    54px
+    58px;
 
   border:
-    1px solid
-    var(--imprint-border);
+    1px
+    solid
+    rgba(255, 255, 255, 0.09);
 
-  border-radius: 17px;
-
-  background:
-    rgba(255, 255, 255, 0.58);
-}
-
-.imprint-detail-label {
-  display: block;
-
-  margin-bottom: 13px;
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.57rem;
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
-.imprint-provider strong {
-  display: block;
-
-  color: var(--imprint-green-dark);
-
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-.imprint-provider p,
-.imprint-provider address {
-  margin: 7px 0 0;
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.77rem;
-  line-height: 1.65;
-}
-
-.imprint-note {
-  margin-top: 18px !important;
-  padding: 13px 15px;
-
-  border-left:
-    3px solid
-    var(--imprint-purple);
-
-  border-radius:
-    0 11px 11px 0;
+  border-radius: 30px;
 
   background:
-    rgba(155, 127, 198, 0.07);
+    linear-gradient(
+      135deg,
+      rgba(47, 104, 85, 0.16),
+      rgba(113, 80, 143, 0.13)
+    );
+
+  box-shadow:
+    0 30px 70px
+    rgba(0, 0, 0, 0.2);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.impressum-contact-card h2 {
+  max-width: 730px;
+
+  margin:
+    0
+    0
+    19px;
 
   color:
-    var(--imprint-text-soft) !important;
+    var(--impressum-white);
 
-  font-size: 0.75rem !important;
-  line-height: 1.6 !important;
+  font-size:
+    clamp(
+      2.8rem,
+      5vw,
+      5rem
+    );
+
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.06em;
 }
 
-.imprint-note--dark {
-  border-left-color:
-    var(--imprint-green-bright);
+.impressum-contact-card h2 span {
+  display: block;
 
-  background:
-    rgba(255, 255, 255, 0.055);
+  color:
+    var(--impressum-purple-light);
+}
+
+.impressum-contact-card p {
+  max-width: 620px;
+
+  margin: 0;
 
   color:
     rgba(
       255,
       255,
       255,
-      0.57
-    ) !important;
-}
-
-
-/* =========================================================
-   KONTAKT
-========================================================= */
-
-.imprint-contact-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 13px;
-}
-
-.imprint-contact-card {
-  min-height: 88px;
-  padding: 16px;
-
-  display: grid;
-
-  grid-template-columns:
-    auto
-    minmax(0, 1fr)
-    auto;
-
-  align-items: center;
-  gap: 13px;
-
-  border:
-    1px solid
-    var(--imprint-border);
-
-  border-radius: 17px;
-
-  background:
-    rgba(255, 255, 255, 0.63);
-
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease;
-}
-
-.imprint-contact-card:hover {
-  border-color:
-    rgba(40, 79, 64, 0.3);
-
-  background: var(--imprint-white);
-
-  transform: translateY(-2px);
-}
-
-.imprint-contact-card__icon {
-  width: 43px;
-  height: 43px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 13px;
-
-  color: var(--imprint-green-dark);
-  background: var(--imprint-green-soft);
-}
-
-.imprint-contact-card__icon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.imprint-contact-card > span:nth-child(2) {
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.imprint-contact-card small {
-  color: var(--imprint-text-soft);
-
-  font-size: 0.59rem;
-}
-
-.imprint-contact-card strong {
-  margin-top: 4px;
-
-  overflow-wrap: anywhere;
-
-  color: var(--imprint-text);
-
-  font-size: 0.78rem;
-}
-
-.imprint-contact-card__arrow {
-  width: 16px;
-  height: 16px;
-
-  color: var(--imprint-purple);
-}
-
-.imprint-address-line {
-  margin-top: 16px;
-  padding-top: 16px;
-
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-
-  border-top:
-    1px solid
-    var(--imprint-border);
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.76rem;
-  line-height: 1.55;
-}
-
-.imprint-address-line svg {
-  flex: 0 0 auto;
-
-  width: 17px;
-  height: 17px;
-
-  color: var(--imprint-green-dark);
-}
-
-
-/* =========================================================
-   UST-ID
-========================================================= */
-
-.imprint-vat {
-  width: fit-content;
-
-  margin-top: 22px;
-  padding: 16px 19px;
-
-  display: flex;
-  align-items: center;
-  gap: 22px;
-
-  border:
-    1px solid
-    var(--imprint-border);
-
-  border-radius: 16px;
-
-  background:
-    linear-gradient(
-      145deg,
-      var(--imprint-black-soft),
-      #191b20
-    );
-}
-
-.imprint-vat span {
-  color:
-    rgba(255, 255, 255, 0.48);
-
-  font-size: 0.58rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.imprint-vat strong {
-  color: var(--imprint-green-bright);
-
-  font-size: 1rem;
-  letter-spacing: 0.08em;
-}
-
-
-/* =========================================================
-   VERANTWORTLICHE PERSON
-========================================================= */
-
-.imprint-person-card {
-  width: fit-content;
-
-  margin-top: 22px;
-
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.imprint-person-card__avatar {
-  width: 57px;
-  height: 57px;
-
-  flex: 0 0 57px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 18px;
-
-  color: var(--imprint-white);
-
-  background:
-    linear-gradient(
-      145deg,
-      var(--imprint-green-dark),
-      var(--imprint-purple-dark)
+      0.66
     );
 
-  font-size: 0.77rem;
-  font-weight: 850;
-}
-
-.imprint-person-card strong {
-  display: block;
-
-  color: var(--imprint-text);
-
-  font-size: 0.92rem;
-}
-
-.imprint-person-card address {
-  margin-top: 5px;
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.73rem;
-  line-height: 1.55;
-}
-
-
-/* =========================================================
-   STREITBEILEGUNG
-========================================================= */
-
-.imprint-legal-highlight {
-  margin-top: 22px;
-  padding: 18px;
-
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-
-  border:
-    1px solid
-    rgba(76, 61, 102, 0.13);
-
-  border-radius: 17px;
-
-  background:
-    rgba(238, 232, 247, 0.64);
-}
-
-.imprint-legal-highlight svg {
-  flex: 0 0 auto;
-
-  width: 21px;
-  height: 21px;
-
-  color: var(--imprint-purple-dark);
-}
-
-.imprint-legal-highlight p {
-  margin: 0;
-
-  color: var(--imprint-text-soft);
-
-  font-size: 0.77rem;
-  line-height: 1.65;
-}
-
-.imprint-inline-link {
-  width: fit-content;
-
-  margin-top: 20px;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-
-  color: var(--imprint-purple-dark);
-
-  font-size: 0.76rem;
-  font-weight: 800;
-}
-
-.imprint-inline-link svg {
-  width: 16px;
-  height: 16px;
-
-  transition: transform 180ms ease;
-}
-
-.imprint-inline-link:hover svg {
-  transform: translateX(4px);
-}
-
-
-/* =========================================================
-   ENTWICKLUNG
-========================================================= */
-
-.imprint-development-grid {
-  margin-top: 24px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 11px;
-}
-
-.imprint-development-grid div {
-  min-height: 115px;
-  padding: 17px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 22px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.1);
-
-  border-radius: 16px;
-
-  background:
-    rgba(255, 255, 255, 0.045);
-}
-
-.imprint-development-grid svg {
-  width: 23px;
-  height: 23px;
-
-  color: var(--imprint-purple-light);
-}
-
-.imprint-development-grid span {
-  color:
-    rgba(255, 255, 255, 0.75);
-
-  font-size: 0.72rem;
-  font-weight: 750;
-  line-height: 1.45;
-}
-
-
-/* =========================================================
-   ABSCHLUSS
-========================================================= */
-
-.imprint-footer-section {
-  padding: 20px 0 120px;
-
-  background: var(--imprint-cream-light);
-}
-
-.imprint-footer-card {
-  position: relative;
-
-  padding:
-    clamp(42px, 6vw, 76px);
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(320px, 0.65fr);
-
-  align-items: center;
-
-  gap: clamp(45px, 8vw, 110px);
-
-  overflow: hidden;
-
-  border-radius: 34px;
-
-  color: var(--imprint-white);
-
-  background:
-    radial-gradient(
-      circle at 92% 5%,
-      rgba(155, 127, 198, 0.28),
-      transparent 34%
-    ),
-    linear-gradient(
-      145deg,
-      var(--imprint-black),
-      #15181b
-    );
-}
-
-.imprint-footer-card::before {
-  position: absolute;
-  right: -180px;
-  bottom: -250px;
-
-  width: 520px;
-  height: 520px;
-
-  border:
-    1px solid
-    rgba(120, 185, 155, 0.13);
-
-  border-radius: 50%;
-
-  content: "";
-}
-
-.imprint-footer-card > div,
-.imprint-footer-card > a {
-  position: relative;
-  z-index: 2;
-}
-
-.imprint-footer-card > div > span {
-  color: var(--imprint-green-bright);
-
-  font-size: 0.63rem;
-  font-weight: 850;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.imprint-footer-card h2 {
-  max-width: 720px;
-  margin: 20px 0 0;
-
-  color: var(--imprint-white);
-
-  font-size:
-    clamp(3rem, 5vw, 5.2rem);
-
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.065em;
-}
-
-.imprint-footer-card h2 strong {
-  display: block;
-
-  color: var(--imprint-purple-light);
-}
-
-.imprint-footer-card p {
-  max-width: 580px;
-  margin: 23px 0 0;
-
-  color:
-    rgba(255, 255, 255, 0.62);
-
-  font-size: 0.89rem;
+  font-size: 0.96rem;
   line-height: 1.75;
 }
 
-.imprint-footer-card > a {
-  min-height: 74px;
-  padding: 16px 18px;
+.impressum-contact-button {
+  min-height: 54px;
 
-  display: grid;
-
-  grid-template-columns:
-    auto
-    minmax(0, 1fr)
-    auto;
-
+  display: inline-flex;
   align-items: center;
-  gap: 13px;
+  justify-content: center;
+  gap: 11px;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.14);
+  padding:
+    0
+    23px;
 
-  border-radius: 17px;
+  border-radius: 999px;
 
   background:
-    rgba(255, 255, 255, 0.075);
+    linear-gradient(
+      135deg,
+      var(--impressum-green-light),
+      #b9d6c5
+    );
+
+  color:
+    var(--impressum-green-dark);
+
+  box-shadow:
+    0 13px 28px
+    rgba(
+      155,
+      199,
+      174,
+      0.13
+    );
+
+  font-size: 0.86rem;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  white-space: nowrap;
 
   transition:
-    transform 200ms ease,
-    background-color 200ms ease,
-    border-color 200ms ease;
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.imprint-footer-card > a:hover {
-  border-color:
-    rgba(157, 216, 185, 0.28);
+.impressum-contact-button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 18px 36px
+    rgba(
+      155,
+      199,
+      174,
+      0.2
+    );
+}
+
+.impressum-contact-glow-green {
+  width: 380px;
+  height: 380px;
+
+  top: -180px;
+  left: -100px;
 
   background:
-    rgba(255, 255, 255, 0.11);
-
-  transform: translateY(-3px);
+    rgba(
+      47,
+      104,
+      85,
+      0.16
+    );
 }
 
-.imprint-footer-card > a > svg {
-  width: 20px;
-  height: 20px;
+.impressum-contact-glow-purple {
+  width: 350px;
+  height: 350px;
 
-  color: var(--imprint-green-bright);
-}
+  right: -100px;
+  bottom: -180px;
 
-.imprint-footer-card > a > span {
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.imprint-footer-card > a small {
-  color:
-    rgba(255, 255, 255, 0.45);
-
-  font-size: 0.58rem;
-}
-
-.imprint-footer-card > a strong {
-  margin-top: 5px;
-
-  overflow-wrap: anywhere;
-
-  color: var(--imprint-white);
-
-  font-size: 0.75rem;
+  background:
+    rgba(
+      113,
+      80,
+      143,
+      0.15
+    );
 }
 
 
 /* =========================================================
-   KLEINERE LAPTOPS
+   RESPONSIVE
 ========================================================= */
 
 @media (max-width: 1180px) {
-  .imprint-container {
-    width: min(
-      calc(100% - 50px),
-      1080px
-    );
+
+  .impressum-intro-grid {
+    gap: 65px;
   }
 
-  .imprint-hero__layout {
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(340px, 0.68fr);
-
-    gap: 55px;
-  }
-
-  .imprint-hero h1 {
-    font-size:
-      clamp(3.8rem, 6.8vw, 6rem);
-  }
-
-  .imprint-content__layout {
-    grid-template-columns:
-      215px
-      minmax(0, 1fr);
-
-    gap: 50px;
-  }
-
-  .imprint-provider {
-    grid-template-columns: 1fr;
-  }
-
-  .imprint-provider > div {
-    min-height: auto;
+  .impressum-contact-card {
+    gap: 45px;
   }
 }
 
 
-/* =========================================================
-   TABLET
-========================================================= */
+@media (max-width: 980px) {
 
-@media (max-width: 920px) {
-  .imprint-container {
-    width: min(
-      calc(100% - 42px),
-      760px
-    );
-  }
-
-  .imprint-hero {
+  .impressum-hero {
     min-height: auto;
-    padding: 135px 0 90px;
+
+    padding:
+      116px
+      0
+      88px;
   }
 
-  .imprint-hero__layout {
+  .impressum-intro {
+    padding:
+      88px
+      0;
+  }
+
+  .impressum-intro-grid {
     grid-template-columns: 1fr;
-    gap: 58px;
+
+    gap: 44px;
   }
 
-  .imprint-hero__content {
-    max-width: 760px;
+  .impressum-intro-right {
+    max-width: 690px;
   }
 
-  .imprint-hero h1 {
-    font-size:
-      clamp(4rem, 10vw, 5.8rem);
+  .impressum-content-section {
+    padding:
+      90px
+      0
+      105px;
   }
 
-  .imprint-hero__identity {
-    width: min(100%, 580px);
-    min-height: 430px;
-
-    margin-inline: auto;
-  }
-
-  .imprint-content {
-    padding: 95px 0 105px;
-  }
-
-  .imprint-content__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .imprint-navigation {
-    display: none;
-  }
-
-  .imprint-section {
-    scroll-margin-top: 100px;
-  }
-
-  .imprint-footer-card {
+  .impressum-card-grid {
     grid-template-columns: 1fr;
   }
 
-  .imprint-footer-card > a {
-    width: min(100%, 550px);
+  .impressum-card-wide {
+    grid-column: auto;
+  }
+
+  .impressum-contact-card {
+    grid-template-columns: 1fr;
+
+    gap: 38px;
+  }
+
+  .impressum-contact-button {
+    width: fit-content;
   }
 }
 
 
-/* =========================================================
-   HANDY
-========================================================= */
+@media (max-width: 768px) {
+
+  .impressum-container {
+    width:
+      min(
+        calc(100% - 38px),
+        1320px
+      );
+  }
+
+  .impressum-hero {
+    padding:
+      106px
+      0
+      75px;
+  }
+
+  .impressum-hero-title {
+    font-size:
+      clamp(
+        3.35rem,
+        14vw,
+        5.4rem
+      );
+  }
+
+  .impressum-intro {
+    padding:
+      78px
+      0;
+  }
+
+  .impressum-content-section {
+    padding:
+      78px
+      0
+      92px;
+  }
+
+  .impressum-contact {
+    padding:
+      82px
+      0;
+  }
+}
+
 
 @media (max-width: 650px) {
-  .imprint-container {
-    width: calc(100% - 30px);
+
+  .impressum-container {
+    width:
+      min(
+        calc(100% - 30px),
+        1320px
+      );
   }
 
-  .imprint-hero {
-    padding: 105px 0 70px;
+  .impressum-hero {
+    padding:
+      96px
+      0
+      66px;
   }
 
-  .imprint-hero__layout {
-    gap: 43px;
+  .impressum-hero-title {
+    margin-bottom: 24px;
   }
 
-  .imprint-hero__eyebrow {
-    margin-bottom: 21px;
-    padding: 8px 12px;
-
-    font-size: 0.57rem;
-    letter-spacing: 0.13em;
-  }
-
-  .imprint-hero h1 {
+  .impressum-hero-title span {
     font-size:
-      clamp(3.2rem, 15vw, 4.6rem);
+      clamp(
+        2.55rem,
+        11vw,
+        4.1rem
+      );
 
-    line-height: 0.91;
-    letter-spacing: -0.067em;
+    line-height: 0.96;
+    letter-spacing: -0.07em;
+
+    white-space: nowrap;
   }
 
-  .imprint-hero__lead {
-    margin-top: 23px;
-
-    font-size: 0.91rem;
-    line-height: 1.7;
+  .impressum-hero-pills {
+    gap: 8px;
   }
 
-  .imprint-hero__meta {
-    margin-top: 27px;
+  .impressum-hero-pill {
+    min-height: 39px;
+
+    padding:
+      0
+      13px;
+
+    font-size: 0.71rem;
   }
 
-  .imprint-hero__meta span {
-    font-size: 0.61rem;
+  .impressum-intro {
+    padding:
+      67px
+      0;
   }
 
-  .imprint-hero__identity {
-    min-height: 390px;
-    padding: 25px;
-
-    border-radius: 26px;
-  }
-
-  .imprint-hero__identity > strong {
-    margin-top: 68px;
-
+  .impressum-intro-left h2 {
     font-size:
-      clamp(2.6rem, 13vw, 3.7rem);
+      clamp(
+        2.8rem,
+        14vw,
+        4.25rem
+      );
   }
 
-  .imprint-content {
-    padding: 75px 0 85px;
+  .impressum-content-section {
+    padding:
+      66px
+      0
+      78px;
   }
 
-  .imprint-sections {
-    gap: 13px;
+  .impressum-card-grid {
+    gap: 16px;
   }
 
-  .imprint-section {
-    grid-template-columns: 1fr;
-    gap: 22px;
+  .impressum-card {
+    padding:
+      30px
+      25px
+      31px;
 
-    padding: 25px 21px;
-
-    border-radius: 22px;
+    border-radius: 23px;
   }
 
-  .imprint-section:hover {
-    transform: none;
+  .impressum-card-number {
+    top: 25px;
+    right: 24px;
+
+    font-size: 1.35rem;
   }
 
-  .imprint-section__head {
-    flex-direction: row;
-    justify-content: space-between;
+  .impressum-card h3 {
+    font-size: 1.45rem;
   }
 
-  .imprint-section__number {
-    order: 2;
+  .impressum-card p {
+    font-size: 0.9rem;
   }
 
-  .imprint-section__icon {
-    width: 45px;
-    height: 45px;
+  .impressum-business-card {
+    align-items: flex-start;
 
-    border-radius: 14px;
+    padding: 19px;
   }
 
-  .imprint-section__icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .imprint-section h2 {
-    font-size:
-      clamp(2rem, 10vw, 2.85rem);
-  }
-
-  .imprint-section__content {
-    margin-top: 21px;
-  }
-
-  .imprint-section__content > p {
-    font-size: 0.84rem;
-    line-height: 1.72;
-  }
-
-  .imprint-provider {
-    gap: 10px;
-  }
-
-  .imprint-provider > div {
-    padding: 17px;
-
-    border-radius: 15px;
-  }
-
-  .imprint-contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .imprint-vat {
+  .impressum-editorial-box {
     width: 100%;
 
-    justify-content: space-between;
-
-    gap: 13px;
+    padding:
+      19px
+      18px;
   }
 
-  .imprint-development-grid {
-    grid-template-columns: 1fr;
+  .impressum-contact {
+    padding:
+      68px
+      0;
   }
 
-  .imprint-development-grid div {
-    min-height: 92px;
+  .impressum-contact-card {
+    gap: 31px;
+
+    padding:
+      37px
+      27px;
+
+    border-radius: 24px;
   }
 
-  .imprint-footer-section {
-    padding: 5px 0 85px;
-  }
-
-  .imprint-footer-card {
-    padding: 36px 22px;
-
-    border-radius: 25px;
-  }
-
-  .imprint-footer-card h2 {
+  .impressum-contact-card h2 {
     font-size:
-      clamp(2.8rem, 13vw, 4rem);
+      clamp(
+        2.55rem,
+        13vw,
+        4rem
+      );
   }
 
-  .imprint-footer-card > a {
-    grid-template-columns:
-      auto minmax(0, 1fr);
-
-    padding: 15px;
-  }
-
-  .imprint-footer-card
-    > a
-    > svg:last-child {
-    display: none;
+  .impressum-contact-button {
+    width: 100%;
   }
 }
 
 
-/* =========================================================
-   SEHR KLEINE HANDYS
-========================================================= */
-
 @media (max-width: 390px) {
-  .imprint-container {
-    width: calc(100% - 24px);
+
+  .impressum-container {
+    width:
+      min(
+        calc(100% - 24px),
+        1320px
+      );
   }
 
-  .imprint-hero {
-    padding-top: 98px;
+  .impressum-hero {
+    padding:
+      90px
+      0
+      60px;
   }
 
-  .imprint-hero h1 {
+  .impressum-eyebrow {
+    gap: 10px;
+
+    font-size: 0.66rem;
+  }
+
+  .impressum-eyebrow-line {
+    width: 27px;
+  }
+
+  .impressum-hero-title {
     font-size:
-      clamp(2.9rem, 14.5vw, 3.65rem);
+      clamp(
+        3rem,
+        15vw,
+        3.7rem
+      );
   }
 
-  .imprint-hero__identity {
-    min-height: 360px;
-    padding: 21px;
+  .impressum-hero-title span {
+    font-size:
+      clamp(
+        2.35rem,
+        10.5vw,
+        3.3rem
+      );
   }
 
-  .imprint-section {
-    padding-inline: 18px;
+  .impressum-hero-pill {
+    width: 100%;
+
+    justify-content: center;
   }
 
-  .imprint-vat {
-    align-items: flex-start;
+  .impressum-card {
+    padding:
+      28px
+      21px
+      29px;
+  }
+
+  .impressum-card-number {
+    right: 20px;
+  }
+
+  .impressum-business-card {
     flex-direction: column;
   }
 
-  .imprint-contact-card {
-    grid-template-columns:
-      auto minmax(0, 1fr);
+  .impressum-editorial-box {
+    flex-direction: column;
   }
 
-  .imprint-contact-card__arrow {
-    display: none;
+  .impressum-legal-links {
+    flex-direction: column;
   }
 
-  .imprint-footer-card {
-    padding-inline: 19px;
+  .impressum-legal-links a {
+    width: 100%;
+  }
+
+  .impressum-contact-card {
+    padding:
+      32px
+      22px;
   }
 }
 
 
 /* =========================================================
-   TOUCH
+   REDUCED MOTION
 ========================================================= */
 
-@media (hover: none) {
-  .imprint-section:hover,
-  .imprint-contact-card:hover,
-  .imprint-footer-card > a:hover {
+@media (prefers-reduced-motion: reduce) {
+
+  .impressum-card,
+  .impressum-contact-mail,
+  .impressum-legal-links a,
+  .impressum-contact-button {
+    transition: none;
+  }
+
+  .impressum-card:hover,
+  .impressum-contact-mail:hover,
+  .impressum-legal-links a:hover,
+  .impressum-contact-button:hover {
     transform: none;
   }
 }
 
 
 /* =========================================================
-   REDUZIERTE BEWEGUNG
+   TOUCH DEVICES
 ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
-  .imprint-page *,
-  .imprint-page *::before,
-  .imprint-page *::after {
-    scroll-behavior: auto !important;
+@media (hover: none) {
 
-    animation-duration:
-      0.01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.01ms !important;
+  .impressum-card:hover,
+  .impressum-contact-mail:hover,
+  .impressum-legal-links a:hover,
+  .impressum-contact-button:hover {
+    transform: none;
   }
 }
