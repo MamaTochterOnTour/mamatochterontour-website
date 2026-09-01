@@ -1,0 +1,788 @@
+/* =========================================================
+   NUTZUNGSBEDINGUNGEN
+   DARK TRAVEL LUXURY × MODERN ADVENTURE
+========================================================= */
+
+.terms-page {
+  --terms-black: #08090a;
+  --terms-black-soft: #101214;
+
+  --terms-green-dark: #153c31;
+  --terms-green: #2f6855;
+  --terms-green-light: #9bc7ae;
+  --terms-green-soft: #dcebe2;
+
+  --terms-purple: #71508f;
+  --terms-purple-light: #b69acb;
+  --terms-purple-dark: #3c284d;
+
+  --terms-cream: #f2eee7;
+  --terms-cream-light: #faf8f3;
+
+  --terms-white: #ffffff;
+
+  --terms-text-dark: #1d2923;
+  --terms-muted-dark: #637069;
+
+  width: 100%;
+  overflow: hidden;
+
+  background: var(--terms-cream);
+  color: var(--terms-text-dark);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.terms-container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.terms-hero {
+  position: relative;
+
+  min-height: 590px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  padding:
+    128px
+    0
+    100px;
+
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(47, 104, 85, 0.23),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 84% 22%,
+      rgba(113, 80, 143, 0.22),
+      transparent 31%
+    ),
+    linear-gradient(
+      145deg,
+      #070809 0%,
+      #101313 52%,
+      #08090a 100%
+    );
+}
+
+.terms-hero::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(255, 255, 255, 0.012) 1px,
+      transparent 1px
+    );
+
+  background-size: 90px 90px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 88%
+    );
+}
+
+.terms-hero-content {
+  position: relative;
+  z-index: 3;
+
+  width: min(100%, 1080px);
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.terms-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-bottom: 24px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.terms-eyebrow-line {
+  width: 36px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--terms-green-light),
+      var(--terms-purple-light)
+    );
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.terms-hero-title {
+  max-width: 1100px;
+
+  margin:
+    0
+    0
+    30px;
+
+  color: var(--terms-white);
+
+  font-size:
+    clamp(
+      4rem,
+      8.2vw,
+      7.7rem
+    );
+
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.075em;
+}
+
+.terms-hero-title span {
+  display: block;
+
+  color: var(--terms-green-light);
+}
+
+.terms-hero-text {
+  max-width: 720px;
+
+  margin: 0;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.69
+    );
+
+  font-size:
+    clamp(
+      1rem,
+      1.4vw,
+      1.15rem
+    );
+
+  line-height: 1.78;
+}
+
+
+/* =========================================================
+   HERO PILLS
+========================================================= */
+
+.terms-hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 38px;
+}
+
+.terms-hero-pill {
+  min-height: 43px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding:
+    0
+    16px;
+
+  border:
+    1px
+    solid
+    rgba(255, 255, 255, 0.11);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.82
+    );
+
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.terms-hero-pill svg {
+  color: var(--terms-green-light);
+}
+
+
+/* =========================================================
+   HERO GLOW
+========================================================= */
+
+.terms-hero-glow {
+  position: absolute;
+
+  border-radius: 999px;
+
+  filter: blur(15px);
+
+  pointer-events: none;
+}
+
+.terms-hero-glow-green {
+  width: 440px;
+  height: 440px;
+
+  top: -180px;
+  left: -170px;
+
+  background:
+    rgba(
+      47,
+      104,
+      85,
+      0.15
+    );
+}
+
+.terms-hero-glow-purple {
+  width: 390px;
+  height: 390px;
+
+  right: -130px;
+  bottom: -170px;
+
+  background:
+    rgba(
+      113,
+      80,
+      143,
+      0.15
+    );
+}
+
+
+/* =========================================================
+   COMING SOON SECTION
+========================================================= */
+
+.terms-coming {
+  position: relative;
+
+  padding:
+    120px
+    0
+    135px;
+
+  background:
+    linear-gradient(
+      148deg,
+      #f1ede5 0%,
+      #f7f1f7 47%,
+      #edf5ef 100%
+    );
+}
+
+.terms-coming-card {
+  position: relative;
+
+  overflow: hidden;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 32px;
+
+  padding:
+    52px
+    54px;
+
+  border:
+    1px
+    solid
+    rgba(21, 60, 49, 0.09);
+
+  border-radius: 30px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.78
+    );
+
+  box-shadow:
+    0 22px 55px
+    rgba(16, 27, 22, 0.07);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.terms-coming-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 42px;
+  right: 42px;
+
+  height: 3px;
+
+  border-radius:
+    0
+    0
+    999px
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--terms-green-light),
+      var(--terms-purple-light)
+    );
+}
+
+
+/* =========================================================
+   COMING SOON ICON
+========================================================= */
+
+.terms-coming-icon {
+  width: 76px;
+  height: 76px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  border-radius: 23px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(47, 104, 85, 0.12),
+      rgba(113, 80, 143, 0.12)
+    );
+
+  color:
+    var(--terms-green-dark);
+
+  font-size: 1.7rem;
+}
+
+
+/* =========================================================
+   COMING SOON CONTENT
+========================================================= */
+
+.terms-coming-content {
+  max-width: 720px;
+}
+
+.terms-coming-label {
+  margin-bottom: 13px;
+
+  color:
+    var(--terms-purple);
+
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.terms-coming-content h2 {
+  margin:
+    0
+    0
+    23px;
+
+  color:
+    var(--terms-green-dark);
+
+  font-size:
+    clamp(
+      2.5rem,
+      4.5vw,
+      4.6rem
+    );
+
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.terms-coming-content h2 span {
+  display: block;
+
+  color:
+    var(--terms-purple);
+}
+
+.terms-coming-content p {
+  max-width: 680px;
+
+  margin:
+    0
+    0
+    13px;
+
+  color:
+    var(--terms-muted-dark);
+
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.terms-coming-content p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.terms-coming-status {
+  min-height: 43px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding:
+    0
+    16px;
+
+  border:
+    1px
+    solid
+    rgba(47, 104, 85, 0.12);
+
+  border-radius: 999px;
+
+  background:
+    rgba(
+      220,
+      235,
+      226,
+      0.48
+    );
+
+  color:
+    var(--terms-green-dark);
+
+  font-size: 0.76rem;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.terms-coming-status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background:
+    var(--terms-green);
+
+  box-shadow:
+    0 0 0 5px
+    rgba(47, 104, 85, 0.09);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 980px) {
+
+  .terms-hero {
+    min-height: auto;
+
+    padding:
+      116px
+      0
+      88px;
+  }
+
+  .terms-coming {
+    padding:
+      90px
+      0
+      105px;
+  }
+
+  .terms-coming-card {
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
+    align-items: start;
+  }
+
+  .terms-coming-status {
+    grid-column: 2;
+    width: fit-content;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .terms-container {
+    width:
+      min(
+        calc(100% - 38px),
+        1320px
+      );
+  }
+
+  .terms-hero {
+    padding:
+      106px
+      0
+      75px;
+  }
+
+  .terms-hero-title {
+    font-size:
+      clamp(
+        3.35rem,
+        14vw,
+        5.4rem
+      );
+  }
+
+  .terms-coming {
+    padding:
+      78px
+      0
+      92px;
+  }
+}
+
+
+@media (max-width: 650px) {
+
+  .terms-container {
+    width:
+      min(
+        calc(100% - 30px),
+        1320px
+      );
+  }
+
+  .terms-hero {
+    padding:
+      96px
+      0
+      66px;
+  }
+
+  .terms-hero-title {
+    margin-bottom: 24px;
+  }
+
+  .terms-hero-title span {
+    font-size:
+      clamp(
+        2.2rem,
+        10vw,
+        3.8rem
+      );
+
+    line-height: 0.98;
+    letter-spacing: -0.065em;
+  }
+
+  .terms-hero-pills {
+    gap: 8px;
+  }
+
+  .terms-hero-pill {
+    min-height: 39px;
+
+    padding:
+      0
+      13px;
+
+    font-size: 0.71rem;
+  }
+
+  .terms-coming {
+    padding:
+      66px
+      0
+      78px;
+  }
+
+  .terms-coming-card {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+
+    padding:
+      35px
+      27px;
+
+    border-radius: 24px;
+  }
+
+  .terms-coming-icon {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 19px;
+
+    font-size: 1.4rem;
+  }
+
+  .terms-coming-status {
+    grid-column: auto;
+  }
+
+  .terms-coming-content h2 {
+    font-size:
+      clamp(
+        2.45rem,
+        12vw,
+        3.8rem
+      );
+  }
+}
+
+
+@media (max-width: 390px) {
+
+  .terms-container {
+    width:
+      min(
+        calc(100% - 24px),
+        1320px
+      );
+  }
+
+  .terms-hero {
+    padding:
+      90px
+      0
+      60px;
+  }
+
+  .terms-eyebrow {
+    gap: 10px;
+
+    font-size: 0.66rem;
+  }
+
+  .terms-eyebrow-line {
+    width: 27px;
+  }
+
+  .terms-hero-title {
+    font-size:
+      clamp(
+        3rem,
+        15vw,
+        3.7rem
+      );
+  }
+
+  .terms-hero-title span {
+    font-size:
+      clamp(
+        1.95rem,
+        9.2vw,
+        3rem
+      );
+  }
+
+  .terms-hero-pill {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .terms-coming-card {
+    padding:
+      31px
+      22px;
+  }
+
+  .terms-coming-status {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .terms-coming-card {
+    transition: none;
+  }
+}

@@ -30,6 +30,9 @@ import Widerruf from
 import AGB from
   "../components/Website/legal/AGB";
 
+import Nutzungsbedingungen from
+  "../components/Website/legal/Nutzungsbedingungen";
+
 import OnlineShop from "../components/Onlineshop/pages/OnlineShop";
 import ShopLogin from "../components/Onlineshop/pages/ShopLogin";
 import ShopRegister from "../components/Onlineshop/pages/ShopRegister";
@@ -158,6 +161,11 @@ function AppRouter() {
         path="/agb"
         element={<AGB />}
       />
+
+      <Route
+  path="/nutzungsbedingungen"
+  element={<Nutzungsbedingungen />}
+/>
 
       {/* Online-Shop */}
       <Route

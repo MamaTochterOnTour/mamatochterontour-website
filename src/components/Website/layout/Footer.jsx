@@ -290,6 +290,10 @@ setNewsletterEmail("");
   Datenschutz
 </Link>
 
+<Link to="/nutzungsbedingungen">
+  Nutzungsbedingungen
+</Link>
+
 <button
   type="button"
   className="footer__cookie-link"
