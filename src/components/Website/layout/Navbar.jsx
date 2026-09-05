@@ -14,19 +14,11 @@ import {
 
 import "./Navbar.css";
 
-import ComingSoonModal from
-  "../comingsoon/ComingSoonModal";
-
 function Navbar() {
   const [
     menuOpen,
     setMenuOpen,
   ] = useState(false);
-
-  const [
-  webAppComingSoonOpen,
-  setWebAppComingSoonOpen,
-] = useState(false);
 
   const navLinkClass = ({
     isActive,
@@ -100,16 +92,13 @@ function Navbar() {
             Reiseguides entdecken
           </Link>
 
-          <button
-  type="button"
+          <a
+  href="/app/"
   className="app-button"
-  onClick={() => {
-    closeMenu();
-    setWebAppComingSoonOpen(true);
-  }}
+  onClick={closeMenu}
 >
   Web-App öffnen
-</button>
+</a>
         </div>
 
         <button
@@ -196,29 +185,18 @@ function Navbar() {
               Reiseguides entdecken
             </Link>
 
-            <button
-  type="button"
+            <a
+  href="/app/"
   className="app-button"
-  onClick={() => {
-    closeMenu();
-    setWebAppComingSoonOpen(true);
-  }}
+  onClick={closeMenu}
 >
   Web-App öffnen
-</button>
+</a>
           </div>
         </div>
       </div>
 
         </header>
-
-    <ComingSoonModal
-      open={webAppComingSoonOpen}
-      type="webapp"
-      onClose={() =>
-        setWebAppComingSoonOpen(false)
-      }
-    />
   </>
 );
 }

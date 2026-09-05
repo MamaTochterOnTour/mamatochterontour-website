@@ -20,20 +20,12 @@ import { FaPodcast } from "react-icons/fa";
 
 import logo from "../../../assets/images/logo/mamatochterontour-logo.png";
 
-import ComingSoonModal from
-  "../comingsoon/ComingSoonModal";
-
 const currentYear = new Date().getFullYear();
 
 function Footer() {
     const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState("idle");
   const [newsletterMessage, setNewsletterMessage] = useState("");
-
-    const [
-  footerComingSoonType,
-  setFooterComingSoonType,
-] = useState(null);
 
 const handleOpenCookieSettings = () => {
   window.dispatchEvent(
@@ -249,15 +241,12 @@ setNewsletterEmail("");
     Momentry entdecken
   </Link>
 
-  <button
-    type="button"
-    className="footer__coming-soon-link"
-    onClick={() =>
-      setFooterComingSoonType("webapp")
-    }
-  >
-    Web-App öffnen
-  </button>
+  <a
+  href="/app/"
+  className="footer__coming-soon-link"
+>
+  Web-App öffnen
+</a>
 
   <a
     href="https://apps.apple.com/de/app/momentry-by-mamatochterontour/id6754201898"
@@ -374,19 +363,6 @@ setNewsletterEmail("");
         </div>
       </div>
         </footer>
-
-    <ComingSoonModal
-      open={
-        footerComingSoonType !== null
-      }
-      type={
-        footerComingSoonType ||
-        "shop"
-      }
-      onClose={() =>
-        setFooterComingSoonType(null)
-      }
-    />
   </>
 );
 }
