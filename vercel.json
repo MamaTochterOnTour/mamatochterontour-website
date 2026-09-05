@@ -2,28 +2,34 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
 
-  "rewrites": [
-  {
-    "source": "/.well-known/apple-app-site-association",
-    "destination": "/.well-known/apple-app-site-association"
-  },
-  {
-    "source": "/.well-known/assetlinks.json",
-    "destination": "/.well-known/assetlinks.json"
-  },
-  {
-    "source": "/app",
-    "destination": "/app/index.html"
-  },
-  {
-    "source": "/app/post/:postId",
-    "destination": "/app/index.html"
-  },
-  {
-    "source": "/(.*)",
-    "destination": "/index.html"
-  }
-],
+  "routes": [
+    {
+      "src": "/.well-known/apple-app-site-association",
+      "dest": "/.well-known/apple-app-site-association"
+    },
+    {
+      "src": "/.well-known/assetlinks.json",
+      "dest": "/.well-known/assetlinks.json"
+    },
+
+    {
+      "handle": "filesystem"
+    },
+
+    {
+      "src": "/app/?",
+      "dest": "/app/index.html"
+    },
+    {
+      "src": "/app/post/[^/]+/?",
+      "dest": "/app/index.html"
+    },
+
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ],
 
   "headers": [
     {
