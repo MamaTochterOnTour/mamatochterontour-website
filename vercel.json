@@ -3,27 +3,27 @@
   "outputDirectory": "dist",
 
   "rewrites": [
-    {
-      "source": "/.well-known/apple-app-site-association",
-      "destination": "/.well-known/apple-app-site-association"
-    },
-    {
-      "source": "/.well-known/assetlinks.json",
-      "destination": "/.well-known/assetlinks.json"
-    },
-    {
-      "source": "/app",
-      "destination": "/app/index.html"
-    },
-    {
-      "source": "/app/(.*)",
-      "destination": "/app/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
+  {
+    "source": "/.well-known/apple-app-site-association",
+    "destination": "/.well-known/apple-app-site-association"
+  },
+  {
+    "source": "/.well-known/assetlinks.json",
+    "destination": "/.well-known/assetlinks.json"
+  },
+  {
+    "source": "/app",
+    "destination": "/app/index.html"
+  },
+  {
+    "source": "/app/post/:postId",
+    "destination": "/app/index.html"
+  },
+  {
+    "source": "/(.*)",
+    "destination": "/index.html"
+  }
+],
 
   "headers": [
     {
