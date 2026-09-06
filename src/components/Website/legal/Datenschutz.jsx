@@ -414,13 +414,15 @@ export default function Datenschutz() {
                 </p>
 
                 <p>
-                  Soweit eine Speicherung oder ein Zugriff auf
-                  Informationen im Endgerät technisch unbedingt
-                  erforderlich ist, erfolgt dies nach den hierfür
-                  geltenden gesetzlichen Bestimmungen. Für nicht
-                  notwendige Technologien holen wir, soweit erforderlich,
-                  zuvor deine Einwilligung ein.
-                </p>
+  Soweit die Speicherung von Informationen in deinem
+  Endgerät oder der Zugriff auf bereits gespeicherte
+  Informationen unbedingt erforderlich ist, damit wir
+  einen von dir ausdrücklich gewünschten digitalen
+  Dienst bereitstellen können, erfolgt dies auf Grundlage
+  von § 25 Abs. 2 TDDDG. Für nicht unbedingt erforderliche
+  Speicherungen oder Zugriffe holen wir vorab deine
+  Einwilligung gemäß § 25 Abs. 1 TDDDG ein.
+</p>
 
               </AnimatedSection>
 
@@ -513,6 +515,34 @@ export default function Datenschutz() {
                   Konfiguration Daten innerhalb und außerhalb des
                   Europäischen Wirtschaftsraums verarbeiten.
                 </p>
+
+                <p>
+  Firebase Authentication wird nach Angaben von Google
+  über Rechenzentren in den Vereinigten Staaten
+  betrieben. Bei anderen Firebase-Diensten hängt der
+  Ort der Verarbeitung unter anderem vom jeweiligen
+  Dienst und der von uns gewählten Konfiguration
+  beziehungsweise Datenregion ab.
+</p>
+
+                <p>
+  Die Verarbeitung im Rahmen von Firebase
+  Authentication, Cloud Firestore, Cloud Storage und
+  Cloud Functions erfolgt insbesondere auf Grundlage
+  von Art. 6 Abs. 1 lit. b DSGVO, soweit sie für die
+  Bereitstellung deines Benutzerkontos und der von dir
+  genutzten Funktionen erforderlich ist. Soweit
+  Verarbeitungen der Sicherheit, Stabilität oder
+  Missbrauchsprävention dienen, kann die Verarbeitung
+  außerdem auf Art. 6 Abs. 1 lit. f DSGVO beruhen.
+</p>
+
+<p>
+  Soweit Firebase-Dienste zu Analysezwecken eingesetzt
+  werden und hierfür eine Einwilligung erforderlich ist,
+  erfolgt die Verarbeitung auf Grundlage von Art. 6
+  Abs. 1 lit. a DSGVO.
+</p>
 
               </AnimatedSection>
 
@@ -1268,12 +1298,15 @@ export default function Datenschutz() {
                   <FiTrash2 />
 
                   <p>
-                    Die Löschung eines Momentry-Kontos beendet ein
-                    über Apple oder Google abgeschlossenes
-                    Premium-Abonnement nicht automatisch.
-                    Ein solches Abonnement muss zusätzlich beim
-                    jeweiligen Anbieter gekündigt werden.
-                  </p>
+  Die Löschung eines Momentry-Kontos beendet ein
+  bestehendes Premium-Abonnement nicht automatisch.
+  Ein aktives Premium-Abonnement muss zusätzlich über
+  die Plattform beziehungsweise den Zahlungsweg
+  gekündigt werden, über den es abgeschlossen wurde.
+  Dies gilt sowohl für über Apple oder Google
+  abgeschlossene Abonnements als auch für über die
+  Web-App abgeschlossene Premium-Abonnements.
+</p>
                 </div>
 
               </AnimatedSection>
@@ -1343,14 +1376,18 @@ export default function Datenschutz() {
                 </p>
 
                 <p>
-                  Soweit personenbezogene Daten in ein Drittland
-                  übermittelt werden, erfolgt dies nur unter
-                  Beachtung der gesetzlichen Voraussetzungen der
-                  DSGVO, beispielsweise auf Grundlage eines
-                  Angemessenheitsbeschlusses, geeigneter Garantien
-                  wie Standardvertragsklauseln oder einer anderen
-                  zulässigen Rechtsgrundlage.
-                </p>
+  Soweit personenbezogene Daten in ein Drittland
+  übermittelt werden, erfolgt dies unter Beachtung
+  der Voraussetzungen der Art. 44 ff. DSGVO. Bei
+  Übermittlungen in die USA kann insbesondere ein
+  Angemessenheitsbeschluss der Europäischen Kommission
+  für nach dem EU-U.S. Data Privacy Framework
+  zertifizierte Unternehmen zugrunde gelegt werden.
+  Soweit kein einschlägiger Angemessenheitsbeschluss
+  besteht, können insbesondere geeignete Garantien wie
+  die Standardvertragsklauseln der Europäischen
+  Kommission verwendet werden.
+</p>
 
               </AnimatedSection>
 

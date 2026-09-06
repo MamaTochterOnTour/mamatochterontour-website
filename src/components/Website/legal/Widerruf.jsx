@@ -800,10 +800,10 @@ export default function Widerruf() {
 
                   <p>
                     Hiermit widerrufe ich den von mir
-                    abgeschlossenen Vertrag über den Erwerb
-                    beziehungsweise die Bereitstellung der
-                    folgenden digitalen Inhalte oder digitalen
-                    Dienstleistungen:
+abgeschlossenen Vertrag über die Bereitstellung
+der folgenden digitalen Inhalte beziehungsweise
+die Erbringung der folgenden digitalen
+Dienstleistung:
                   </p>
 
                   <div className="widerruf-form-field">

@@ -355,8 +355,8 @@ export default function Impressum() {
                 </div>
 
                 <h3>
-                  Verantwortlich für redaktionelle Inhalte
-                </h3>
+  Verantwortlich für journalistisch-redaktionelle Inhalte
+</h3>
 
                 <p>
                   Verantwortlich für journalistisch-redaktionelle
@@ -428,8 +428,8 @@ export default function Impressum() {
                   <FiCheckCircle />
 
                   <span>
-                    Keine Register- oder Aufsichtsangabe erforderlich
-                  </span>
+  Keine Register- oder Aufsichtsbehörde anzugeben
+</span>
 
                 </div>
 
@@ -462,6 +462,12 @@ export default function Impressum() {
   Rechten als Nutzerin, Nutzer, Kundin oder
   Kunde findest du in unseren rechtlichen
   Hinweisen.
+</p>
+
+<p>
+  Wir sind nicht bereit und nicht verpflichtet,
+  an Streitbeilegungsverfahren vor einer
+  Verbraucherschlichtungsstelle teilzunehmen.
 </p>
 
                 <div className="impressum-legal-links">

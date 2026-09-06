@@ -535,12 +535,15 @@ export default function AGB() {
                     </strong>
 
                     <p>
-                      Das Abonnement verlängert sich nach Ablauf
-                      des jeweiligen Abrechnungszeitraums
-                      automatisch um einen weiteren
-                      entsprechenden Zeitraum, sofern es nicht
-                      rechtzeitig gekündigt wird.
-                    </p>
+  Das Abonnement hat die bei Abschluss
+  ausgewählte Laufzeit und verlängert sich
+  automatisch, sofern es nicht rechtzeitig
+  gekündigt wird. Die konkreten Bedingungen
+  zur Laufzeit, Verlängerung und Kündigung
+  werden vor Abschluss des Abonnements
+  angezeigt. Zwingende gesetzliche
+  Kündigungsrechte bleiben unberührt.
+</p>
                   </div>
 
                 </div>
@@ -615,11 +618,14 @@ export default function AGB() {
                 </p>
 
                 <p>
-                  Die technische Verwaltung und Zuordnung von
-                  Premium-Berechtigungen kann über hierfür
-                  eingesetzte technische Dienstleister
-                  erfolgen.
-                </p>
+  Für die technische Verwaltung und
+  plattformübergreifende Zuordnung von
+  Premium-Berechtigungen setzen wir RevenueCat
+  ein. Die eigentliche Zahlungsabwicklung
+  erfolgt abhängig vom gewählten Abschlussweg
+  insbesondere über Stripe, den Apple App Store
+  oder Google Play.
+</p>
 
               </AnimatedSection>
 
@@ -714,11 +720,11 @@ export default function AGB() {
                   </li>
 
                   <li>
-                    Über die Web-App abgeschlossene
-                    Abonnements können über die dafür auf
-                    unserer Website bereitgestellte
-                    Kündigungsmöglichkeit gekündigt werden.
-                  </li>
+  Über die Web-App abgeschlossene
+  Abonnements können über die auf unserer
+  Website bereitgestellte elektronische
+  Kündigungsfunktion gekündigt werden.
+</li>
                 </ul>
 
                 <p>
@@ -810,28 +816,35 @@ export default function AGB() {
                 </p>
 
                 <p>
-                  Soweit rechtlich zulässig, können einzelne
-                  Funktionen auch eingestellt oder durch andere
-                  Funktionen ersetzt werden, insbesondere wenn
-                  dies aufgrund technischer Entwicklungen,
-                  Sicherheitsanforderungen, gesetzlicher
-                  Vorgaben oder der Weiterentwicklung unseres
-                  Angebots erforderlich ist.
-                </p>
+  Einzelne Funktionen können geändert,
+  eingestellt oder durch andere Funktionen
+  ersetzt werden, wenn hierfür ein triftiger
+  Grund besteht. Ein solcher Grund kann
+  insbesondere in technischen Entwicklungen,
+  Sicherheitsanforderungen, gesetzlichen
+  Vorgaben, der Vermeidung von Missbrauch oder
+  einer notwendigen Weiterentwicklung unseres
+  Angebots liegen. Durch solche Änderungen
+  entstehen dir keine zusätzlichen Kosten.
+</p>
 
                 <p>
-                  Änderungen erfolgen unter Beachtung der
-                  gesetzlichen Anforderungen für digitale
-                  Produkte.
-                </p>
+  Über Änderungen informieren wir dich klar
+  und verständlich entsprechend den
+  gesetzlichen Anforderungen.
+</p>
 
-                <p>
-                  Soweit eine Änderung deine
-                  Zugriffsmöglichkeit oder Nutzbarkeit mehr als
-                  nur unerheblich beeinträchtigt, stehen dir die
-                  jeweils gesetzlich vorgesehenen Informations-
-                  und Beendigungsrechte zu.
-                </p>
+<p>
+  Soweit eine Änderung deine
+  Zugriffsmöglichkeit oder Nutzbarkeit mehr als
+  nur unerheblich beeinträchtigt, informieren
+  wir dich innerhalb einer angemessenen Frist
+  vor der Änderung auf einem dauerhaften
+  Datenträger über die Änderung, ihren
+  Zeitpunkt und die dir gesetzlich zustehenden
+  Rechte. Gesetzliche Beendigungsrechte bleiben
+  unberührt.
+</p>
 
               </AnimatedSection>
 
@@ -1097,6 +1110,24 @@ export default function AGB() {
                 </div>
 
                 <p>
+  Die Moderation erfolgt auf Grundlage der in
+  diesen AGB beschriebenen Regeln. Nutzerinnen
+  und Nutzer können Inhalte melden, die sie für
+  rechtswidrig halten oder die gegen diese AGB
+  verstoßen. Entsprechende Meldungen werden von
+  uns geprüft.
+</p>
+
+<p>
+  Soweit wir Inhalte entfernen, ihre
+  Sichtbarkeit einschränken, Funktionen
+  beschränken oder Benutzerkonten sperren,
+  beachten wir die hierfür geltenden
+  gesetzlichen Informations- und
+  Begründungspflichten.
+</p>
+
+                <p>
                   Bei der Entscheidung berücksichtigen wir,
                   soweit dies nach den Umständen möglich und
                   angemessen ist, insbesondere die Schwere des
@@ -1188,15 +1219,27 @@ export default function AGB() {
                   entgegenstehen.
                 </p>
 
-                <div className="agb-notice">
-                  <FiRefreshCw />
+                <p>
+  Soweit gesetzlich vorgesehen, stellen wir dir
+  auf Verlangen von dir bereitgestellte oder
+  erstellte nicht personenbezogene Inhalte nach
+  Vertragsbeendigung unentgeltlich, ohne
+  Behinderung und innerhalb einer angemessenen
+  Frist in einem gängigen und maschinenlesbaren
+  Format zur Verfügung.
+</p>
 
-                  <p>
-                    Die Löschung deines Momentry-Kontos beendet
-                    ein über Apple oder Google abgeschlossenes
-                    Abonnement nicht automatisch.
-                  </p>
-                </div>
+                <div className="agb-notice">
+  <FiRefreshCw />
+
+  <p>
+    Die Löschung deines Momentry-Kontos beendet
+    ein bestehendes Premium-Abonnement nicht
+    automatisch. Ein aktives Abonnement muss
+    zusätzlich über die Plattform gekündigt
+    werden, über die es abgeschlossen wurde.
+  </p>
+</div>
 
                 <p>
                   Ein über einen App Store abgeschlossenes
@@ -1206,11 +1249,14 @@ export default function AGB() {
                 </p>
 
                 <p>
-                  Bei einem über die Web-App abgeschlossenen
-                  Abonnement solltest du vor beziehungsweise im
-                  Zusammenhang mit der Kontolöschung prüfen, ob
-                  das Abonnement ordnungsgemäß beendet wurde.
-                </p>
+  Auch ein über die Web-App abgeschlossenes
+  Premium-Abonnement wird durch die Löschung
+  des Momentry-Kontos nicht automatisch
+  beendet. Ein noch aktives Web-Abonnement
+  muss vor beziehungsweise zusätzlich zur
+  Kontolöschung über die hierfür vorgesehene
+  Kündigungsfunktion gekündigt werden.
+</p>
 
                 <p>
                   Wenn du dir beim Status deines Abonnements
@@ -1470,6 +1516,15 @@ export default function AGB() {
                   jeweils anwendbaren Abläufe des betreffenden
                   App Stores zu beachten.
                 </p>
+
+                <p>
+  Soweit für einen über eine
+  Online-Benutzeroberfläche geschlossenen
+  Vertrag ein Widerrufsrecht besteht, stellen
+  wir während der gesetzlichen Widerrufsfrist
+  die gesetzlich vorgesehene elektronische
+  Widerrufsfunktion zur Verfügung.
+</p>
 
                 <p>
                   Einzelheiten findest du in unserer
