@@ -5,7 +5,8 @@
       {
         "appID": "63QDXY5V25.com.mycompany.reisetagebuch",
         "paths": [
-          "/app/post/*"
+          "/app/post/*",
+          "/app/trip/invite/*"
         ]
       }
     ]
