@@ -48,6 +48,10 @@ import CheckoutSuccess from "../components/Onlineshop/pages/CheckoutSuccess";
 import ShopProtectedRoute from
   "../components/Onlineshop/auth/ShopProtectedRoute";
 
+
+import TripInvitation from "../components/Website/Momentry/TripInvitation";
+
+
 const CONSENT_KEY = "mtt_cookie_consent";
 
 function AppRouter() {
@@ -130,6 +134,15 @@ function AppRouter() {
         path="/momentry"
         element={<Momentry />}
       />
+
+
+<Route
+  path="/app/trip/invite/:token"
+  element={<TripInvitation />}
+/>
+
+<Route path="/invite/:token" element={<TripInvitation />} />
+
 
       <Route
         path="/kooperationen"

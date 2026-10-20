@@ -3,6 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getFunctions } from "firebase/functions";
 
+import {
+  initializeAppCheck,
+  ReCaptchaEnterpriseProvider,
+  getToken,
+} from "firebase/app-check";
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -16,6 +22,18 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+export const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaEnterpriseProvider(
+    import.meta.env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY
+  ),
+  isTokenAutoRefreshEnabled: true,
+});
+
+export async function getAppCheckToken() {
+  const result = await getToken(appCheck);
+  return result.token;
+}
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);

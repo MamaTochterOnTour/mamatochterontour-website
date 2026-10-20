@@ -13,8 +13,16 @@
     },
 
     {
-      "handle": "filesystem"
-    },
+  "src": "/app/trip/invite/([a-f0-9]{64})/?",
+  "dest": "/api/trip-invite?token=$1"
+},
+{
+  "handle": "filesystem"
+},
+{
+  "src": "/app/trip/invite/[^/]+/?",
+  "dest": "/index.html"
+},
 
     {
       "src": "/app(?:/.*)?",
