@@ -1656,6 +1656,7 @@ exports.subscribeToNewsletter = onCall(
   {
     region: "europe-west1",
     secrets: [BREVO_API_KEY],
+    enforceAppCheck: true,
   },
   async (request) => {
     const rawEmail =

@@ -98,13 +98,19 @@ setNewsletterEmail("");
           {/* Marke und Beschreibung */}
           <div className="footer__brand">
 
-            <div className="footer__newsletter">
+            <div
+  id="newsletter"
+  className="footer__newsletter"
+>
 
   <h3>Newsletter</h3>
 
   <p>
-    Verpasse keine neuen Reiseguides, App-Updates und exklusiven Angebote mehr.
-  </p>
+  Verpasse keine neuen Reiseguides,
+  App-Updates oder exklusiven Angebote
+  und sichere dir 10 % Willkommensrabatt
+  für unseren Online-Shop.
+</p>
 
   <form
   className="footer__newsletter-form"
@@ -210,9 +216,21 @@ setNewsletterEmail("");
     Website
   </span>
 
-  <Link to="/">Startseite</Link>
-  <Link to="/kooperationen">Kooperationen</Link>
-  <Link to="/kontakt">Kontakt</Link>
+  <Link to="/">
+  Startseite
+</Link>
+
+<Link to="/ueber-uns">
+  Über uns
+</Link>
+
+<Link to="/kooperationen">
+  Kooperationen
+</Link>
+
+<Link to="/kontakt">
+  Kontakt
+</Link>
 </div>
 
            {/* Online-Shop */}

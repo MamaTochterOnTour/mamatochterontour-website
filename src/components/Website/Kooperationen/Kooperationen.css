@@ -25,8 +25,6 @@
   --coop-muted-dark: #637069;
   --coop-muted: #909a95;
 
-  min-height: 100vh;
-
   overflow: hidden;
 
   color: #e9ecea;
@@ -1348,5 +1346,1270 @@
 
     transition-duration:
       0.01ms !important;
+  }
+}
+
+/* =========================================================
+   BESTEHENDE PARTNERSCHAFTEN
+========================================================= */
+
+.cooperation-partners {
+  padding:
+    100px 0 115px;
+
+  color:
+    var(--coop-text-dark);
+
+  background:
+    var(--coop-cream-light);
+
+  border-top:
+    1px solid
+    rgba(21, 60, 49, 0.08);
+}
+
+.cooperation-partners__heading {
+  max-width: 900px;
+}
+
+.cooperation-partners__heading h2 {
+  margin:
+    21px 0 0;
+
+  color:
+    var(--coop-green-dark);
+
+  font-size:
+    clamp(3.5rem, 5.5vw, 5.9rem);
+
+  line-height: 0.89;
+
+  letter-spacing:
+    -0.072em;
+}
+
+.cooperation-partners__heading h2 span {
+  display: block;
+
+  color:
+    var(--coop-purple);
+}
+
+.cooperation-partners__heading > p {
+  max-width: 610px;
+
+  margin:
+    25px 0 0;
+
+  color:
+    var(--coop-muted-dark);
+
+  font-size: 0.92rem;
+
+  line-height: 1.75;
+}
+
+.cooperation-partners__grid {
+  margin-top: 52px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 16px;
+}
+
+.cooperation-partner-card {
+  min-width: 0;
+  min-height: 215px;
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  border:
+    1px solid
+    rgba(21, 60, 49, 0.11);
+
+  border-radius: 23px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 20px 50px
+    rgba(21, 60, 49, 0.07);
+
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.cooperation-partner-card:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(113, 80, 143, 0.24);
+
+  box-shadow:
+    0 27px 60px
+    rgba(21, 60, 49, 0.11);
+}
+
+.cooperation-partner-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cooperation-partner-card__top > span {
+  color:
+    rgba(21, 60, 49, 0.42);
+
+  font-size: 0.58rem;
+  font-weight: 850;
+}
+
+.cooperation-partner-card__top > div {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color:
+    var(--coop-white);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--coop-green),
+      var(--coop-purple)
+    );
+}
+
+.cooperation-partner-card__top svg {
+  width: 17px;
+  height: 17px;
+}
+
+.cooperation-partner-card h3 {
+  margin:
+    auto 0 0;
+
+  color:
+    var(--coop-green-dark);
+
+  font-size:
+    clamp(1.25rem, 1.7vw, 1.65rem);
+
+  line-height: 1.08;
+
+  letter-spacing:
+    -0.04em;
+}
+
+.cooperation-partner-card > p {
+  margin:
+    10px 0 0;
+
+  color:
+    var(--coop-purple);
+
+  font-size: 0.67rem;
+  font-weight: 800;
+
+  line-height: 1.45;
+}
+
+
+/* =========================================================
+   CTA-AKTIONEN
+========================================================= */
+
+.cooperation-cta__actions {
+  position: relative;
+  z-index: 2;
+
+  margin-top: 30px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   PARTNER – TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .cooperation-partners {
+    padding:
+      90px 0;
+  }
+
+  .cooperation-partners__grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+
+/* =========================================================
+   PARTNER – HANDY
+========================================================= */
+
+@media (max-width: 650px) {
+  .cooperation-partners {
+    padding:
+      78px 0;
+  }
+
+  .cooperation-partners__heading h2 {
+    font-size:
+      clamp(
+        3rem,
+        14vw,
+        3.9rem
+      );
+  }
+
+  .cooperation-partners__heading > p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  .cooperation-partners__grid {
+    margin-top: 38px;
+
+    grid-template-columns: 1fr;
+
+    gap: 11px;
+  }
+
+  .cooperation-partner-card {
+    min-height: 175px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+  }
+
+  .cooperation-cta__actions {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   KOOPERATIONEN – FINALE DESIGNKORREKTUREN
+========================================================= */
+
+
+/* =========================================================
+   GROSSE ÜBERSCHRIFTEN – KEINE ÜBERSCHNEIDUNGEN
+========================================================= */
+
+.cooperation-hero h1 {
+  line-height: 0.92;
+}
+
+.cooperation-hero h1 span {
+  margin-top: 0.08em;
+}
+
+.cooperation-intro h2,
+.cooperation-partners__heading h2 {
+  line-height: 0.95;
+}
+
+.cooperation-intro h2 span,
+.cooperation-partners__heading h2 span {
+  margin-top: 0.08em;
+}
+
+
+/* =========================================================
+   HERO – DESKTOP
+========================================================= */
+
+.cooperation-hero::before {
+  position: absolute;
+  top: 15%;
+  right: -180px;
+
+  width: 620px;
+  height: 620px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+
+  border-radius: 50%;
+
+  content: "";
+  pointer-events: none;
+}
+
+.cooperation-hero__side-copy {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.cooperation-hero__side-copy > div {
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  border-radius: 12px;
+
+  color:
+    var(--coop-green-light);
+
+  background:
+    rgba(155, 199, 174, 0.09);
+}
+
+.cooperation-hero__side-copy svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cooperation-hero__side-copy span {
+  min-width: 0;
+}
+
+@media (min-width: 981px) {
+  .cooperation-hero__layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(380px, 0.5fr);
+  }
+
+  .cooperation-hero__side {
+    padding: 0;
+
+    display: grid;
+    gap: 13px;
+
+    overflow: visible;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .cooperation-hero__side-label {
+    margin: 0 0 5px 17px;
+  }
+
+  .cooperation-hero__side-item,
+  .cooperation-hero__side-item:last-child {
+    padding: 17px 20px;
+
+    display: grid;
+    grid-template-columns:
+      35px minmax(0, 1fr);
+
+    align-items: center;
+    gap: 12px;
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.11);
+
+    border-radius: 19px;
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.075),
+        rgba(255, 255, 255, 0.035)
+      );
+
+    box-shadow:
+      0 20px 48px
+      rgba(0, 0, 0, 0.17);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      background-color 220ms ease;
+  }
+
+  .cooperation-hero__side-item:nth-of-type(1) {
+    transform:
+      translateX(20px);
+  }
+
+  .cooperation-hero__side-item:nth-of-type(2) {
+    transform:
+      translateX(-12px);
+  }
+
+  .cooperation-hero__side-item:nth-of-type(3) {
+    transform:
+      translateX(28px);
+  }
+
+  .cooperation-hero__side-item:nth-of-type(1):hover {
+    transform:
+      translateX(20px)
+      translateY(-3px);
+  }
+
+  .cooperation-hero__side-item:nth-of-type(2):hover {
+    transform:
+      translateX(-12px)
+      translateY(-3px);
+  }
+
+  .cooperation-hero__side-item:nth-of-type(3):hover {
+    transform:
+      translateX(28px)
+      translateY(-3px);
+  }
+
+  .cooperation-hero__side-item:hover {
+    border-color:
+      rgba(155, 199, 174, 0.26);
+
+    background:
+      rgba(255, 255, 255, 0.08);
+  }
+}
+
+
+/* =========================================================
+   PARTNERSCHAFTEN – EIGENER VOLLER BEREICH
+========================================================= */
+
+.cooperation-partners {
+  position: relative;
+
+  padding:
+    110px 0 120px;
+
+  overflow: hidden;
+
+  color:
+    var(--coop-text-dark);
+
+  background:
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(113, 80, 143, 0.11),
+      transparent 29%
+    ),
+    linear-gradient(
+      135deg,
+      #edf4ef,
+      #faf8f4 54%,
+      #eee8f2
+    );
+
+  border-top:
+    1px solid
+    rgba(21, 60, 49, 0.09);
+
+  border-bottom:
+    1px solid
+    rgba(21, 60, 49, 0.09);
+}
+
+.cooperation-partners::before {
+  position: absolute;
+  right: -220px;
+  bottom: -330px;
+
+  width: 650px;
+  height: 650px;
+
+  border:
+    1px solid
+    rgba(113, 80, 143, 0.09);
+
+  border-radius: 50%;
+
+  content: "";
+  pointer-events: none;
+}
+
+.cooperation-partners__heading {
+  position: relative;
+  z-index: 1;
+
+  max-width: none;
+}
+
+.cooperation-partners__heading-grid {
+  margin-top: 22px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(350px, 0.58fr);
+
+  align-items: end;
+  gap:
+    clamp(55px, 8vw, 115px);
+}
+
+.cooperation-partners__heading h2 {
+  max-width: 850px;
+
+  margin: 0;
+
+  color:
+    var(--coop-green-dark);
+
+  font-size:
+    clamp(3.5rem, 5.5vw, 5.9rem);
+
+  letter-spacing:
+    -0.072em;
+}
+
+.cooperation-partners__heading h2 span {
+  display: block;
+
+  color:
+    var(--coop-purple);
+}
+
+.cooperation-partners__copy {
+  padding-left: 31px;
+
+  border-left:
+    1px solid
+    rgba(21, 60, 49, 0.16);
+}
+
+.cooperation-partners__copy p {
+  margin: 0;
+
+  color:
+    var(--coop-muted-dark);
+
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.cooperation-partners__copy p + p {
+  margin-top: 17px;
+}
+
+.cooperation-partners__grid {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+
+  margin-top: 58px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 17px;
+}
+
+.cooperation-partner-card {
+  width: 100%;
+  min-width: 0;
+  min-height: 190px;
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  border:
+    1px solid
+    rgba(21, 60, 49, 0.11);
+
+  border-radius: 23px;
+
+  background:
+    rgba(255, 255, 255, 0.8);
+
+  box-shadow:
+    0 22px 55px
+    rgba(21, 60, 49, 0.07);
+}
+
+.cooperation-partner-card h3 {
+  margin:
+    auto 0 0;
+
+  color:
+    var(--coop-green-dark);
+
+  font-size:
+    clamp(1.25rem, 1.7vw, 1.65rem);
+
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+
+.cooperation-partner-card > p {
+  margin:
+    10px 0 0;
+
+  color:
+    var(--coop-purple);
+
+  font-size: 0.67rem;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   ABSCHLUSS ALS VOLLBREITER BLOCK
+========================================================= */
+
+.cooperation-cta {
+  position: relative;
+
+  padding:
+    120px 0;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 82% 12%,
+      rgba(113, 80, 143, 0.22),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 20% 105%,
+      rgba(47, 104, 85, 0.26),
+      transparent 36%
+    ),
+    linear-gradient(
+      145deg,
+      #090c0a,
+      #101712 56%,
+      #17121d
+    );
+}
+
+.cooperation-cta__card {
+  position: relative;
+
+  padding: 0;
+
+  overflow: visible;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+}
+
+.cooperation-cta__glow {
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .cooperation-partners {
+    padding:
+      95px 0;
+  }
+
+  .cooperation-partners__heading-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+
+    gap: 32px;
+  }
+
+  .cooperation-partners__copy {
+    max-width: 680px;
+
+    padding-top: 27px;
+    padding-left: 0;
+
+    border-top:
+      1px solid
+      rgba(21, 60, 49, 0.16);
+
+    border-left: 0;
+  }
+
+  .cooperation-partners__grid {
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 12px;
+}
+
+  .cooperation-partner-card {
+    min-height: 180px;
+
+    padding: 20px;
+  }
+
+  .cooperation-cta {
+    padding:
+      100px 0;
+  }
+}
+
+
+/* =========================================================
+   HANDY
+========================================================= */
+
+@media (max-width: 650px) {
+  .cooperation-hero h1 {
+    line-height: 0.94;
+  }
+
+  .cooperation-hero h1 span {
+    margin-top: 0.09em;
+  }
+
+  .cooperation-hero__side-copy {
+    gap: 10px;
+  }
+
+  .cooperation-hero__side-copy > div {
+    width: 33px;
+    height: 33px;
+
+    border-radius: 10px;
+  }
+
+  .cooperation-hero__side-copy svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cooperation-intro h2,
+  .cooperation-partners__heading h2 {
+    line-height: 0.97;
+  }
+
+  .cooperation-intro h2 span,
+  .cooperation-partners__heading h2 span {
+    margin-top: 0.1em;
+  }
+
+  .cooperation-partners {
+    padding:
+      78px 0;
+  }
+
+  .cooperation-partners__heading h2 {
+    font-size:
+      clamp(
+        2.75rem,
+        13vw,
+        3.65rem
+      );
+  }
+
+  .cooperation-partners__copy {
+    padding-top: 23px;
+  }
+
+  .cooperation-partners__copy p {
+    font-size: 0.84rem;
+    line-height: 1.67;
+  }
+
+  .cooperation-partners__grid {
+    margin-top: 39px;
+
+    grid-template-columns: 1fr;
+
+    gap: 11px;
+  }
+
+  .cooperation-partner-card {
+    min-height: 160px;
+
+    padding: 19px;
+
+    border-radius: 20px;
+  }
+
+  /*
+   * Verhindert, dass das lange Label
+   * "Zusammenarbeit mit uns" abgeschnitten wird.
+   */
+
+  .cooperation-possibilities__heading
+  .cooperation-section-label {
+    max-width: 100%;
+
+    font-size: 0.44rem;
+    line-height: 1.45;
+
+    letter-spacing: 0.1em;
+
+    white-space: normal;
+  }
+
+  .cooperation-possibilities__heading h2 {
+    font-size:
+      clamp(
+        2.65rem,
+        12vw,
+        3.5rem
+      );
+
+    line-height: 0.94;
+  }
+
+  .cooperation-cta {
+    padding:
+      82px 0;
+  }
+
+  .cooperation-cta__card {
+    padding: 0;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+  }
+}
+
+/* =========================================================
+   KOOPERATIONEN – ABSCHLIESSENDE KORREKTUREN
+========================================================= */
+
+
+/* =========================================================
+   HERO – REDAKTIONELLE LISTE AUF DEM LAPTOP
+========================================================= */
+
+@media (min-width: 981px) {
+  .cooperation-hero__layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(350px, 0.42fr);
+
+    gap:
+      clamp(45px, 6vw, 85px);
+  }
+
+  .cooperation-hero__side {
+    width: 100%;
+    max-width: 440px;
+
+    margin-right: 38px;
+
+    padding: 0;
+
+    justify-self: end;
+
+    display: block;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    transform:
+      translateX(-38px);
+  }
+
+  .cooperation-hero__side-label {
+    display: block;
+
+    margin: 0 0 16px;
+
+    color:
+      var(--coop-green-light);
+
+    font-size: 0.58rem;
+    letter-spacing: 0.17em;
+  }
+
+  .cooperation-hero__side-item,
+  .cooperation-hero__side-item:last-child,
+  .cooperation-hero__side-item:nth-of-type(1),
+  .cooperation-hero__side-item:nth-of-type(2),
+  .cooperation-hero__side-item:nth-of-type(3) {
+    padding: 22px 0;
+
+    display: grid;
+    grid-template-columns:
+      55px minmax(0, 1fr);
+
+    align-items: center;
+    gap: 17px;
+
+    border: 0;
+    border-top:
+      1px solid
+      rgba(255, 255, 255, 0.13);
+
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    transform: none;
+  }
+
+  .cooperation-hero__side-item:last-child {
+    border-bottom:
+      1px solid
+      rgba(255, 255, 255, 0.13);
+  }
+
+  .cooperation-hero__side-item:hover,
+  .cooperation-hero__side-item:nth-of-type(1):hover,
+  .cooperation-hero__side-item:nth-of-type(2):hover,
+  .cooperation-hero__side-item:nth-of-type(3):hover {
+    background: transparent;
+
+    transform:
+      translateX(7px);
+  }
+
+  .cooperation-hero__side-item strong {
+    color:
+      var(--coop-purple-light);
+
+    font-size: 1.15rem;
+    font-weight: 750;
+  }
+
+  .cooperation-hero__side-copy {
+    display: block;
+  }
+
+  .cooperation-hero__side-copy > div {
+    display: none;
+  }
+
+  .cooperation-hero__side-copy span {
+    color:
+      rgba(255, 255, 255, 0.88);
+
+    font-size: 1rem;
+    font-weight: 750;
+    line-height: 1.4;
+  }
+}
+
+
+/* =========================================================
+   WAS UNS AUSZEICHNET – DUNKLER BEREICH
+========================================================= */
+
+.cooperation-possibilities {
+  color:
+    var(--coop-white);
+
+  background:
+    radial-gradient(
+      circle at 88% 16%,
+      rgba(113, 80, 143, 0.19),
+      transparent 29%
+    ),
+    radial-gradient(
+      circle at 12% 90%,
+      rgba(47, 104, 85, 0.2),
+      transparent 32%
+    ),
+    var(--coop-black-soft);
+}
+
+.cooperation-possibilities
+.cooperation-section-label {
+  color:
+    var(--coop-green-light);
+}
+
+.cooperation-possibilities__heading h2 {
+  color:
+    var(--coop-white);
+}
+
+.cooperation-possibilities__heading h2 span {
+  color:
+    var(--coop-purple-light);
+}
+
+.cooperation-possibility-card {
+  border-color:
+    rgba(255, 255, 255, 0.1);
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  box-shadow:
+    0 23px 55px
+    rgba(0, 0, 0, 0.17);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+}
+
+.cooperation-possibility-card h3 {
+  color:
+    var(--coop-white);
+}
+
+.cooperation-possibility-card p {
+  color:
+    rgba(255, 255, 255, 0.63);
+}
+
+
+/* =========================================================
+   ABSCHLUSS – HELLER VOLLBREITER BEREICH
+========================================================= */
+
+.cooperation-cta {
+  color:
+    var(--coop-text-dark);
+
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(113, 80, 143, 0.13),
+      transparent 31%
+    ),
+    linear-gradient(
+      135deg,
+      #edf4ef,
+      #faf8f4 58%,
+      #eee8f2
+    );
+}
+
+.cooperation-cta__card {
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+}
+
+.cooperation-cta__glow {
+  opacity: 0.16;
+}
+
+.cooperation-cta__icon {
+  border-color:
+    rgba(21, 60, 49, 0.13);
+
+  color:
+    var(--coop-green-dark);
+
+  background:
+    var(--coop-green-soft);
+}
+
+.cooperation-cta__eyebrow {
+  color:
+    var(--coop-green);
+}
+
+.cooperation-cta h2 {
+  color:
+    var(--coop-green-dark);
+}
+
+.cooperation-cta h2 span {
+  color:
+    var(--coop-purple);
+}
+
+.cooperation-cta p {
+  color:
+    var(--coop-muted-dark);
+}
+
+.cooperation-cta
+.cooperation-button--primary {
+  color:
+    var(--coop-white);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--coop-green-dark),
+      var(--coop-purple-dark)
+    );
+}
+
+.cooperation-cta
+.cooperation-button--secondary {
+  border-color:
+    rgba(21, 60, 49, 0.18);
+
+  color:
+    var(--coop-green-dark);
+
+  background:
+    rgba(255, 255, 255, 0.7);
+}
+
+.cooperation-cta
+.cooperation-button--secondary svg {
+  color:
+    var(--coop-green-dark);
+
+  stroke:
+    var(--coop-green-dark);
+}
+
+
+/* =========================================================
+   HANDY – HERO-DARSTELLUNG BEIBEHALTEN
+========================================================= */
+
+@media (max-width: 980px) {
+  .cooperation-hero__side {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   HERO – UNNÖTIGEN FREIRAUM UNTEN ENTFERNEN
+========================================================= */
+
+.cooperation-hero {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.cooperation-hero__layout {
+  height: auto !important;
+  min-height: 0 !important;
+
+  padding-bottom: 55px !important;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .cooperation-hero__layout {
+    padding-bottom: 48px !important;
+  }
+}
+
+/* Handy */
+@media (max-width: 650px) {
+  .cooperation-hero__layout {
+    padding-bottom: 38px !important;
+  }
+}
+
+/* =========================================================
+   ABOUT HERO – HÖHE WIE KOOPERATIONEN
+========================================================= */
+
+.about-hero {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.about-hero__layout {
+  height: auto !important;
+  min-height: 0 !important;
+
+  padding-top: 22px !important;
+  padding-bottom: 55px !important;
+}
+
+
+/* Tablet */
+
+@media (max-width: 980px) {
+
+  .about-hero__layout {
+    padding-top: 16px !important;
+    padding-bottom: 48px !important;
+  }
+}
+
+
+/* Handy */
+
+@media (max-width: 650px) {
+
+  .about-hero__layout {
+    padding-top: 8px !important;
+    padding-bottom: 38px !important;
+  }
+}
+
+
+/* Sehr kleine Handys */
+
+@media (max-width: 390px) {
+
+  .about-hero__layout {
+    padding-top: 5px !important;
   }
 }

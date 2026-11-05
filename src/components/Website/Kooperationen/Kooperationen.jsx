@@ -7,7 +7,6 @@ import {
   FiArrowRight,
   FiBriefcase,
   FiCheck,
-  FiCompass,
   FiDownload,
   FiHeart,
   FiMail,
@@ -38,31 +37,58 @@ const CONTACT_EMAIL =
   "mamatochterontour@outlook.de";
 
 /* =========================================================
+   BESTEHENDE PARTNERSCHAFTEN
+========================================================= */
+
+const EXISTING_PARTNERS = [
+  {
+    id: "macromedia",
+    name: "Macromedia University",
+    since: "Social-Media-Partner seit August 2025",
+  },
+  {
+    id: "holy",
+    name: "HOLY",
+    since: "Social-Media-Partner seit Januar 2026",
+  },
+  {
+    id: "tui-aschaffenburg",
+    name: "TUI Reisebüro Aschaffenburg",
+    since: "Momentry App-Partner seit Januar 2026",
+  },
+  {
+    id: "snocks",
+    name: "SNOCKS",
+    since: "Social-Media-Partner seit August 2026",
+  },
+];
+
+/* =========================================================
    KOOPERATIONS-BEREICHE
 ========================================================= */
 
 const COOPERATION_AREAS = [
   {
-    id: "content",
-    number: "01",
-    icon: FiUsers,
-    eyebrow:
-      "MamaTochterOnTour",
-    title:
-      "Content, Social Media & Events",
-    text:
-      "Wir erzählen Geschichten aus unserem Alltag und von unseren Reisen – persönlich, nahbar und immer mit dem Anspruch, Kooperationen natürlich in unseren Content zu integrieren.",
-    items: [
-      "Social-Media-Kampagnen",
-      "Reels, TikToks, Stories & Posts",
-      "Events & Einladungen",
-      "Hotels & Unterkünfte",
-      "Kreuzfahrten & Reiseerlebnisse",
-      "Destinationen & Pressereisen",
-      "Produktintegrationen",
-      "Langfristige Partnerschaften",
-    ],
-  },
+  id: "content",
+  number: "01",
+  icon: FiUsers,
+  eyebrow:
+    "MamaTochterOnTour",
+  title:
+    "Content, Social Media & Events",
+  text:
+    "Wir erzählen Geschichten aus unserem Alltag und von unseren Reisen – persönlich, nahbar und immer mit dem Anspruch, Kooperationen natürlich und glaubwürdig in unseren Content zu integrieren.",
+  items: [
+    "Social-Media-Kampagnen",
+    "Reels, TikToks, Stories & Posts",
+    "Authentische Produktintegrationen",
+    "Content-Produktion",
+    "Events & Einladungen",
+    "Markenbotschafter-Kampagnen",
+    "Individuelle Konzepte",
+    "Langfristige Partnerschaften",
+  ],
+},
 
   {
     id: "momentry",
@@ -73,8 +99,8 @@ const COOPERATION_AREAS = [
     title:
       "Partnerschaften für unsere Reise-App",
     text:
-      "Mit Momentry by MamaTochterOnTour möchten wir eine Plattform schaffen, die Reisende vor, während und nach ihrer Reise begleitet. Dafür suchen wir Partner, deren Angebote und Produkte einen echten Mehrwert für Reisende schaffen.",
-    items: [
+  "Momentry by MamaTochterOnTour ist unsere Reise-App, die Reisende vor, während und nach ihrer Reise begleitet. Wir sind offen für Partnerschaften, die unserer Community einen echten Mehrwert bieten und sich sinnvoll in die Reisewelt der App integrieren lassen.",
+  items: [
       "Hotels & Unterkünfte",
       "Destinationen & Tourismus",
       "Kreuzfahrt & Mobilität",
@@ -113,53 +139,53 @@ const COOPERATION_AREAS = [
    KOOPERATIONS-MÖGLICHKEITEN
 ========================================================= */
 
-const POSSIBILITIES = [
+const COOPERATION_STRENGTHS = [
   {
-    icon: FiHeart,
+    icon: FiUsers,
     title:
-      "Authentischer Content",
+      "Persönliches Mama-Tochter-Duo",
     text:
-      "Produkte, Marken und Erlebnisse werden so eingebunden, dass sie natürlich zu unseren bestehenden Inhalten passen.",
+      "Zwei Generationen, unterschiedliche Perspektiven und eine gemeinsame Art, Geschichten persönlich und nahbar zu erzählen.",
   },
 
   {
-    icon: FiCompass,
+    icon: FiHeart,
     title:
-      "Reise & Erlebnis",
+      "Authentisches Storytelling",
     text:
-      "Hotels, Kreuzfahrten, Destinationen, Events und besondere Erlebnisse können wir redaktionell und auf Social Media begleiten.",
+      "Kooperationen werden so in unseren Content eingebunden, dass sie glaubwürdig zu uns und unseren bestehenden Inhalten passen.",
   },
 
   {
     icon: FiSmartphone,
     title:
-      "Momentry Partnerschaften",
+      "Plattformübergreifender Content",
     text:
-      "Marken und Services können Teil der Momentry-Reisewelt werden und Reisenden einen echten praktischen Mehrwert bieten.",
+      "Wir entwickeln Inhalte für unterschiedliche Formate und Plattformen – von kurzen Social-Media-Videos bis zu ausführlicheren Einblicken.",
   },
 
   {
     icon: FiPackage,
     title:
-      "Produktkooperationen",
+      "Eigene Projekte & Produkte",
     text:
-      "Von passenden Reiseprodukten bis hin zu gemeinsam entwickelten Produkten oder Aktionen für unseren Online-Shop.",
+      "Mit Momentry, unseren Reiseguides und unserem Online-Shop verbinden wir Content mit eigenen digitalen Projekten und Produkten.",
   },
 
   {
     icon: FiStar,
     title:
-      "Individuelle Kampagnen",
+      "Individuelle Konzepte",
     text:
-      "Nicht jede Kooperation muss gleich aussehen. Wir entwickeln gerne individuelle Konzepte passend zur Marke und Zielsetzung.",
+      "Wir entwickeln Kooperationen passend zur Marke, zur Zielsetzung und zu den Menschen, die unsere Inhalte begleiten.",
   },
 
   {
     icon: FiBriefcase,
     title:
-      "Langfristige Partnerschaften",
+      "Langfristiges Markenverständnis",
     text:
-      "Besonders spannend finden wir Kooperationen, die über einzelne Kampagnen hinausgehen und langfristig wachsen können.",
+      "Besonders wichtig sind uns Partnerschaften, die authentisch wachsen und über eine einzelne Kampagne hinausgehen können.",
   },
 ];
 
@@ -340,47 +366,64 @@ function CooperationHero() {
         </motion.div>
 
         <AnimatedSection
-          className="cooperation-hero__side"
-          delay={0.12}
-        >
-          <span className="cooperation-hero__side-label">
-            Drei Bereiche
-          </span>
+  className="cooperation-hero__side"
+  delay={0.12}
+>
+  <span className="cooperation-hero__side-label">
+    Unsere Kooperationswelten
+  </span>
 
-          <div className="cooperation-hero__side-item">
-            <strong>
-              01
-            </strong>
+  <div className="cooperation-hero__side-item">
+    <strong>
+      01
+    </strong>
 
-            <span>
-              Content,
-              Social Media
-              & Events
-            </span>
-          </div>
+    <div className="cooperation-hero__side-copy">
+      <div>
+        <FiUsers aria-hidden="true" />
+      </div>
 
-          <div className="cooperation-hero__side-item">
-            <strong>
-              02
-            </strong>
+      <span>
+        Content, Social Media
+        & Events
+      </span>
+    </div>
+  </div>
 
-            <span>
-              Momentry
-              Partnerschaften
-            </span>
-          </div>
+  <div className="cooperation-hero__side-item">
+    <strong>
+      02
+    </strong>
 
-          <div className="cooperation-hero__side-item">
-            <strong>
-              03
-            </strong>
+    <div className="cooperation-hero__side-copy">
+      <div>
+        <FiSmartphone aria-hidden="true" />
+      </div>
 
-            <span>
-              Online-Shop
-              & Produkte
-            </span>
-          </div>
-        </AnimatedSection>
+      <span>
+        Momentry
+        Partnerschaften
+      </span>
+    </div>
+  </div>
+
+  <div className="cooperation-hero__side-item">
+    <strong>
+      03
+    </strong>
+
+    <div className="cooperation-hero__side-copy">
+      <div>
+        <FiShoppingBag aria-hidden="true" />
+      </div>
+
+      <span>
+        Online-Shop
+        & Produkte
+      </span>
+    </div>
+  </div>
+</AnimatedSection>
       </div>
     </section>
   );
@@ -426,6 +469,85 @@ function CooperationIntro() {
             </div>
           </div>
         </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   BESTEHENDE PARTNERSCHAFTEN
+========================================================= */
+
+function CooperationPartners() {
+  return (
+    <section className="cooperation-partners">
+      <div className="cooperation-container">
+        <AnimatedSection className="cooperation-partners__heading">
+          <SectionLabel>
+            Bestehende Partnerschaften
+          </SectionLabel>
+
+          <div className="cooperation-partners__heading-grid">
+            <h2>
+              Partner, die uns
+              <span>
+                langfristig begleiten.
+              </span>
+            </h2>
+
+            <div className="cooperation-partners__copy">
+  <p>
+  Mit der Macromedia University,
+  HOLY und SNOCKS arbeiten wir im
+  Rahmen langfristiger
+  Social-Media-Kooperationen zusammen.
+  Das TUI Reisebüro Aschaffenburg
+  begleitet Momentry by MamaTochterOnTour als App-Partner.
+</p>
+
+  <p>
+    Darüber hinaus haben wir bereits
+    vielfältige Einzelkooperationen umgesetzt –
+    unter anderem mit Hotels sowie im Rahmen
+    von Events, Museen, Ausstellungen,
+    Freizeitparks und Musicals.
+  </p>
+</div>
+          </div>
+        </AnimatedSection>
+
+        <div className="cooperation-partners__grid">
+          {EXISTING_PARTNERS.map(
+            (partner, index) => (
+              <AnimatedSection
+                key={partner.id}
+                className="cooperation-partner-card"
+                delay={index * 0.06}
+              >
+                <div className="cooperation-partner-card__top">
+                  <span>
+                    {String(index + 1).padStart(
+                      2,
+                      "0"
+                    )}
+                  </span>
+
+                  <div>
+                    <FiCheck aria-hidden="true" />
+                  </div>
+                </div>
+
+                <h3>
+                  {partner.name}
+                </h3>
+
+                <p>
+                  {partner.since}
+                </p>
+              </AnimatedSection>
+            )
+          )}
+        </div>
       </div>
     </section>
   );
@@ -525,25 +647,29 @@ function CooperationAreas() {
    MÖGLICHKEITEN
 ========================================================= */
 
-function CooperationPossibilities() {
+/* =========================================================
+   WAS UNS AUSZEICHNET
+========================================================= */
+
+function CooperationStrengths() {
   return (
     <section className="cooperation-possibilities">
       <div className="cooperation-container">
         <AnimatedSection className="cooperation-possibilities__heading">
           <SectionLabel>
-            Möglichkeiten
+            Zusammenarbeit mit uns
           </SectionLabel>
 
           <h2>
-            Vom einzelnen Moment
+            Was eine Zusammenarbeit
             <span>
-              bis zur Partnerschaft.
+              mit uns auszeichnet.
             </span>
           </h2>
         </AnimatedSection>
 
         <div className="cooperation-possibilities__grid">
-          {POSSIBILITIES.map(
+          {COOPERATION_STRENGTHS.map(
             (item, index) => {
               const Icon =
                 item.icon;
@@ -552,9 +678,7 @@ function CooperationPossibilities() {
                 <AnimatedSection
                   key={item.title}
                   className="cooperation-possibility-card"
-                  delay={
-                    index * 0.05
-                  }
+                  delay={index * 0.05}
                 >
                   <div className="cooperation-possibility-card__icon">
                     <Icon
@@ -580,6 +704,74 @@ function CooperationPossibilities() {
 }
 
 /* =========================================================
+   ABSCHLUSS / KONTAKT
+========================================================= */
+
+function CooperationCTA() {
+  return (
+    <section className="cooperation-cta">
+      <div className="cooperation-container">
+        <AnimatedSection className="cooperation-cta__card">
+          <div
+            className="cooperation-cta__glow"
+            aria-hidden="true"
+          />
+
+          <div className="cooperation-cta__icon">
+            <FiMail aria-hidden="true" />
+          </div>
+
+          <span className="cooperation-cta__eyebrow">
+            Lasst uns sprechen
+          </span>
+
+          <h2>
+            Eine Idee, die
+            <span>
+              zu uns passen könnte?
+            </span>
+          </h2>
+
+          <p>
+            Dann freuen wir uns darauf,
+            mehr über die Marke, die Idee
+            und die geplante Zusammenarbeit
+            zu erfahren.
+          </p>
+
+          <div className="cooperation-cta__actions">
+            <a
+              href={`mailto:${CONTACT_EMAIL}?subject=Kooperationsanfrage`}
+              className="cooperation-button cooperation-button--primary"
+            >
+              <FiMail aria-hidden="true" />
+
+              <span>
+                Kooperation anfragen
+              </span>
+
+              <FiArrowRight aria-hidden="true" />
+            </a>
+
+            <a
+              href={MEDIA_KIT_URL}
+              download
+              className="cooperation-button cooperation-button--secondary"
+            >
+              <FiDownload aria-hidden="true" />
+
+              <span>
+                Media Kit herunterladen
+              </span>
+            </a>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
    PAGE
 ========================================================= */
 
@@ -591,11 +783,15 @@ function Kooperationen() {
       <main className="cooperation-page">
         <CooperationHero />
 
-        <CooperationIntro />
+<CooperationIntro />
 
-        <CooperationAreas />
+<CooperationAreas />
 
-        <CooperationPossibilities />
+<CooperationPartners />
+
+<CooperationStrengths />
+
+<CooperationCTA />
 
       </main>
 

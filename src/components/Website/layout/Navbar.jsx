@@ -62,6 +62,14 @@ function Navbar() {
           </NavLink>
 
           <NavLink
+  to="/ueber-uns"
+  className={navLinkClass}
+  onClick={closeMenu}
+>
+  Über uns
+</NavLink>
+
+          <NavLink
             to="/momentry"
             className={navLinkClass}
           >
@@ -150,6 +158,14 @@ function Navbar() {
             >
               Home
             </NavLink>
+
+            <NavLink
+  to="/ueber-uns"
+  className={navLinkClass}
+  onClick={closeMenu}
+>
+  Über uns
+</NavLink>
 
             <NavLink
               to="/momentry"

@@ -12,9 +12,12 @@ import {
 } from "../utils/analytics";
 
 import Home from "../components/Website/home/Home";
+import About from "../components/Website/UeberUns/About";
 import Momentry from "../components/Website/Momentry/Momentry";
 import Contact from "../components/Website/contact/Contact";
 import Kooperationen from "../components/Website/Kooperationen/Kooperationen";
+
+import NotFound from "../components/Website/NotFound/NotFound";
 
 import NewsletterAbmelden from "../components/Website/NewsletterAbmelden/NewsletterAbmelden";
 
@@ -131,6 +134,11 @@ function AppRouter() {
       />
 
       <Route
+  path="/ueber-uns"
+  element={<About />}
+/>
+
+      <Route
         path="/momentry"
         element={<Momentry />}
       />
@@ -244,6 +252,12 @@ function AppRouter() {
             <ShopAccount />
           </ShopProtectedRoute>
         }
+      />
+
+            {/* Nicht vorhandene Seiten */}
+      <Route
+        path="*"
+        element={<NotFound />}
       />
     </Routes>
   );

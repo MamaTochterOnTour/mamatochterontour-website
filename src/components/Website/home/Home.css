@@ -362,7 +362,7 @@
   object-fit: cover;
   object-position: center center;
 
-  filter: none;
+  filter: contrast(1.06) saturate(1.04);
   transform: none;
 
   max-width: none;
@@ -407,19 +407,25 @@
 }
 
 .home-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  pointer-events: none;
+
   background:
     linear-gradient(
       90deg,
-      rgba(4, 6, 6, 0.72) 0%,
-      rgba(5, 8, 7, 0.50) 42%,
-      rgba(6, 8, 7, 0.18) 72%,
-      rgba(6, 8, 7, 0.30) 100%
+      rgba(4, 6, 6, 0.62) 0%,
+      rgba(5, 8, 7, 0.38) 42%,
+      rgba(6, 8, 7, 0.08) 72%,
+      rgba(6, 8, 7, 0.18) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(5, 7, 6, 0.12) 0%,
-      rgba(5, 7, 6, 0.03) 55%,
-      rgba(5, 7, 6, 0.65) 100%
+      rgba(5, 7, 6, 0.06) 0%,
+      rgba(5, 7, 6, 0.02) 55%,
+      rgba(5, 7, 6, 0.52) 100%
     );
 }
 
@@ -437,6 +443,7 @@
 
   border-radius: 50%;
   filter: blur(100px);
+  opacity: 0.45;
 
   pointer-events: none;
 }
@@ -1294,7 +1301,7 @@
 }
 
 .home-shop__features {
-  margin: 31px 0 34px;
+  margin: 31px 0 18px;
 
   display: grid;
   gap: 12px;
@@ -2956,5 +2963,442 @@
   50% {
     transform:
       translateY(6px);
+  }
+}
+/* =========================================================
+   ABSCHLUSS / KOOPERATION
+========================================================= */
+
+.home-final-cta {
+  position: relative;
+
+  padding: 125px 0;
+
+  overflow: hidden;
+
+  color: var(--home-white);
+
+  background:
+    radial-gradient(
+      circle at 88% 20%,
+      rgba(155, 199, 174, 0.17),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #102c24 0%,
+      #153c31 48%,
+      #33233f 100%
+    );
+}
+
+.home-final-cta::before {
+  position: absolute;
+  top: -260px;
+  right: -170px;
+
+  width: 640px;
+  height: 640px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 50%;
+
+  content: "";
+  pointer-events: none;
+}
+
+.home-final-cta::after {
+  position: absolute;
+  right: 12%;
+  bottom: -260px;
+
+  width: 470px;
+  height: 470px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(113, 80, 143, 0.14);
+
+  filter: blur(100px);
+
+  content: "";
+  pointer-events: none;
+}
+
+.home-final-cta__card {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(270px, 330px);
+
+  align-items: center;
+
+  gap:
+    clamp(60px, 9vw, 135px);
+}
+
+.home-final-cta__content {
+  max-width: 850px;
+}
+
+.home-final-cta__content h2 {
+  margin: 24px 0 0;
+
+  color: var(--home-white);
+
+  font-size:
+    clamp(3.5rem, 5.7vw, 6.1rem);
+
+  line-height: 0.9;
+  letter-spacing: -0.072em;
+}
+
+.home-final-cta__content h2 span {
+  display: block;
+
+  color: var(--home-green-light);
+}
+
+.home-final-cta__content p {
+  max-width: 720px;
+
+  margin: 29px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.69);
+
+  font-size: 0.98rem;
+  line-height: 1.84;
+}
+
+.home-final-cta__actions {
+  padding-left:
+    clamp(25px, 4vw, 48px);
+
+  display: grid;
+  gap: 12px;
+
+  border-left:
+    1px solid
+    rgba(255, 255, 255, 0.15);
+}
+
+.home-final-cta__button {
+  width: 100%;
+  min-height: 62px;
+
+  padding: 0 19px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.2);
+
+  border-radius: 16px;
+
+  font-size: 0.83rem;
+  font-weight: 850;
+
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.home-final-cta__button svg {
+  width: 19px;
+  height: 19px;
+
+  flex: 0 0 auto;
+
+  stroke: currentColor;
+}
+
+.home-final-cta__button svg:last-child {
+  margin-left: auto;
+
+  transition:
+    transform 220ms ease;
+}
+
+.home-final-cta__button:hover {
+  transform:
+    translateY(-2px);
+}
+
+.home-final-cta__button:hover
+svg:last-child {
+  transform:
+    translateX(4px);
+}
+
+/*
+ * Die höhere Spezifität verhindert,
+ * dass ".home-page a" die dunkle
+ * Schriftfarbe überschreibt.
+ */
+
+.home-page
+.home-final-cta__button--primary {
+  color: #153c31;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 18px 42px
+    rgba(0, 0, 0, 0.2);
+}
+
+.home-page
+.home-final-cta__button--primary span,
+.home-page
+.home-final-cta__button--primary svg {
+  color: #153c31;
+  stroke: #153c31;
+}
+
+.home-page
+.home-final-cta__button--primary:hover {
+  color: #102c24;
+
+  background:
+    var(--home-green-soft);
+}
+
+.home-page
+.home-final-cta__button--secondary {
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.07);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+}
+
+.home-page
+.home-final-cta__button--secondary span,
+.home-page
+.home-final-cta__button--secondary svg {
+  color: #ffffff;
+  stroke: #ffffff;
+}
+
+.home-page
+.home-final-cta__button--secondary:hover {
+  border-color:
+    rgba(255, 255, 255, 0.34);
+
+  background:
+    rgba(255, 255, 255, 0.13);
+}
+
+
+/* =========================================================
+   ABSCHLUSS – TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .home-final-cta {
+    padding: 100px 0;
+  }
+
+  .home-final-cta__card {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .home-final-cta__actions {
+    width: min(100%, 420px);
+
+    padding-top: 31px;
+    padding-left: 0;
+
+    border-top:
+      1px solid
+      rgba(255, 255, 255, 0.15);
+
+    border-left: 0;
+  }
+}
+
+
+/* =========================================================
+   ABSCHLUSS – HANDY
+========================================================= */
+
+@media (max-width: 650px) {
+  .home-final-cta {
+    padding: 82px 0;
+  }
+
+  .home-final-cta__card {
+    gap: 33px;
+  }
+
+  .home-final-cta__content h2 {
+    margin-top: 19px;
+
+    font-size:
+      clamp(3rem, 14vw, 4.15rem);
+  }
+
+  .home-final-cta__content p {
+    margin-top: 22px;
+
+    font-size: 0.87rem;
+    line-height: 1.7;
+  }
+
+  .home-final-cta__actions {
+    width: 100%;
+
+    padding-top: 27px;
+  }
+
+  .home-final-cta__button {
+    min-height: 59px;
+
+    padding: 0 16px;
+  }
+}
+
+/* =========================================================
+   HERO-ÜBERSCHRIFT – BUCHSTABENABSTAND KORRIGIEREN
+========================================================= */
+
+.home-hero h1 strong {
+  letter-spacing: -0.045em;
+  font-kerning: normal;
+}
+
+/* Handy */
+@media (max-width: 650px) {
+  .home-hero h1 strong {
+    letter-spacing: -0.035em;
+  }
+}
+
+/* =========================================================
+   REISEGUIDES – NEWSLETTER-VORTEIL
+========================================================= */
+
+.home-shop__newsletter-benefit {
+  width: fit-content;
+  max-width: 100%;
+
+  margin-top: 0;
+  margin-bottom: 18px;
+  padding:
+    9px 12px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border:
+    1px solid
+    rgba(113, 80, 143, 0.17);
+
+  border-radius: 999px;
+
+  color:
+    #153c31;
+
+  background:
+    rgba(255, 255, 255, 0.62);
+
+  font-size: 0.62rem;
+  font-weight: 790;
+
+  line-height: 1.35;
+
+  box-shadow:
+    0 12px 30px
+    rgba(21, 60, 49, 0.06);
+
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.home-shop__newsletter-benefit svg {
+  width: 15px;
+  height: 15px;
+
+  flex: 0 0 auto;
+
+  color:
+    #71508f;
+}
+
+.home-shop__newsletter-benefit svg:last-child {
+  margin-left: 3px;
+
+  transition:
+    transform 220ms ease;
+}
+
+.home-shop__newsletter-benefit:hover {
+  border-color:
+    rgba(113, 80, 143, 0.3);
+
+  background:
+    rgba(255, 255, 255, 0.86);
+
+  transform:
+    translateY(-2px);
+}
+
+.home-shop__newsletter-benefit:hover
+svg:last-child {
+  transform:
+    translateX(3px);
+}
+
+
+/* Handy */
+
+@media (max-width: 650px) {
+
+  .home-shop__newsletter-benefit {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    border-radius: 14px;
+
+    font-size: 0.61rem;
+  }
+
+  .home-shop__newsletter-benefit
+  svg:last-child {
+    margin-left: auto;
+  }
+}
+
+
+/* Geräte ohne Hover */
+
+@media (hover: none) {
+
+  .home-shop__newsletter-benefit:hover {
+    transform: none;
   }
 }

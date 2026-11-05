@@ -170,11 +170,25 @@
   position: relative;
   z-index: 2;
 
+  min-height: 0;
+
   padding:
     40px 0 55px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(390px, 0.68fr);
+
+  align-items: center;
+
+  gap:
+    clamp(55px, 8vw, 120px);
 }
 
 .contact-hero__content {
+  min-width: 0;
   max-width: 850px;
 }
 
@@ -286,10 +300,349 @@
 }
 
 /* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.contact-hero__button {
+  width: fit-content;
+  min-height: 56px;
+
+  margin-top: 25px;
+  padding:
+    0 18px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border:
+    1px solid
+    rgba(155, 199, 174, 0.24);
+
+  border-radius: 15px;
+
+  color:
+    var(--contact-white) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--contact-green-dark),
+      var(--contact-purple-dark)
+    );
+
+  box-shadow:
+    0 18px 42px
+    rgba(0, 0, 0, 0.2);
+
+  font-size: 0.72rem;
+  font-weight: 820;
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.contact-hero__button svg {
+  width: 17px;
+  height: 17px;
+
+  flex: 0 0 auto;
+}
+
+.contact-hero__button svg:last-child {
+  margin-left: 5px;
+
+  transition:
+    transform 220ms ease;
+}
+
+.contact-hero__button:hover {
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 24px 50px
+    rgba(0, 0, 0, 0.28);
+}
+
+.contact-hero__button:hover
+svg:last-child {
+  transform:
+    translateX(3px);
+}
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.contact-hero__visual {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  isolation: isolate;
+}
+
+.contact-hero__visual::before {
+  position: absolute;
+  z-index: -2;
+
+  width: 330px;
+  height: 330px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(155, 199, 174, 0.13),
+      rgba(113, 80, 143, 0.08) 55%,
+      transparent 72%
+    );
+
+  filter:
+    blur(2px);
+
+  content: "";
+}
+
+.contact-hero__visual-circle {
+  position: absolute;
+
+  width: 410px;
+  height: 410px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 50%;
+}
+
+.contact-hero__visual-circle--small {
+  width: 285px;
+  height: 285px;
+
+  border-color:
+    rgba(155, 199, 174, 0.11);
+}
+
+.contact-hero__mail-symbol {
+  position: relative;
+  z-index: 2;
+
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.13);
+
+  border-radius: 42px;
+
+  color:
+    var(--contact-green-light);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.035)
+    );
+
+  box-shadow:
+    0 30px 70px
+    rgba(0, 0, 0, 0.25);
+
+  backdrop-filter:
+    blur(20px);
+
+  transform:
+    rotate(-5deg);
+}
+
+.contact-hero__mail-symbol svg {
+  width: 62px;
+  height: 62px;
+
+  stroke-width: 1.25;
+}
+
+.contact-hero__email-card {
+  position: absolute;
+  right: 0;
+  bottom: 60px;
+  z-index: 3;
+
+  min-width: 330px;
+
+  padding:
+    17px 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto;
+
+  align-items: center;
+
+  column-gap: 15px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius: 17px;
+
+  color:
+    var(--contact-white) !important;
+
+  background:
+    rgba(16, 18, 20, 0.72);
+
+  box-shadow:
+    0 20px 50px
+    rgba(0, 0, 0, 0.25);
+
+  backdrop-filter:
+    blur(20px);
+
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease;
+}
+
+.contact-hero__email-card span {
+  grid-column:
+    1 / 2;
+
+  color:
+    var(--contact-green-light);
+
+  font-size: 0.53rem;
+  font-weight: 850;
+
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.contact-hero__email-card strong {
+  grid-column:
+    1 / 2;
+
+  margin-top: 4px;
+
+  font-size: 0.69rem;
+}
+
+.contact-hero__email-card svg {
+  grid-column:
+    2 / 3;
+
+  grid-row:
+    1 / 3;
+
+  width: 18px;
+  height: 18px;
+}
+
+.contact-hero__email-card:hover {
+  border-color:
+    rgba(155, 199, 174, 0.3);
+
+  transform:
+    translateY(-3px);
+}
+
+.contact-hero__personal-note {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  z-index: 3;
+
+  padding:
+    14px 16px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.11);
+
+  border-radius: 16px;
+
+  color:
+    var(--contact-white);
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  box-shadow:
+    0 18px 45px
+    rgba(0, 0, 0, 0.18);
+
+  backdrop-filter:
+    blur(18px);
+}
+
+.contact-hero__status-dot {
+  width: 9px;
+  height: 9px;
+
+  flex:
+    0 0 9px;
+
+  border-radius: 50%;
+
+  background:
+    var(--contact-green-light);
+
+  box-shadow:
+    0 0 0 5px
+    rgba(155, 199, 174, 0.11);
+}
+
+.contact-hero__personal-note div {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-hero__personal-note strong {
+  font-size: 0.68rem;
+}
+
+.contact-hero__personal-note small {
+  margin-top: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  font-size: 0.56rem;
+}
+
+/* =========================================================
    MAIN
 ========================================================= */
 
 .contact-main {
+
+    scroll-margin-top: 110px;
+
   padding:
     105px 0 115px;
 
@@ -417,6 +770,13 @@
   letter-spacing: 0.04em;
 }
 
+.contact-form__optional {
+  color:
+    var(--contact-muted-dark);
+
+  font-weight: 550;
+}
+
 .contact-form__field input,
 .contact-form__field select,
 .contact-form__field textarea {
@@ -507,6 +867,23 @@
 
   accent-color:
     var(--contact-green);
+}
+
+.contact-form__privacy a {
+  color:
+    var(--contact-green);
+
+  font-weight: 780;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  transition:
+    color 200ms ease;
+}
+
+.contact-form__privacy a:hover {
+  color:
+    var(--contact-purple);
 }
 
 .contact-form__submit {
@@ -718,62 +1095,125 @@ svg:last-child {
 }
 
 /* =========================================================
-   INFO LIST
+   KOOPERATIONS-HINWEIS
 ========================================================= */
 
-.contact-info__list {
-  margin-top: 20px;
-
-  display: grid;
-
-  gap: 12px;
+.contact-info__card--cooperation {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.88),
+      rgba(238, 230, 243, 0.78)
+    );
 }
 
-.contact-info__list > div {
+.contact-info__cooperation-icon {
+  width: 46px;
+  height: 46px;
+
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 
-  gap: 11px;
-}
-
-.contact-info__list > div > svg {
-  width: 36px;
-  height: 36px;
-
-  padding: 8px;
-
-  flex: 0 0 auto;
-
-  border-radius: 11px;
+  border-radius: 14px;
 
   color:
-    var(--contact-purple);
+    var(--contact-white);
 
   background:
-    rgba(113, 80, 143, 0.09);
+    linear-gradient(
+      135deg,
+      var(--contact-green),
+      var(--contact-purple)
+    );
 }
 
-.contact-info__list span {
-  display: flex;
-  flex-direction: column;
+.contact-info__cooperation-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
-.contact-info__list strong {
+.contact-info__card--cooperation
+.contact-info__eyebrow {
+  margin-top: 20px;
+}
+
+.contact-info__card--cooperation h3 {
   color:
     var(--contact-green-dark);
-
-  font-size: 0.73rem;
 }
 
-.contact-info__list small {
-  margin-top: 3px;
+.contact-info__card--cooperation p {
+  margin:
+    14px 0 0;
 
   color:
     var(--contact-muted-dark);
 
-  font-size: 0.63rem;
+  font-size: 0.75rem;
 
-  line-height: 1.45;
+  line-height: 1.6;
+}
+
+.contact-info__cooperation-link {
+  min-height: 49px;
+
+  margin-top: 20px;
+  padding:
+    0 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  border:
+    1px solid
+    rgba(21, 60, 49, 0.12);
+
+  border-radius: 14px;
+
+  color:
+    var(--contact-white) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--contact-green-dark),
+      var(--contact-purple-dark)
+    );
+
+  font-size: 0.69rem;
+  font-weight: 820;
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.contact-info__cooperation-link svg {
+  width: 16px;
+  height: 16px;
+
+  flex: 0 0 auto;
+
+  transition:
+    transform 220ms ease;
+}
+
+.contact-info__cooperation-link:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 16px 35px
+    rgba(21, 60, 49, 0.16);
+}
+
+.contact-info__cooperation-link:hover svg {
+  transform:
+    translateX(3px);
 }
 
 .contact-info__note {
@@ -822,6 +1262,44 @@ svg:last-child {
 
 @media (max-width: 1180px) {
 
+    .contact-hero__layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(330px, 0.58fr);
+
+    gap: 45px;
+  }
+
+  .contact-hero__visual {
+    min-height: 450px;
+  }
+
+  .contact-hero__visual-circle {
+    width: 350px;
+    height: 350px;
+  }
+
+  .contact-hero__visual-circle--small {
+    width: 245px;
+    height: 245px;
+  }
+
+  .contact-hero__mail-symbol {
+    width: 125px;
+    height: 125px;
+
+    border-radius: 35px;
+  }
+
+  .contact-hero__mail-symbol svg {
+    width: 52px;
+    height: 52px;
+  }
+
+  .contact-hero__email-card {
+    min-width: 290px;
+  }
+
   .contact-container {
     width: min(
       calc(100% - 50px),
@@ -847,7 +1325,17 @@ svg:last-child {
    TABLETS
 ========================================================= */
 
+
 @media (max-width: 980px) {
+
+    .contact-hero__layout {
+    grid-template-columns:
+      1fr;
+  }
+
+  .contact-hero__visual {
+    display: none;
+  }
 
   .contact-container {
     width: min(
@@ -941,6 +1429,17 @@ svg:last-child {
 ========================================================= */
 
 @media (max-width: 650px) {
+
+    .contact-hero__button {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+
+  .contact-hero__button
+  svg:last-child {
+    margin-left: auto;
+  }
 
   .contact-container {
     width:
@@ -1114,8 +1613,10 @@ svg:last-child {
 
 @media (hover: none) {
 
+  .contact-hero__button:hover,
+  .contact-hero__email-card:hover,
   .contact-form__submit:hover,
-  .contact-cta__button:hover {
+  .contact-info__cooperation-link:hover {
     transform: none;
   }
 }
@@ -1139,5 +1640,144 @@ svg:last-child {
 
     transition-duration:
       0.01ms !important;
+  }
+}
+
+/* =========================================================
+   CONTACT HERO – WIE KOOPERATIONEN
+========================================================= */
+
+/*
+ * Auf dem Desktop ersetzt die rechte Liste
+ * die kleinen Themen-Pills.
+ */
+@media (min-width: 981px) {
+
+  .contact-hero__topics {
+    display: none;
+  }
+
+  .contact-hero__layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(350px, 0.42fr);
+
+    gap:
+      clamp(45px, 6vw, 85px);
+  }
+
+  .contact-hero__routes {
+    width: 100%;
+    max-width: 440px;
+
+    margin-right: 38px;
+
+    justify-self: end;
+    align-self: center;
+
+    transform:
+      translateX(-38px);
+  }
+
+  .contact-hero__routes-label {
+    display: block;
+
+    margin:
+      0 0 16px;
+
+    color:
+      var(--contact-green-light);
+
+    font-size: 0.58rem;
+    font-weight: 850;
+
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+  }
+
+  .contact-hero__routes-list {
+    width: 100%;
+  }
+
+  .contact-hero__route {
+    padding:
+      22px 0;
+
+    display: grid;
+
+    grid-template-columns:
+      55px minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 17px;
+
+    border-top:
+      1px solid
+      rgba(255, 255, 255, 0.13);
+
+    transition:
+      transform 220ms ease;
+  }
+
+  .contact-hero__route:last-child {
+    border-bottom:
+      1px solid
+      rgba(255, 255, 255, 0.13);
+  }
+
+  .contact-hero__route strong {
+    color:
+      var(--contact-purple-light);
+
+    font-size: 1.15rem;
+    font-weight: 750;
+  }
+
+  .contact-hero__route span {
+    color:
+      rgba(255, 255, 255, 0.88);
+
+    font-size: 1rem;
+    font-weight: 750;
+
+    line-height: 1.4;
+  }
+
+  .contact-hero__route:hover {
+    transform:
+      translateX(7px);
+  }
+}
+
+
+/* =========================================================
+   CONTACT HERO – TABLET UND HANDY
+========================================================= */
+
+@media (max-width: 980px) {
+
+  /*
+   * Die rechte Liste wird ausgeblendet.
+   * Stattdessen bleiben die kompakten Pills sichtbar.
+   */
+  .contact-hero__routes {
+    display: none;
+  }
+
+  .contact-hero__topics {
+    display: flex;
+  }
+}
+
+
+/* =========================================================
+   CONTACT HERO – TOUCH
+========================================================= */
+
+@media (hover: none) {
+
+  .contact-hero__route:hover {
+    transform: none;
   }
 }

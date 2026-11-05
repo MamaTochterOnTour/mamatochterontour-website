@@ -6,10 +6,11 @@ import {
 import {
   FiArrowRight,
   FiBookOpen,
-  FiCompass,
+  FiMail,
   FiShoppingBag,
   FiSmartphone,
   FiStar,
+  FiUsers,
 } from "react-icons/fi";
 
 import {
@@ -24,22 +25,6 @@ import Footer from "../layout/Footer";
 
 import "./Home.css";
 
-/*
- * Passe diese Pfade an deine echten Dateien an.
- */
-
-import travelCruiseImage from
-  "../../../assets/images/home/travel-kreuzfahrt.jpg";
-
-import travelCityImage from
-  "../../../assets/images/home/travel-staedtereise.jpg";
-
-import travelIslandImage from
-  "../../../assets/images/home/travel-insel.jpg";
-
-import travelRoadtripImage from
-  "../../../assets/images/home/travel-roadtrip.jpg";
-
 import youtubeMallorcaThumbnail from
   "../../../assets/images/home/youtube-mallorca.jpg";
 
@@ -51,13 +36,6 @@ import instagramMallorcaPreview from
 
 import tiktokColognePreview from
   "../../../assets/videos/tiktok-koeln.mp4";
-
-const TRAVEL_IMAGES = {
-  cruise: travelCruiseImage,
-  city: travelCityImage,
-  island: travelIslandImage,
-  roadtrip: travelRoadtripImage,
-};
 
 const VIDEO_ITEMS = [
   {
@@ -110,37 +88,6 @@ const VIDEO_ITEMS = [
     url:
       "https://www.tiktok.com/@mamatochterontour?_r=1&_t=ZG-98enOr0BhC4",
 
-  },
-];
-
-const TRAVEL_ITEMS = [
-  {
-    id: "cruise",
-    eyebrow: "Kreuzfahrten",
-    title: "Die Welt vom Wasser",
-    text: "Schiffe, Routen & persönliche Tipps.",
-    image: TRAVEL_IMAGES.cruise,
-  },
-  {
-    id: "city",
-    eyebrow: "Städtereisen",
-    title: "Neue Orte entdecken",
-    text: "Highlights, Cafés & Sehenswürdigkeiten.",
-    image: TRAVEL_IMAGES.city,
-  },
-  {
-    id: "island",
-    eyebrow: "Inselmomente",
-    title: "Zeit für Meer und Ruhe",
-    text: "Strände, Buchten & echte Geheimtipps.",
-    image: TRAVEL_IMAGES.island,
-  },
-  {
-    id: "roadtrip",
-    eyebrow: "Roadtrips",
-    title: "Freiheit auf vier Rädern",
-    text: "Routen, Stopps & Abenteuer.",
-    image: TRAVEL_IMAGES.roadtrip,
   },
 ];
 
@@ -249,7 +196,7 @@ function HomeHero() {
   preload="auto"
 >
   <source
-    src="/videos/hero-travel.mp4"
+    src="/videos/hero-travel-h264.mp4"
     type="video/mp4"
   />
 </video>
@@ -263,7 +210,7 @@ function HomeHero() {
   preload="auto"
 >
   <source
-    src="/videos/hero-travel-mobile.mp4"
+    src="/videos/hero-travel-mobile-h264.mp4"
     type="video/mp4"
   />
 </video>
@@ -339,31 +286,54 @@ function HomeHero() {
           </p>
 
           <div className="home-hero__actions">
-            <Link
-              to="/momentry"
-              className="home-button home-button--app"
-            >
-              <FiSmartphone
-                aria-hidden="true"
-              />
+  <Link
+    to="/momentry"
+    className="home-button home-button--app"
+  >
+    <FiSmartphone
+      aria-hidden="true"
+    />
 
-              <span>
-                <small>
-                  Reisen gemeinsam planen
-                </small>
+    <span>
+      <small>
+        Reisen gemeinsam planen
+      </small>
 
-                <strong>
-                  Momentry entdecken
-                </strong>
-              </span>
+      <strong>
+        Momentry entdecken
+      </strong>
+    </span>
 
-              <FiArrowRight
-                className="home-button__arrow"
-                aria-hidden="true"
-              />
-            </Link>
+    <FiArrowRight
+      className="home-button__arrow"
+      aria-hidden="true"
+    />
+  </Link>
 
-          </div>
+  <Link
+    to="/kooperationen"
+    className="home-button home-button--glass"
+  >
+    <FiUsers
+      aria-hidden="true"
+    />
+
+    <span>
+      <small>
+        Für Marken & Partner
+      </small>
+
+      <strong>
+        Mit uns zusammenarbeiten
+      </strong>
+    </span>
+
+    <FiArrowRight
+      className="home-button__arrow"
+      aria-hidden="true"
+    />
+  </Link>
+</div>
 
           <div className="home-hero__tags">
             <span>
@@ -420,13 +390,16 @@ function HomeStatement() {
             </p>
 
             <p>
-              Genau deshalb verbinden wir
-              persönliche Reiseerlebnisse mit
-              digitaler Planung, ehrlichem
-              Content, Community und
-              Reiseguides, die wir selbst
-              entwickeln.
-            </p>
+  Genau deshalb verbinden wir
+  persönliche Reiseerlebnisse mit
+  unserer Reise-App Momentry by MamaTochterOnTour,
+  ehrlichem Content und einer
+  Community, die Reisen gemeinsam
+  plant und Erinnerungen teilt.
+  Unsere digitalen Reiseguides
+  entstehen dabei direkt aus
+  unseren eigenen Erfahrungen.
+</p>
 
             <div className="home-statement__signature">
               <span>
@@ -439,83 +412,6 @@ function HomeStatement() {
             </div>
           </AnimatedSection>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================
-   REISEN
-========================================================= */
-
-function TravelStories() {
-  return (
-    <section className="home-travel">
-      <div className="home-container">
-        <AnimatedSection className="home-travel__heading">
-          <SectionLabel>
-            Unsere Reisen
-          </SectionLabel>
-
-          <div className="home-travel__heading-grid">
-            <h2>
-              Orte, die nicht
-              <span>
-                nur auf der Karte bleiben.
-              </span>
-            </h2>
-
-            <p>
-  Unsere Reisen kannst du in Form von
-  persönlichen Reisetagebüchern in unserer
-  Reise-App Momentry by MamaTochterOnTour mitverfolgen. Dort
-  teilen wir unsere Erlebnisse, Eindrücke
-  und besonderen Momente von unterwegs.
-</p>
-          </div>
-        </AnimatedSection>
-
-        <div className="home-destinations">
-          {TRAVEL_ITEMS.map(
-            (item, index) => (
-              <AnimatedSection
-                key={item.id}
-                className={`home-destination ${item.position}`}
-                delay={
-                  index * 0.06
-                }
-              >
-                <Link
-                  className="home-destination__link"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    loading="lazy"
-                  />
-
-                  <div className="home-destination__overlay" />
-
-                  <div className="home-destination__content">
-                    <span>
-                      {item.eyebrow}
-                    </span>
-
-                    <h3>
-                      {item.title}
-                    </h3>
-
-                    <p>
-                      {item.text}
-                    </p>
-
-                  </div>
-                </Link>
-              </AnimatedSection>
-            )
-          )}
-        </div>
-
       </div>
     </section>
   );
@@ -604,8 +500,8 @@ function VideoWorld() {
       <div className="home-container">
         <AnimatedSection className="home-videos__heading">
           <SectionLabel light>
-            Bewegtbild
-          </SectionLabel>
+  Unterwegs mit uns
+</SectionLabel>
 
           <h2>
             Nicht nur ansehen.
@@ -616,7 +512,7 @@ function VideoWorld() {
 
           <p>
             Unsere Reisen leben in Videos weiter.
-            Auf YouTube, Instagram und TikTok
+            Auf TikTok, Instagram und YouTube
             nehmen wir dich mit hinter die
             Kulissen und direkt an besondere
             Orte.
@@ -703,6 +599,25 @@ function ShopExperience() {
             </div>
           </div>
 
+                    <a
+            href="#newsletter"
+            className="home-shop__newsletter-benefit"
+            aria-label="Zur Newsletter-Anmeldung"
+          >
+            <FiMail
+              aria-hidden="true"
+            />
+
+            <span>
+              10 % Willkommensrabatt
+              bei Newsletter-Anmeldung
+            </span>
+
+            <FiArrowRight
+              aria-hidden="true"
+            />
+          </a>
+
           <Link
             to="/shop"
             className="home-shop__button"
@@ -783,6 +698,69 @@ function ShopExperience() {
 }
 
 /* =========================================================
+   ABSCHLUSS / KOOPERATION
+========================================================= */
+
+function HomeFinalCTA() {
+  return (
+    <section className="home-final-cta">
+      <div className="home-container">
+        <AnimatedSection className="home-final-cta__card">
+          <div className="home-final-cta__content">
+            <SectionLabel light>
+  Gemeinsam etwas bewegen
+</SectionLabel>
+
+            <h2>
+              Lasst uns gemeinsam
+              <span>
+                etwas Besonderes entwickeln.
+              </span>
+            </h2>
+
+            <p>
+  Wir freuen uns auf kreative
+  Kooperationen mit Marken und Partnern,
+  deren Ideen und Werte authentisch zu
+  uns, unserem Alltag und unserer
+  Community passen – als einzelne
+  Kampagne oder langfristige
+  Zusammenarbeit.
+</p>
+          </div>
+
+          <div className="home-final-cta__actions">
+            <Link
+              to="/kooperationen"
+              className="home-final-cta__button home-final-cta__button--primary"
+            >
+              <FiUsers aria-hidden="true" />
+
+              <span>
+                Kooperation anfragen
+              </span>
+
+              <FiArrowRight aria-hidden="true" />
+            </Link>
+
+            <Link
+              to="/ueber-uns"
+              className="home-final-cta__button home-final-cta__button--secondary"
+            >
+              <span>
+                Mehr über uns
+              </span>
+
+              <FiArrowRight aria-hidden="true" />
+            </Link>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
    HOMEPAGE
 ========================================================= */
 
@@ -794,13 +772,13 @@ function Home() {
       <main className="home-page">
         <HomeHero />
 
-        <TravelStories />
+<HomeStatement />
 
-        <VideoWorld />
+<ShopExperience />
 
-        <HomeStatement />
+<VideoWorld />
 
-        <ShopExperience />
+<HomeFinalCTA />
       </main>
 
       <Footer />
