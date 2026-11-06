@@ -175,10 +175,35 @@ async function main() {
     console.log(`SEO erstellt: ${page.path}`);
   }
 
+  
+  // Sitemap automatisch aus allen öffentlichen SEO-Seiten erstellen
+  const sitemapEntries = pages
+    .map((page) => {
+      const url = new URL(page.path, SITE_URL).href;
+
+      return `  <url>
+    <loc>${escapeHtml(url)}</loc>
+  </url>`;
+    })
+    .join("\n");
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries}
+</urlset>
+`;
+
+  await writeFile(
+    path.join(DIST_DIR, "sitemap.xml"),
+    sitemap,
+    "utf8"
+  );
+
   console.log(
-    `Fertig! ${pages.length} SEO-Seiten wurden erstellt.`
+    `Fertig! ${pages.length} SEO-Seiten und ${pages.length} Sitemap-URLs wurden erstellt.`
   );
 }
+
 
 main().catch((error) => {
   console.error("SEO-Generierung fehlgeschlagen:", error);

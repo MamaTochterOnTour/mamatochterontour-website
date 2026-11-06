@@ -1,4 +1,5 @@
+
 User-agent: *
 Allow: /
 
-Sitemap: https://mamatochterontour.com/sitemap.xml
+Sitemap: https://mamatochterontour.de/sitemap.xml
