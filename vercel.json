@@ -3,6 +3,17 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "routes": [
+
+{
+  "src": "/(.*)",
+  "continue": true,
+  "headers": {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Frame-Options": "SAMEORIGIN"
+  }
+},
+
     {
       "src": "/.well-known/apple-app-site-association",
       "dest": "/.well-known/apple-app-site-association"
@@ -46,23 +57,6 @@
   
 
 "headers": [
-  {
-    "source": "/(.*)",
-    "headers": [
-      {
-        "key": "X-Content-Type-Options",
-        "value": "nosniff"
-      },
-      {
-        "key": "Referrer-Policy",
-        "value": "strict-origin-when-cross-origin"
-      },
-      {
-        "key": "X-Frame-Options",
-        "value": "SAMEORIGIN"
-      }
-    ]
-  },
   {
     "source": "/.well-known/(.*)",
     "headers": [
