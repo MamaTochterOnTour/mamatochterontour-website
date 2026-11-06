@@ -33,57 +33,75 @@ const handleOpenCookieSettings = () => {
   );
 };
 
-  const handleNewsletterSubmit = async (event) => {
-    event.preventDefault();
 
-    const email = newsletterEmail.trim();
+const handleNewsletterSubmit = async (event) => {
+  event.preventDefault();
 
-    if (!email) {
-      setNewsletterStatus("error");
-      setNewsletterMessage("Bitte gib deine E-Mail-Adresse ein.");
-      return;
-    }
+  const email = newsletterEmail.trim();
 
-    setNewsletterStatus("loading");
-    setNewsletterMessage("");
+  if (!email) {
+    setNewsletterStatus("error");
+    setNewsletterMessage("Bitte gib deine E-Mail-Adresse ein.");
+    return;
+  }
 
-    try {
-      const subscribeToNewsletter = httpsCallable(
-        functions,
-        "subscribeToNewsletter"
+  setNewsletterStatus("loading");
+  setNewsletterMessage("");
+
+  try {
+    const subscribeToNewsletter = httpsCallable(
+      functions,
+      "subscribeToNewsletter"
+    );
+
+    const result = await subscribeToNewsletter({ email });
+
+    setNewsletterStatus("success");
+
+    if (result.data?.alreadySubscribed) {
+      setNewsletterMessage(
+        result.data?.message ||
+          "Du bist bereits für unseren Newsletter angemeldet. 💚"
       );
-
-      const result = await subscribeToNewsletter({ email });
-
-      setNewsletterStatus("success");
-
-setNewsletterMessage(
-  result.data?.message ||
-    "Deine Newsletter-Anmeldung wurde verarbeitet."
-);
-
-setNewsletterEmail("");
-    } catch (error) {
-      console.error("Newsletter-Anmeldung fehlgeschlagen:", error);
-
-      setNewsletterStatus("error");
-
-      if (
-  error.code === "functions/invalid-argument" ||
-  error.code === "invalid-argument"
-) {
-        setNewsletterMessage(
-          error.message || "Bitte überprüfe deine E-Mail-Adresse."
-        );
-      } else {
-        setNewsletterMessage(
-          "Die Anmeldung hat leider nicht funktioniert. Bitte versuche es später erneut."
-        );
-      }
+    } else if (result.data?.pendingConfirmation) {
+      setNewsletterMessage(
+        result.data?.message ||
+          "Bitte bestätige deine Newsletter-Anmeldung über die E-Mail, die wir dir geschickt haben."
+      );
+    } else {
+      setNewsletterMessage(
+        result.data?.message ||
+          "Deine Newsletter-Anmeldung wurde verarbeitet."
+      );
     }
-  };
 
+    setNewsletterEmail("");
+  } catch (error) {
+    console.error("Newsletter-Anmeldung fehlgeschlagen:", error);
 
+    setNewsletterStatus("error");
+
+    if (
+      error.code === "functions/resource-exhausted" ||
+      error.code === "resource-exhausted"
+    ) {
+      setNewsletterMessage(
+        "Du hast zu viele Anmeldeversuche durchgeführt. Bitte warte etwa 15 Minuten und versuche es anschließend erneut."
+      );
+    } else if (
+      error.code === "functions/invalid-argument" ||
+      error.code === "invalid-argument"
+    ) {
+      setNewsletterMessage(
+        error.message || "Bitte überprüfe deine E-Mail-Adresse."
+      );
+    } else {
+      setNewsletterMessage(
+        "Die Anmeldung hat leider nicht funktioniert. Bitte versuche es später erneut."
+      );
+    }
+  }
+};
 
   return (
   <>

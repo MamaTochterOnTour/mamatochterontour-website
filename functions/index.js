@@ -25,6 +25,9 @@ const shopProducts = require("./shopProducts");
 
 const BREVO_API_KEY = defineSecret("BREVO_API_KEY");
 
+const NEWSLETTER_RATE_LIMIT_KEY =
+  defineSecret("NEWSLETTER_RATE_LIMIT_KEY");
+
 const STRIPE_SECRET_KEY = defineSecret("STRIPE_SECRET_KEY");
 
 const STRIPE_WEBHOOK_SECRET =
@@ -1652,10 +1655,62 @@ function createCouponRedemptionId(email, code) {
     .digest("hex");
 }
 
+async function checkNewsletterRateLimit(request) {
+  const ip = request.rawRequest?.ip;
+
+  if (!ip) {
+    throw new HttpsError(
+      "unavailable",
+      "Die Anmeldung ist vorübergehend nicht verfügbar."
+    );
+  }
+
+  const ipHash = crypto
+    .createHmac(
+      "sha256",
+      NEWSLETTER_RATE_LIMIT_KEY.value()
+    )
+    .update(ip)
+    .digest("hex");
+
+  const windowMs = 15 * 60 * 1000;
+  const maxAttempts = 10;
+  const now = Date.now();
+  const windowId = Math.floor(now / windowMs);
+
+  const rateLimitRef = db
+    .collection("newsletterRateLimits")
+    .doc(`${ipHash}_${windowId}`);
+
+  await db.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(rateLimitRef);
+    const attempts = snapshot.exists
+      ? snapshot.data().attempts || 0
+      : 0;
+
+    if (attempts >= maxAttempts) {
+      throw new HttpsError(
+        "resource-exhausted",
+        "Zu viele Anmeldeversuche. Bitte versuche es später erneut."
+      );
+    }
+
+    transaction.set(rateLimitRef, {
+      attempts: attempts + 1,
+      expiresAt: new Date(
+        (windowId + 1) * windowMs + 24 * 60 * 60 * 1000
+      ),
+    });
+  });
+}
+
 exports.subscribeToNewsletter = onCall(
   {
     region: "europe-west1",
-    secrets: [BREVO_API_KEY],
+    secrets: [
+      BREVO_API_KEY,
+      NEWSLETTER_RATE_LIMIT_KEY,
+    ],
     enforceAppCheck: true,
   },
   async (request) => {
@@ -1690,6 +1745,7 @@ exports.subscribeToNewsletter = onCall(
     }
 
     try {
+            await checkNewsletterRateLimit(request);
       /*
        * =========================================
        * 1. KONTAKT BEI BREVO PRÜFEN
