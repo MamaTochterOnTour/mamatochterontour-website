@@ -1320,16 +1320,12 @@
    kannst du es auf Weiß drehen:
 */
 
-.footer__payment-methods img[src$=".svg"] {
-  filter:
-    brightness(0)
-    invert(1);
-}
 
-/* PNGs wie PayPal NICHT invertieren */
-.footer__payment-methods img[src$=".png"] {
+/* Zahlungslogos in ihren Originalfarben darstellen */
+.footer__payment-methods img {
   filter: none;
 }
+
 
 /* =========================================================
    TRENNLINIE
