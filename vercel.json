@@ -1,7 +1,7 @@
+
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-
   "routes": [
     {
       "src": "/.well-known/apple-app-site-association",
@@ -11,30 +11,38 @@
       "src": "/.well-known/assetlinks.json",
       "dest": "/.well-known/assetlinks.json"
     },
-
     {
-  "src": "/app/trip/invite/([a-f0-9]{64})/?",
-  "dest": "/api/trip-invite?token=$1"
-},
-{
-  "handle": "filesystem"
-},
-{
-  "src": "/app/trip/invite/[^/]+/?",
-  "dest": "/index.html"
-},
-
+      "src": "/app/trip/invite/([a-f0-9]{64})/?",
+      "dest": "/api/trip-invite?token=$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/(ueber-uns|momentry|kooperationen|kontakt|shop)/?$",
+      "dest": "/$1/index.html"
+    },
+    {
+      "src": "^/shop/reiseguides/?$",
+      "dest": "/shop/reiseguides/index.html"
+    },
+    {
+      "src": "^/shop/reiseguides/([^/]+)/?$",
+      "dest": "/shop/reiseguides/$1/index.html"
+    },
+    {
+      "src": "/app/trip/invite/[^/]+/?",
+      "dest": "/index.html"
+    },
     {
       "src": "/app(?:/.*)?",
       "dest": "/app/index.html"
     },
-
     {
       "src": "/.*",
       "dest": "/index.html"
     }
   ],
-
   "headers": [
     {
       "source": "/.well-known/(.*)",
