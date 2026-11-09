@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-const SITE_URL = "https://mamatochterontour.de";
+const SITE_URL = "https://www.mamatochterontour.de";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`;
 const DIST_DIR = path.resolve("dist");
 
@@ -49,6 +49,13 @@ const staticPages = [
     title: "Reiseguides – Tipps für deine nächste Reise",
     description:
       "Entdecke unsere Reiseguides mit persönlichen Erfahrungen, praktischen Tipps und Inspiration für deine nächste Reise.",
+  },
+
+  {
+    path: "/impressum",
+    title: "Impressum – MamaTochterOnTour",
+    description:
+      "Impressum und rechtliche Anbieterinformationen von MamaTochterOnTour.",
   },
 ];
 

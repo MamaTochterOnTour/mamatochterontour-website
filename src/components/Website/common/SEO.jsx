@@ -2,7 +2,7 @@
 import { useLayoutEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://mamatochterontour.de";
+const SITE_URL = "https://www.mamatochterontour.de";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 // Entfernt nur die SEO-Tags, die beim Build

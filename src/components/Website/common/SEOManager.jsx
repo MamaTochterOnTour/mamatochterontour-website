@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import SEO from "./SEO";
 import shopProducts from "../../../data/Onlineshop/shopProducts";
 
-const DEFAULT_IMAGE = "https://mamatochterontour.de/og-image.jpg";
+const DEFAULT_IMAGE = "https://www.mamatochterontour.de/og-image.jpg";
 
 const seoPages = {
   "/": {
@@ -46,6 +46,12 @@ const seoPages = {
     title: "Reiseguides – Tipps für deine nächste Reise",
     description:
       "Entdecke unsere Reiseguides mit persönlichen Erfahrungen, praktischen Tipps und Inspiration für deine nächste Reise.",
+  },
+
+  "/impressum": {
+    title: "Impressum – MamaTochterOnTour",
+    description:
+      "Impressum und rechtliche Anbieterinformationen von MamaTochterOnTour.",
   },
 };
 
