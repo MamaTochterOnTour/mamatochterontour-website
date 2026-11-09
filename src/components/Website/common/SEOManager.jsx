@@ -48,10 +48,25 @@ const seoPages = {
       "Entdecke unsere Reiseguides mit persönlichen Erfahrungen, praktischen Tipps und Inspiration für deine nächste Reise.",
   },
 
-  "/impressum": {
+    "/impressum": {
     title: "Impressum – MamaTochterOnTour",
     description:
       "Impressum und rechtliche Anbieterinformationen von MamaTochterOnTour.",
+  },
+  "/datenschutz": {
+    title: "Datenschutzerklärung – MamaTochterOnTour",
+    description:
+      "Informationen zum Datenschutz und zur Verarbeitung personenbezogener Daten auf der Website von MamaTochterOnTour.",
+  },
+  "/agb": {
+    title: "Allgemeine Geschäftsbedingungen – MamaTochterOnTour",
+    description:
+      "Allgemeine Geschäftsbedingungen für den Online-Shop und die digitalen Produkte von MamaTochterOnTour.",
+  },
+  "/widerruf": {
+    title: "Widerrufsbelehrung – MamaTochterOnTour",
+    description:
+      "Informationen zum Widerrufsrecht und zu den Widerrufsbedingungen im Online-Shop von MamaTochterOnTour.",
   },
 };
 

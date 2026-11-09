@@ -30,7 +30,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "^/(ueber-uns|momentry|kooperationen|kontakt|impressum|shop)/?$",
+      "src": "^/(ueber-uns|momentry|kooperationen|kontakt|impressum|datenschutz|agb|widerruf|shop)/?$",
       "dest": "/$1/index.html"
     },
     {
