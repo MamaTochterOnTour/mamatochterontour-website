@@ -2,22 +2,38 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "routes": [
-
+  
+"routes": [
+  {
+    "src": "/(.*)",
+    "continue": true,
+    "headers": {
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "X-Frame-Options": "SAMEORIGIN"
+    }
+  },
+  
 {
-  "src": "/(.*)",
+  "src": "^/app(?:/.*)?$",
   "continue": true,
   "headers": {
-    "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-    "X-Frame-Options": "SAMEORIGIN"
+    "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
   }
 },
+{
+  "src": "^/(?!app(?:/|$)).*",
+  "continue": true,
+  "headers": {
+    "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; frame-src 'self' https://www.google.com https://www.recaptcha.net; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+  }
+},
+{
+  "src": "/.well-known/apple-app-site-association",
+  "dest": "/.well-known/apple-app-site-association"
+},
 
-    {
-      "src": "/.well-known/apple-app-site-association",
-      "dest": "/.well-known/apple-app-site-association"
-    },
+
     {
       "src": "/.well-known/assetlinks.json",
       "dest": "/.well-known/assetlinks.json"
