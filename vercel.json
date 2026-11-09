@@ -25,7 +25,7 @@
   "src": "^/(?!app(?:/|$)).*",
   "continue": true,
   "headers": {
-    "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; frame-src 'self' https://www.google.com https://www.recaptcha.net; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+    "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; frame-src 'self' https://www.google.com https://www.recaptcha.net https://reiseapp-mamatocherontour.firebaseapp.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
   }
 },
 {
